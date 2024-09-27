@@ -1,0 +1,32 @@
+@import url("header.css");
+@import url("page.css");
+
+html{
+  font-size: 100%;
+}
+
+.h5p-caretaker {
+  --color-background-dark: #f6f6f6;
+  --color-background-light: #ffffff;
+  --color-background-separator: #dddddd;
+  --color-main: #443e9f;
+  --color-main-dark: #352d78;
+  --color-main-very-light: #f7f5ff;
+  --color-text: #101010;
+  --color-text-light: #666666;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --color-error: #d11a1a;
+
+  background-color: var(--color-background-dark);
+  color: var(--color-text);
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  margin: 0;
+
+  .main-color {
+    color: var(--color-main);
+  }
+}

@@ -1,0 +1,161 @@
+.dropzone {
+  --remove-button-size: 2rem;
+  --file-info-padding: 0.75rem;
+
+  background-color: var(--color-background-light);
+  border: 1px dashed var(--color-background-separator);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  padding: 2.75rem;
+  text-align: center;
+  transition: background-color 0.3s, border-color 0.3s;
+  width: 100%;
+
+  &:not([disabled="disabled"]) {
+    cursor: pointer;
+
+    &.dragging {
+      background-color: var(--color-main-very-light);
+      border-color: var(--color-main);
+    }
+
+    &:has(.file-input:active),
+    &:has(.file-input:focus) {
+      background-color: var(--color-main-very-light);
+      border-color: var(--color-main);
+    }
+  }
+
+  .upload-wrapper {
+    background-color: var(--color-main);
+    border-radius: 4px;
+    display: grid;
+    margin: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    width: fit-content;
+
+    .file-input {
+      grid-area: 1 / 1 / 1 / 1;
+      opacity: 0;
+      width: 1px;
+
+      &:focus + .upload-button {
+        outline: 2px auto Highlight; /* for Firefox */
+        outline: 2px auto -webkit-focus-ring-color; /* for Chrome and others */
+      }
+    }
+
+    .upload-button {
+      border-radius: 4px;
+      display: inline-block;
+      padding: 0.75rem 1.5rem 0.75rem 2.25rem;
+      background-color: var(--color-main);
+      color: var(--color-background-light);
+      cursor: pointer;
+      font-weight: bold;
+      grid-area: 1 / 1 / 1 / 1;
+      margin: auto;
+      position: relative;
+      text-align: center;
+      text-decoration: none;
+      transition: background-color 0.3s;
+      user-select: none;
+
+      &::before {
+        content: "\f09b";
+        font-family: 'Material Symbols Outlined';
+        font-weight: normal;
+        font-size: 1rem;
+        left: 1rem;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      &:hover {
+        background-color: var(--color-main-dark);
+      }
+    }
+  }
+
+  .file-info {
+    background-color: var(--color-background-light);
+    border: 1px solid var(--color-background-separator);
+    box-sizing: border-box;
+    box-shadow: 0 1px 2px var(--color-shadow);
+    border-radius: 4px;
+    display: inline-flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: space-between;
+    padding: var(--file-info-padding) var(--file-info-padding) var(--file-info-padding) calc(var(--file-info-padding) + var(--remove-button-size));
+    position: relative;
+
+    &::before {
+      color: var(--color-main);
+      content: "\e873";
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-size: 1.2rem;
+      left: 1rem;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .file-data {
+      display: flex;
+      flex-direction: column;
+
+      .file-name {
+        font-weight: bold;
+        text-align: left;
+      }
+
+      .file-value {
+        color: var(--color-text-light);
+        text-align: left;
+      }
+    }
+
+    .remove-button {
+      aspect-ratio: 1;
+      background: none;
+      border: none;
+      color: var(--color-main);
+      cursor: pointer;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      width: 2rem;
+
+      &:hover {
+        color: var(--color-main-dark);
+      }
+
+      &:before {
+        content: "\e5cd";
+        font-family: 'Material Symbols Outlined';
+        font-weight: bold;
+        font-size: 1.2rem;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  .status {
+    margin-top: 1rem;
+
+    &.error {
+      color: var(--color-error);
+    }
+  }
+
+  .display-none {
+    display: none;
+  }
+}
