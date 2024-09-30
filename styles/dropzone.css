@@ -151,6 +151,7 @@
 
   .status {
     margin-top: 1rem;
+    margin-bottom: 0;
 
     &.error {
       color: var(--color-error);

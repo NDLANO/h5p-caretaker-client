@@ -70,6 +70,7 @@ export class Dropzone {
     this.dropzone.append(this.fileInfo);
 
     this.progressbar = new Progressbar();
+    this.hideProgress();
     this.dropzone.append(this.progressbar.getDOM());
 
     this.status = document.createElement('p');

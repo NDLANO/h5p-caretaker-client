@@ -114,6 +114,7 @@ const handleUpload = async (file) => {
 
             const percentComplete = (uploadedBytes / totalBytes) * 100;
             dropzone.setProgress(percentComplete);
+            console.log(`Progress: ${percentComplete}%`);
 
             controller.enqueue(value);
             read();
@@ -128,6 +129,7 @@ const handleUpload = async (file) => {
       method: 'POST',
       body: formData,
     });
+
 
     dropzone.hideProgress();
 
@@ -162,7 +164,6 @@ const initialize = () => {
       }
     }
   );
-  dropzone.hideProgress();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
