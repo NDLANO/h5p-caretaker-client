@@ -162,6 +162,7 @@ const initialize = () => {
       }
     }
   );
+  dropzone.hideProgress();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
