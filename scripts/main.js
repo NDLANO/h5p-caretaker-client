@@ -85,17 +85,51 @@ const createOutput = (data) => {
 const handleUpload = async (file) => {
   const formData = new FormData();
   formData.append('file', file);
-  // TODO: Check why the value is not passed to server correctly - or what happens there
   formData.set('locale', document.querySelector('.select-language')?.value ?? 'en');
 
+  // // Set up progress bar UI elements
+  // const progressBar = document.querySelector('.progress-bar'); // Assuming there's a progress bar in HTML
+  // progressBar.value = 0;
+  // progressBar.style.display = 'block'; // Show the progress bar
+
   try {
-    // Will eventually be replaced by the actual endpoint variable
-    const response = await fetch('/h5p-caretaker-poc/upload.php', {
-      method: 'POST',
-      body: formData
+    dropzone.setStatus('');
+    dropzone.showProgress();
+
+    const totalBytes = file.size; // Total size of the file to track progress
+    let uploadedBytes = 0;
+
+    new ReadableStream({
+      start(controller) {
+        const reader = file.stream().getReader();
+
+        const read = () => {
+          reader.read().then(({ done, value }) => {
+            if (done) {
+              controller.close();
+              return;
+            }
+
+            uploadedBytes += value.length;
+
+            const percentComplete = (uploadedBytes / totalBytes) * 100;
+            dropzone.setProgress(percentComplete);
+
+            controller.enqueue(value);
+            read();
+          });
+        };
+
+        read();
+      }
     });
 
-    // TODO: Progress bar
+    const response = await fetch('/h5p-caretaker/upload.php', {
+      method: 'POST',
+      body: formData,
+    });
+
+    dropzone.hideProgress();
 
     if (response.ok) {
       const data = await response.json();
@@ -103,7 +137,7 @@ const handleUpload = async (file) => {
       console.log(data);
 
       const output = createOutput(data);
-      document.querySelector('.output').innerHTML = ''
+      document.querySelector('.output').innerHTML = '';
       document.querySelector('.output').append(output);
     } else {
       const text = await response.text();
@@ -112,7 +146,7 @@ const handleUpload = async (file) => {
   } catch (error) {
     dropzone.setStatus(error, true);
   }
-}
+};
 
 const initialize = () => {
   dropzone = new Dropzone(

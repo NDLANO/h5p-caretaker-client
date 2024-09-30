@@ -1,3 +1,5 @@
+import { Progressbar } from './progressbar.js';
+
 export class Dropzone {
 
   #isUploadDisabled = false;
@@ -66,6 +68,9 @@ export class Dropzone {
     this.fileInfo.append(this.removeButton);
 
     this.dropzone.append(this.fileInfo);
+
+    this.progressbar = new Progressbar();
+    this.dropzone.append(this.progressbar.getDOM());
 
     this.status = document.createElement('p');
     this.status.classList.add('status');
@@ -137,8 +142,21 @@ export class Dropzone {
   }
 
   setStatus(status, isError = false) {
+    this.status.classList.toggle('display-none', !status);
     this.status.innerText = status;
     this.status.classList.toggle('error', isError);
+  }
+
+  showProgress() {
+    this.progressbar.show();
+  }
+
+  hideProgress() {
+    this.progressbar.hide();
+  }
+
+  setProgress(progress) {
+    this.progressbar.setProgress(progress);
   }
 
   #handleClick(event) {

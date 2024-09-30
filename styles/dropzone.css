@@ -1,3 +1,5 @@
+@import url("progressbar.css");
+
 .dropzone {
   --remove-button-size: 2rem;
   --file-info-padding: 0.75rem;

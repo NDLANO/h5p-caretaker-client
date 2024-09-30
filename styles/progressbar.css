@@ -1,0 +1,25 @@
+.progressbar-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  margin-inline: auto;
+  max-width: 20rem;
+
+  .progressbar-background {
+    background-color: var(--color-main-very-light);
+    height: 0.25rem;
+    width: 100%;
+  }
+
+  .progressbar-fill {
+    background-color: var(--color-main);
+    border-radius: 4px;
+    height: 100%;
+  }
+
+  .dispay-none {
+    display: none;
+  }
+}
