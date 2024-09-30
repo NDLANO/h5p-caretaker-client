@@ -156,9 +156,27 @@
     &.error {
       color: var(--color-error);
     }
+
+    &.pulse {
+      animation: pulse 1s infinite;
+    }
   }
 
   .display-none {
     display: none;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
   }
 }

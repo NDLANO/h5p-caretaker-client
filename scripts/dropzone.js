@@ -142,10 +142,11 @@ export class Dropzone {
     this.callbacks.reset();
   }
 
-  setStatus(status, isError = false) {
+  setStatus(status, className) {
     this.status.classList.toggle('display-none', !status);
+    this.status.classList.toggle('error', className === 'error');
+    this.status.classList.toggle('pulse', className === 'pulse');
     this.status.innerText = status;
-    this.status.classList.toggle('error', isError);
   }
 
   showProgress() {

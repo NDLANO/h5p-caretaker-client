@@ -82,72 +82,51 @@ const createOutput = (data) => {
   return output;
 };
 
-const handleUpload = async (file) => {
+const handleUpload = (file) => {
   const formData = new FormData();
   formData.append('file', file);
   formData.set('locale', document.querySelector('.select-language')?.value ?? 'en');
 
-  // // Set up progress bar UI elements
-  // const progressBar = document.querySelector('.progress-bar'); // Assuming there's a progress bar in HTML
-  // progressBar.value = 0;
-  // progressBar.style.display = 'block'; // Show the progress bar
+  dropzone.setStatus('');
+  dropzone.showProgress();
 
-  try {
-    dropzone.setStatus('');
-    dropzone.showProgress();
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', '/h5p-caretaker/upload.php', true);
 
-    const totalBytes = file.size; // Total size of the file to track progress
-    let uploadedBytes = 0;
 
-    new ReadableStream({
-      start(controller) {
-        const reader = file.stream().getReader();
-
-        const read = () => {
-          reader.read().then(({ done, value }) => {
-            if (done) {
-              controller.close();
-              return;
-            }
-
-            uploadedBytes += value.length;
-
-            const percentComplete = (uploadedBytes / totalBytes) * 100;
-            dropzone.setProgress(percentComplete);
-            console.log(`Progress: ${percentComplete}%`);
-
-            controller.enqueue(value);
-            read();
-          });
-        };
-
-        read();
+  xhr.upload.addEventListener('progress', (event) => {
+    if (event.lengthComputable) {
+      const percentComplete = (event.loaded / event.total) * 100;
+      dropzone.setProgress(percentComplete);
+      if (percentComplete === 100) {
+        dropzone.hideProgress();
+        dropzone.setStatus('Your file is being checked', 'pulse');
       }
-    });
 
-    const response = await fetch('/h5p-caretaker/upload.php', {
-      method: 'POST',
-      body: formData,
-    });
+    }
+  });
 
-
+  xhr.addEventListener('load', () => {
     dropzone.hideProgress();
-
-    if (response.ok) {
-      const data = await response.json();
-      dropzone.setStatus('Your file is checked');
+    if (xhr.status >= 200 && xhr.status < 300) {
+      const data = JSON.parse(xhr.responseText);
+      dropzone.setStatus('Your file was checked successfully');
       console.log(data);
 
       const output = createOutput(data);
       document.querySelector('.output').innerHTML = '';
       document.querySelector('.output').append(output);
     } else {
-      const text = await response.text();
-      dropzone.setStatus(text, true);
+      dropzone.setStatus(xhr.responseText, 'error');
     }
-  } catch (error) {
-    dropzone.setStatus(error, true);
-  }
+  });
+
+  xhr.addEventListener('error', () => {
+    dropzone.setStatus(xhr.statusText, 'error');
+  });
+
+  // Send the request
+  xhr.send(formData);
 };
 
 const initialize = () => {
