@@ -18,6 +18,13 @@ html{
   --color-shadow: rgba(0, 0, 0, 0.1);
   --color-error: #d11a1a;
 
+  --border-radius-default: 4px;
+
+  --font-size-default: 1rem;
+  --font-size-small: calc(var(--font-size-default) * 0.8);
+  --font-size-large: calc(var(--font-size-default) * 1.2);
+  --font-size-larger: calc(var(--font-size-default) * 1.5);
+
   background-color: var(--color-background-dark);
   color: var(--color-text);
   font-family: "Inter", sans-serif;
