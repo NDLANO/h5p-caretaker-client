@@ -2,11 +2,15 @@ export class Progressbar {
 
   #progress = 0;
 
+  // DOM elements
   #dom;
   #barBackground;
   #bar;
   #value;
 
+  /**
+   * @constructor
+   */
   constructor() {
     this.#dom = document.createElement('div');
     this.#dom.classList.add('progressbar-wrapper');
@@ -28,18 +32,32 @@ export class Progressbar {
     this.setProgress(0);
   }
 
+  /**
+   * Get DOM element of the progress bar.
+   * @returns {HTMLElement} The DOM element of the progress bar.
+   */
   getDOM() {
     return this.#dom;
   }
 
+  /**
+   * Show the progress bar.
+   */
   show() {
     this.#dom.classList.remove('display-none');
   }
 
+  /**
+   * Hide the progress bar.
+   */
   hide() {
     this.#dom.classList.add('display-none');
   }
 
+  /**
+   * Set the progress of the progress bar.
+   * @param {number} progress Progress of the progress bar in percentage.
+   */
   setProgress(progress) {
     if (typeof progress !== 'number') {
       return;
@@ -52,6 +70,10 @@ export class Progressbar {
     this.#value.innerText = `${Math.floor(this.#progress)}%`;
   }
 
+  /**
+   * Get the progress of the progress bar.
+   * @returns {number} Progress of the progress bar in percentage.
+   */
   getProgress() {
     return this.#progress;
   }
