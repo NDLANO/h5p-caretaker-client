@@ -1,0 +1,102 @@
+@import url("message-content.css");
+
+.message-accordion-panel {
+  --header-gap: 0.5rem;
+  --header-icon-width: 1rem;
+  --transition-time: 250ms;
+
+  background-color: var(--color-background-light);
+  border: 1px solid var(--color-background-separator);
+  border-radius: calc(2 * var(--border-radius-default));
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: var(--font-size-small);
+  padding: 1rem;
+
+  .message-accordion-panel-header {
+    display: inline-flex;
+    flex-direction: row;
+    gap: var(--header-gap);
+    justify-content: space-between;
+    margin-bottom: 0;
+    transition: margin-bottom var(--transition-time);
+    width: 100%;
+
+    &:has(.message-accordion-panel-button[aria-expanded="true"]) {
+      margin-bottom: 1rem;
+
+      .message-accordion-panel-icon::before {
+        content: "\e316";
+      }
+    }
+
+    &:has(.message-accordion-panel-button[aria-expanded="false"]) {
+      .message-accordion-panel-icon::before {
+        content: "\e313";
+      }
+    }
+
+    .message-accordion-panel-icon {
+      position: relative;
+      width: --var(header-icon-width);
+
+      &::before {
+        content: " ";
+        font-family: 'Material Symbols Outlined';
+        font-size: var(--font-size-default);
+        top: -0.125rem;
+      }
+    }
+
+    .message-accordion-panel-button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      flex-grow: 1;
+      font-family: inherit;
+      font-size: var(--font-size-small);
+      font-weight: bold;
+      padding: 0;
+      text-align: left;
+      width: 100%;
+    }
+
+    .message-accordion-panel-level {
+      border-radius: var(--border-radius-default);
+      padding: 0.25rem 0.5rem;
+      font-weight: bold;
+      height: 1rem;
+
+      &.error {
+        background-color: var(--color-error-light);
+        color: var(--color-error);
+      }
+      &.warning {
+        background-color: var(--color-warning-light);
+        color: var(--color-warning);
+      }
+      &.info {
+        background-color: var(--color-info-light);
+        color: var(--color-info);
+      }
+    }
+  }
+
+  .message-accordion-panel-content-grid {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    padding-left: calc(var(--header-icon-width) + var(--header-gap));
+    transition: grid-template-rows, opacity var(--transition-time);
+
+    &[aria-hidden="false"] {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .message-accordion-panel-content-wrapper {
+      overflow: hidden;
+      padding-top: 0;
+    }
+  }
+}

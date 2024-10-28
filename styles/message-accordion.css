@@ -1,0 +1,22 @@
+@import url("message-accordion-panel.css");
+
+.message-accordion {
+  margin-top: 2rem;
+
+  .message-accordion-header {
+    font-size: var(--font-size-large);
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-bottom: 1rem;
+  }
+
+  .message-accordion-panels-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    .message-accordion-panels-list-item {
+      margin-bottom: 0.5rem;
+    }
+  }
+}

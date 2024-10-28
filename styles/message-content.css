@@ -1,0 +1,30 @@
+.message-content {
+
+  .message-content-category-type {
+    color: var(--color-main);
+  }
+
+  .message-content-item {
+    margin-bottom: 0.5rem;
+
+    p {
+      line-height: 1rem;
+      margin: 0;;
+    }
+
+    .message-content-item-label {
+      color: var(--color-main);
+      font-weight: bold;
+      margin: 0;
+      text-transform: capitalize;
+    }
+
+    .message-content-item-text {
+      margin-top: 0;
+    }
+
+    .message-content-image {
+      max-width: 100%;
+    }
+  }
+}

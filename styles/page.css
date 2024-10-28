@@ -1,8 +1,8 @@
 @import url("dropzone.css");
+@import url("message-accordion.css");
 
 .page {
   margin-inline: auto;
-  height: 200px;
   max-width: 50%;
 
   h2.title {
