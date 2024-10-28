@@ -1,13 +1,20 @@
 import { Dropzone } from './dropzone.js';
 
+/** @constant {string} DEFAULT_UPLOAD_ENDPOINT Default upload endpoint. */
+const DEFAULT_UPLOAD_ENDPOINT = './upload';
+
 class Main {
 
   #dropzone;
+  #endpoint;
 
   /**
    * @constructor
    */
   constructor() {
+    const mainDOMElement = document.querySelector('main');
+    this.#endpoint = mainDOMElement?.dataset.uploadEndpoint ?? DEFAULT_UPLOAD_ENDPOINT;
+
     document.addEventListener('DOMContentLoaded', () => {
       this.#initialize();
     });
@@ -45,7 +52,7 @@ class Main {
     this.#dropzone.showProgress();
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/h5p-caretaker/upload.php', true);
+    xhr.open('POST', this.#endpoint, true);
 
     xhr.upload.addEventListener('progress', (event) => {
       if (!event.lengthComputable) {
