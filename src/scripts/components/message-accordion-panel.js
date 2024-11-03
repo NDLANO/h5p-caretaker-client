@@ -1,4 +1,4 @@
-import { createUUID } from '../services/util.js';
+import { createUUID } from '@services/util.js';
 import { MessageContent } from './message-content.js';
 
 export class MessageAccordionPanel {

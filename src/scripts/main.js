@@ -1,5 +1,6 @@
-import { Dropzone } from './components/dropzone.js';
-import { MessageAccordion } from './components/message-accordion.js';
+import { Dropzone } from '@components/dropzone.js';
+import { MessageAccordion } from '@components/message-accordion.js';
+import '@styles/main.css';
 
 /** @constant {string} DEFAULT_UPLOAD_ENDPOINT Default upload endpoint. */
 const DEFAULT_UPLOAD_ENDPOINT = './upload';
