@@ -1,0 +1,575 @@
+/*
+Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+https://openfontlicense.org
+*/
+
+@font-face {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(3a07eab52bc91374d82c.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(2c21e04f9a0a997fb25c.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(7d7a881a152aa2ca7715.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(9641d5d087bc9e626d4c.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(b2be0bf638eacbb24415.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(02d30d49f061087e6275.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(9c8bbd8b6f5daa06ba26.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(feab7b25a7cc55fc0f2b.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(f5ace7a3364cd10e4de8.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(19873a15cf8af83ccda7.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(1b12911183d4d0726dd4.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(4f0caf5ae9e89afce04f.woff2) format("woff2");
+}
+
+/*
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 100 700;
+  src: url(6f154dbcb3a7aaff996c.woff2) format('woff2');
+}
+
+.header {
+  align-items: center;
+  background-color: var(--color-background-light);
+  border-bottom: 1px solid var(--color-background-separator);
+  column-gap: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-family: "Poppins", sans-serif;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding: 0.5rem 1.5rem;
+
+  .title {
+    flex-shrink: 0;
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .select-language {
+    background-color: var(--color-background-light);
+    border-color: var(--color-background-separator);
+    border-width: 1px;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 0.3rem 1.3rem 0.3rem 0.3rem;
+  }
+}
+
+.progressbar-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  margin-inline: auto;
+  max-width: 20rem;
+
+  .progressbar-background {
+    background-color: var(--color-main-very-light);
+    height: 0.25rem;
+    width: 100%;
+  }
+
+  .progressbar-fill {
+    background-color: var(--color-main);
+    border-radius: var(--border-radius-default);
+    height: 100%;
+  }
+
+  .dispay-none {
+    display: none;
+  }
+}
+
+.dropzone {
+  --remove-button-size: 2rem;
+  --file-info-padding: 0.75rem;
+
+  background-color: var(--color-background-light);
+  border: 1px dashed var(--color-background-separator);
+  border-radius: calc(2 * var(--border-radius-default));
+  box-sizing: border-box;
+  font-size: var(--font-size-small);
+  padding: 2.75rem;
+  text-align: center;
+  transition: background-color 0.3s, border-color 0.3s;
+  width: 100%;
+
+  &:not([disabled="disabled"]) {
+    cursor: pointer;
+
+    &.dragging {
+      background-color: var(--color-main-very-light);
+      border-color: var(--color-main);
+    }
+
+    &:has(.file-input:active),
+    &:has(.file-input:focus) {
+      background-color: var(--color-main-very-light);
+      border-color: var(--color-main);
+    }
+  }
+
+  .upload-wrapper {
+    background-color: var(--color-main);
+    border-radius: var(--border-radius-default);
+    display: grid;
+    margin: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    width: fit-content;
+
+    .upload-button {
+      border-radius: var(--border-radius-default);
+      display: inline-block;
+      padding: 0.75rem 1.5rem 0.75rem 2.25rem;
+      background-color: var(--color-main);
+      color: var(--color-background-light);
+      cursor: pointer;
+      font-family: "Poppins", sans-serif;
+      font-weight: bold;
+      grid-area: 1 / 1 / 1 / 1;
+      margin: auto;
+      position: relative;
+      text-align: center;
+      text-decoration: none;
+      transition: background-color 0.3s;
+      user-select: none;
+
+      &::before {
+        content: "\f09b";
+        font-family: 'Material Symbols Outlined', sans-serif;
+        font-weight: normal;
+        font-size: var(--font-size-default);
+        left: 1rem;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      &:hover {
+        background-color: var(--color-main-dark);
+      }
+    }
+
+    .file-input {
+      grid-area: 1 / 1 / 1 / 1;
+      opacity: 0;
+      width: 1px;
+
+      &:focus + .upload-button {
+        outline: 2px auto Highlight; /* for Firefox */
+        outline: 2px auto -webkit-focus-ring-color; /* for Chrome and others */
+      }
+    }
+  }
+
+  .file-info {
+    background-color: var(--color-background-light);
+    border: 1px solid var(--color-background-separator);
+    box-sizing: border-box;
+    box-shadow: 0 1px 2px var(--color-shadow);
+    border-radius: var(--border-radius-default);
+    display: inline-flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: space-between;
+    padding: var(--file-info-padding) var(--file-info-padding) var(--file-info-padding) calc(var(--file-info-padding) + var(--remove-button-size));
+    position: relative;
+
+    &::before {
+      color: var(--color-main);
+      content: "\e873";
+      font-family: 'Material Symbols Outlined', sans-serif;
+      font-weight: normal;
+      font-size: var(--font-size-large);
+      left: 1rem;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .file-data {
+      display: flex;
+      flex-direction: column;
+
+      .file-name {
+        font-weight: bold;
+        text-align: left;
+      }
+
+      .file-value {
+        color: var(--color-text-light);
+        text-align: left;
+      }
+    }
+
+    .remove-button {
+      aspect-ratio: 1;
+      background: none;
+      border: none;
+      color: var(--color-main);
+      cursor: pointer;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      width: 2rem;
+
+      &:hover {
+        color: var(--color-main-dark);
+      }
+
+      &:before {
+        content: "\e5cd";
+        font-family: 'Material Symbols Outlined', sans-serif;
+        font-weight: bold;
+        font-size: var(--font-size-large);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  .status {
+    margin-top: 1rem;
+    margin-bottom: 0;
+
+    &.error {
+      color: var(--color-error);
+    }
+
+    &.pulse {
+      animation: pulse 1s infinite;
+    }
+  }
+
+  .display-none {
+    display: none;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.message-content {
+
+  .message-content-category-type {
+    color: var(--color-main);
+  }
+
+  .message-content-item {
+    margin-bottom: 0.5rem;
+
+    p {
+      line-height: 1rem;
+      margin: 0;;
+    }
+
+    .message-content-item-label {
+      color: var(--color-main);
+      font-weight: bold;
+      margin: 0;
+      text-transform: capitalize;
+    }
+
+    .message-content-item-text {
+      margin-top: 0;
+    }
+
+    .message-content-image {
+      max-width: 100%;
+    }
+  }
+}
+
+.message-accordion-panel {
+  --header-gap: 0.5rem;
+  --header-icon-width: 1rem;
+  --transition-time: 250ms;
+
+  background-color: var(--color-background-light);
+  border: 1px solid var(--color-background-separator);
+  border-radius: calc(2 * var(--border-radius-default));
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: var(--font-size-small);
+  padding: 1rem;
+
+  .message-accordion-panel-header {
+    display: inline-flex;
+    flex-direction: row;
+    gap: var(--header-gap);
+    justify-content: space-between;
+    margin-bottom: 0;
+    transition: margin-bottom var(--transition-time);
+    width: 100%;
+
+    .message-accordion-panel-icon {
+      position: relative;
+      width: --var(header-icon-width);
+
+      &::before {
+        content: " ";
+        font-family: 'Material Symbols Outlined', sans-serif;
+        font-size: var(--font-size-default);
+        top: -0.125rem;
+      }
+    }
+
+    .message-accordion-panel-button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      flex-grow: 1;
+      font-family: inherit;
+      font-size: var(--font-size-small);
+      font-weight: bold;
+      padding: 0;
+      text-align: left;
+      width: 100%;
+    }
+
+    .message-accordion-panel-level {
+      border-radius: var(--border-radius-default);
+      padding: 0.25rem 0.5rem;
+      font-weight: bold;
+      height: 1rem;
+
+      &.error {
+        background-color: var(--color-error-light);
+        color: var(--color-error);
+      }
+      &.warning {
+        background-color: var(--color-warning-light);
+        color: var(--color-warning);
+      }
+      &.info {
+        background-color: var(--color-info-light);
+        color: var(--color-info);
+      }
+    }
+
+    &:has(.message-accordion-panel-button[aria-expanded="true"]) {
+      margin-bottom: 1rem;
+
+      .message-accordion-panel-icon::before {
+        content: "\e316";
+      }
+    }
+
+    &:has(.message-accordion-panel-button[aria-expanded="false"]) {
+      .message-accordion-panel-icon::before {
+        content: "\e313";
+      }
+    }
+  }
+
+  .message-accordion-panel-content-grid {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    padding-left: calc(var(--header-icon-width) + var(--header-gap));
+    transition: grid-template-rows, opacity var(--transition-time);
+
+    &[aria-hidden="false"] {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .message-accordion-panel-content-wrapper {
+      overflow: hidden;
+      padding-top: 0;
+    }
+  }
+}
+
+.message-accordion {
+  margin-top: 2rem;
+
+  .message-accordion-header {
+    font-size: var(--font-size-large);
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-bottom: 1rem;
+  }
+
+  .message-accordion-panels-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    .message-accordion-panels-list-item {
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+.page {
+  margin-inline: auto;
+  max-width: 50%;
+
+  h2.title {
+    font-size: var(--font-size-larger);
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  p {
+    line-height: 1.5rem;
+  }
+}
+
+html{
+  font-size: 100%;
+}
+
+.h5p-caretaker {
+  --color-background-dark: #f6f6f6;
+  --color-background-light: #ffffff;
+  --color-background-separator: #dddddd;
+  --color-main: #443e9f;
+  --color-main-dark: #352d78;
+  --color-main-very-light: #f7f5ff;
+  --color-text: #101010;
+  --color-text-light: #666666;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+
+  --color-error: #9e1010;
+  --color-error-light: #ffe9e9;
+  --color-info: #443e9f;
+  --color-info-light: #f7f5ff;
+  --color-warning: #754e00;
+  --color-warning-light: #fff9e6;
+
+  --border-radius-default: 4px;
+
+  --font-size-default: 1rem;
+  --font-size-small: calc(var(--font-size-default) * 0.8);
+  --font-size-large: calc(var(--font-size-default) * 1.2);
+  --font-size-larger: calc(var(--font-size-default) * 1.5);
+
+  background-color: var(--color-background-dark);
+  color: var(--color-text);
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  margin: 0;
+
+  .main-color {
+    color: var(--color-main);
+  }
+}
+
