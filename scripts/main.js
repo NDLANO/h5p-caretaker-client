@@ -25,6 +25,13 @@ class Main {
    * Initialize the main class.
    */
   #initialize() {
+    // Language select field
+    const languageSelect = document.querySelector('.h5p-caretaker .select-language');
+    languageSelect?.addEventListener('change', (event) => {
+      this.#handleLanguageChanged(event);
+    });
+
+    // Dropzone
     this.#dropzone = new Dropzone(
       {
         selectorDropzone: '.h5p-caretaker .dropzone'
@@ -80,6 +87,22 @@ class Main {
    */
   #reset() {
     document.querySelector('.output').innerHTML = '';
+  }
+
+  /**
+   * Handle language changed.
+   * @param {Event} event ChangeEvent.
+   */
+  #handleLanguageChanged(event) {
+    if (!event.target.dataset.locale) {
+      return;
+    }
+
+    // Don't mess with parameters that are set already, but keep them
+    const params = new URLSearchParams(window.location.search);
+    params.set(event.target.dataset.locale, event.target.value);
+
+    window.location.href = `${window.location.pathname}?${params.toString()}${window.location.hash}`;
   }
 
   /**
