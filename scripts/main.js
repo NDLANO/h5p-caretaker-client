@@ -4,15 +4,32 @@ import { MessageAccordion } from './components/message-accordion.js';
 /** @constant {string} DEFAULT_UPLOAD_ENDPOINT Default upload endpoint. */
 const DEFAULT_UPLOAD_ENDPOINT = './upload';
 
+/** @constant {string} DEFAULT_LOCALE_KEY Default locale key for GET parameters. */
+const DEFAULT_LOCALE_KEY = 'locale';
+
+/** @constant {object} DEFAULT_L10N Default localization. */
+const DEFAULT_L10N = {
+  orDragTheFileHere: 'or drag the file here',
+  removeFile: 'Remove file',
+  selectYourLanguage: 'Select your language',
+  uploadProgress: 'Upload progress',
+  uploadYourH5Pfile: 'Upload your H5P file',
+  yourFileIsBeingChecked: 'Your file is being checked',
+  yourFileWasCheckedSuccessfully: 'Your file was checked successfully'
+}
+
 class Main {
 
   #dropzone;
   #endpoint;
+  #l10n;
 
   /**
    * @constructor
    */
   constructor() {
+    this.#l10n = {...DEFAULT_L10N, ...window.H5P_CARETAKER_L10N};
+
     const mainDOMElement = document.querySelector('main');
     this.#endpoint = mainDOMElement?.dataset.uploadEndpoint ?? DEFAULT_UPLOAD_ENDPOINT;
 
@@ -27,6 +44,7 @@ class Main {
   #initialize() {
     // Language select field
     const languageSelect = document.querySelector('.h5p-caretaker .select-language');
+    languageSelect?.setAttribute('aria-label', DEFAULT_L10N.selectYourLanguage);
     languageSelect?.addEventListener('change', (event) => {
       this.#handleLanguageChanged(event);
     });
@@ -34,7 +52,13 @@ class Main {
     // Dropzone
     this.#dropzone = new Dropzone(
       {
-        selectorDropzone: '.h5p-caretaker .dropzone'
+        selectorDropzone: '.h5p-caretaker .dropzone',
+        l10n: {
+          orDragTheFileHere: this.#l10n.orDragTheFileHere,
+          removeFile: this.#l10n.removeFile,
+          uploadProgress: this.#l10n.uploadProgress,
+          uploadYourH5Pfile: this.#l10n.uploadYourH5Pfile
+        }
       },
       {
         upload: async (file) => {
@@ -94,13 +118,9 @@ class Main {
    * @param {Event} event ChangeEvent.
    */
   #handleLanguageChanged(event) {
-    if (!event.target.dataset.locale) {
-      return;
-    }
-
     // Don't mess with parameters that are set already, but keep them
     const params = new URLSearchParams(window.location.search);
-    params.set(event.target.dataset.locale, event.target.value);
+    params.set(event.target.dataset.localeKey ?? DEFAULT_LOCALE_KEY, event.target.value);
 
     window.location.href = `${window.location.pathname}?${params.toString()}${window.location.hash}`;
   }
@@ -114,7 +134,7 @@ class Main {
 
     if (percentage === 100) {
       this.#dropzone.hideProgress();
-      this.#dropzone.setStatus('Your file is being checked', 'pulse');
+      this.#dropzone.setStatus(this.#l10n.yourFileIsBeingChecked, 'pulse');
     }
   }
 
@@ -128,7 +148,7 @@ class Main {
       const data = JSON.parse(xhr.responseText);
       console.log(data);
 
-      this.#dropzone.setStatus('Your file was checked successfully');
+      this.#dropzone.setStatus(this.#l10n.yourFileWasCheckedSuccessfully);
 
       ['error', 'warning', 'info'].forEach((type) => {
         const messages = data.messages

@@ -34,6 +34,9 @@ export class Dropzone {
       return;
     }
 
+    console.log(this.#params.l10n);
+
+
     this.#callbacks = callbacks ?? {};
     this.#callbacks.upload = this.#callbacks.upload ?? (() => {});
     this.#callbacks.reset = this.#callbacks.reset ?? (() => {});
@@ -80,7 +83,7 @@ export class Dropzone {
     const fileInputLabel = document.createElement('label');
     fileInputLabel.classList.add('upload-button');
     fileInputLabel.htmlFor = 'file-input';
-    fileInputLabel.innerText = 'Upload your H5P file';
+    fileInputLabel.innerText = this.#params.l10n.uploadYourH5Pfile;
     this.#uploadWrapper.append(fileInputLabel);
 
     this.#dropzone.append(this.#uploadWrapper);
@@ -103,7 +106,7 @@ export class Dropzone {
 
     const removeButton = document.createElement('button');
     removeButton.classList.add('remove-button');
-    removeButton.setAttribute('aria-label', 'Remove file');
+    removeButton.setAttribute('aria-label', this.#params.l10n.removeFile);
     removeButton.addEventListener('click', () => {
       this.reset();
     });
@@ -111,13 +114,17 @@ export class Dropzone {
 
     this.#dropzone.append(this.#fileInfo);
 
-    this.#progressbar = new Progressbar();
+    this.#progressbar = new Progressbar({
+      l10n: {
+        uploadProgress: this.#params.l10n.uploadProgress
+      }
+    });
     this.hideProgress();
     this.#dropzone.append(this.#progressbar.getDOM());
 
     this.status = document.createElement('p');
     this.status.classList.add('status');
-    this.status.innerText = 'or drag the file here';
+    this.status.innerText = this.#params.l10n.orDragTheFileHere;
     this.#dropzone.append(this.status);
   }
 
@@ -165,7 +172,7 @@ export class Dropzone {
     this.#fileInfo.classList.add('display-none');
     this.#uploadWrapper.classList.remove('display-none');
 
-    this.setStatus('or drag the file here')
+    this.setStatus(this.#params.l10n.orDragTheFileHere);
 
     this.#enableUpload();
     this.#callbacks.reset();

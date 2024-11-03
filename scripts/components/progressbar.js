@@ -10,14 +10,15 @@ export class Progressbar {
 
   /**
    * @constructor
+   * @param {object} params Parameters for the progress bar.
    */
-  constructor() {
+  constructor(params = {}) {
     this.#dom = document.createElement('div');
     this.#dom.classList.add('progressbar-wrapper');
 
     this.#barBackground = document.createElement('div');
     this.#barBackground.setAttribute('role', 'progressbar');
-    this.#barBackground.setAttribute('aria-label', 'Upload progress');
+    this.#barBackground.setAttribute('aria-label', params.l10n.uploadProgress);
     this.#barBackground.classList.add('progressbar-background');
     this.#dom.appendChild(this.#barBackground);
 
