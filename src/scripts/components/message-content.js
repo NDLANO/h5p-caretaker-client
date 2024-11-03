@@ -50,9 +50,9 @@ export class MessageContent {
     }
 
     if (params.message.type === 'libreText') {
-      const status = `<h3>Status</h3><p>${params.message.details.status}</p>`;
+      const status = `<h3>${params.translations.status}</h3><p>${params.message.details.status}</p>`;
       params.message.details.description = `${params.message.details.description}${status}`;
-      const licenseNote = `<h3>License Note</h3><p>${params.message.details.licenseNote}</p>`;
+      const licenseNote = `<h3>${params.translations.licenseNote}</h3><p>${params.message.details.licenseNote}</p>`;
       params.message.details.description = `${params.message.details.description}${licenseNote}`;
 
       const items = this.#parseLibreTextToArray(params.message.details.description);
