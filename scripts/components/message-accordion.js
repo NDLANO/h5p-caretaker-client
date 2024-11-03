@@ -5,7 +5,7 @@ export class MessageAccordion {
   #dom;
 
   /**
-   * @constructor
+   * @class
    * @param {object} params Parameters for the message accordion.
    */
   constructor(params = {}) {

@@ -9,7 +9,7 @@ export class Progressbar {
   #value;
 
   /**
-   * @constructor
+   * @class
    * @param {object} params Parameters for the progress bar.
    */
   constructor(params = {}) {
@@ -64,6 +64,7 @@ export class Progressbar {
       return;
     }
 
+    // eslint-disable-next-line no-magic-numbers
     progress = Math.max(0, Math.min(progress, 100));
     this.#progress = progress;
     this.#dom.setAttribute('aria-valuenow', this.#progress);

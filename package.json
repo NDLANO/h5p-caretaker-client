@@ -3,10 +3,19 @@
   "version": "1.0.0",
   "description": "JavaScript reference client for using H5P Caretaker",
   "main": "index.js",
+  "scripts": {
+    "lint": "stylelint './styles/**/*.css' && eslint './scripts/**/*.js'"
+  },
   "keywords": [
     "H5P",
     "maintenance"
   ],
   "author": "NDLA",
-  "license": "MIT"
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "eslint-config-snordian-h5p": "github:otacke/eslint-config-snordian-h5p",
+    "stylelint": "^16.10.0",
+    "stylelint-config-recommended": "^14.0.1"
+  }
 }

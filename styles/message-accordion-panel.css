@@ -22,27 +22,13 @@
     transition: margin-bottom var(--transition-time);
     width: 100%;
 
-    &:has(.message-accordion-panel-button[aria-expanded="true"]) {
-      margin-bottom: 1rem;
-
-      .message-accordion-panel-icon::before {
-        content: "\e316";
-      }
-    }
-
-    &:has(.message-accordion-panel-button[aria-expanded="false"]) {
-      .message-accordion-panel-icon::before {
-        content: "\e313";
-      }
-    }
-
     .message-accordion-panel-icon {
       position: relative;
       width: --var(header-icon-width);
 
       &::before {
         content: " ";
-        font-family: 'Material Symbols Outlined';
+        font-family: 'Material Symbols Outlined', sans-serif;
         font-size: var(--font-size-default);
         top: -0.125rem;
       }
@@ -78,6 +64,20 @@
       &.info {
         background-color: var(--color-info-light);
         color: var(--color-info);
+      }
+    }
+
+    &:has(.message-accordion-panel-button[aria-expanded="true"]) {
+      margin-bottom: 1rem;
+
+      .message-accordion-panel-icon::before {
+        content: "\e316";
+      }
+    }
+
+    &:has(.message-accordion-panel-button[aria-expanded="false"]) {
+      .message-accordion-panel-icon::before {
+        content: "\e313";
       }
     }
   }

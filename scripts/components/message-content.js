@@ -2,7 +2,7 @@ export class MessageContent {
   #dom;
 
   /**
-   * @constructor
+   * @class
    * @param {object} params Parameters for the message content.
    * @param {object} params.message Message object.
    * @param {object} params.translations Translations object.
@@ -120,7 +120,7 @@ export class MessageContent {
       reference.classList.add('message-content-reference');
       reference.href = params.message.details.reference;
       reference.target = '_blank';
-      reference.innerText = params.translations.learnMore
+      reference.innerText = params.translations.learnMore;
       this.#dom.append(reference);
     }
   }

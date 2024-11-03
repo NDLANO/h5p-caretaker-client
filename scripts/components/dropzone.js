@@ -1,5 +1,11 @@
 import { Progressbar } from './progressbar.js';
 
+/** @constant {number} KB Bytes in a kilobyte. */
+const KB = 1024;
+
+/** @constant {number} DEFAULT_FILESIZE_PADDING Default padding for file size. */
+const DEFAULT_FILESIZE_PADDING = 2;
+
 export class Dropzone {
 
   // State
@@ -21,12 +27,12 @@ export class Dropzone {
   #progressbar;
 
   /**
-   * @constructor
+   * @class Dropzone
    * @param {object} params Parameters for the dropzone.
    * @param {string} params.selectorDropzone CSS selector for the dropzone.
    * @param {object} callbacks Callbacks for the dropzone.
-   * @param {Function} callbacks.upload Callback for the upload event.
-   * @param {Function} callbacks.reset Callback for the reset event.
+   * @param {function} callbacks.upload Callback for the upload event.
+   * @param {function} callbacks.reset Callback for the reset event.
    */
   constructor(params = {}, callbacks = {}) {
     this.#params = params;
@@ -139,7 +145,7 @@ export class Dropzone {
     this.#fileName.innerText = file.name;
 
     if (file.size) {
-      this.#fileValue.innerText = `${(file.size / 1024).toFixed(2)} KB`;
+      this.#fileValue.innerText = `${(file.size / KB).toFixed(DEFAULT_FILESIZE_PADDING)} KB`;
     }
 
     this.#uploadWrapper.classList.add('display-none');
@@ -267,7 +273,7 @@ export class Dropzone {
 
   /**
    * Upload file.
-   * @param {File} file
+   * @param {File} file File to upload.
    */
   #upload(file) {
     if (!file) {

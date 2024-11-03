@@ -16,7 +16,13 @@ const DEFAULT_L10N = {
   uploadYourH5Pfile: 'Upload your H5P file',
   yourFileIsBeingChecked: 'Your file is being checked',
   yourFileWasCheckedSuccessfully: 'Your file was checked successfully'
-}
+};
+
+/** @constant {object} XHR status codes */
+const XHR_STATUS_CODES = {
+  OK: 200,
+  MULTIPLE_CHOICES: 300
+};
 
 class Main {
 
@@ -25,10 +31,10 @@ class Main {
   #l10n;
 
   /**
-   * @constructor
+   * @class
    */
   constructor() {
-    this.#l10n = {...DEFAULT_L10N, ...window.H5P_CARETAKER_L10N};
+    this.#l10n = { ...DEFAULT_L10N, ...window.H5P_CARETAKER_L10N };
 
     const mainDOMElement = document.querySelector('main');
     this.#endpoint = mainDOMElement?.dataset.uploadEndpoint ?? DEFAULT_UPLOAD_ENDPOINT;
@@ -91,6 +97,7 @@ class Main {
         return;
       }
 
+      // eslint-disable-next-line no-magic-numbers
       this.#updateProgress((event.loaded / event.total) * 100);
     });
 
@@ -132,6 +139,7 @@ class Main {
   #updateProgress(percentage) {
     this.#dropzone.setProgress(percentage);
 
+    // eslint-disable-next-line no-magic-numbers
     if (percentage === 100) {
       this.#dropzone.hideProgress();
       this.#dropzone.setStatus(this.#l10n.yourFileIsBeingChecked, 'pulse');
@@ -144,8 +152,11 @@ class Main {
    */
   #handleFileUploaded(xhr) {
     this.#dropzone.hideProgress();
-    if (xhr.status >= 200 && xhr.status < 300) {
+    if (xhr.status >= XHR_STATUS_CODES.OK && xhr.status < XHR_STATUS_CODES.MULTIPLE_CHOICES) {
       const data = JSON.parse(xhr.responseText);
+
+      // TODO: This is a general debug output, remove this once done
+      // eslint-disable-next-line no-console
       console.log(data);
 
       this.#dropzone.setStatus(this.#l10n.yourFileWasCheckedSuccessfully);
@@ -176,7 +187,8 @@ class Main {
         }
       });
 
-    } else {
+    }
+    else {
       this.#setErrorMessage(xhr.responseText);
     }
   }

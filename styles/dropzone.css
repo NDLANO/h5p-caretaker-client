@@ -38,17 +38,6 @@
     grid-template-rows: 1fr;
     width: fit-content;
 
-    .file-input {
-      grid-area: 1 / 1 / 1 / 1;
-      opacity: 0;
-      width: 1px;
-
-      &:focus + .upload-button {
-        outline: 2px auto Highlight; /* for Firefox */
-        outline: 2px auto -webkit-focus-ring-color; /* for Chrome and others */
-      }
-    }
-
     .upload-button {
       border-radius: var(--border-radius-default);
       display: inline-block;
@@ -68,7 +57,7 @@
 
       &::before {
         content: "\f09b";
-        font-family: 'Material Symbols Outlined';
+        font-family: 'Material Symbols Outlined', sans-serif;
         font-weight: normal;
         font-size: var(--font-size-default);
         left: 1rem;
@@ -79,6 +68,17 @@
 
       &:hover {
         background-color: var(--color-main-dark);
+      }
+    }
+
+    .file-input {
+      grid-area: 1 / 1 / 1 / 1;
+      opacity: 0;
+      width: 1px;
+
+      &:focus + .upload-button {
+        outline: 2px auto Highlight; /* for Firefox */
+        outline: 2px auto -webkit-focus-ring-color; /* for Chrome and others */
       }
     }
   }
@@ -99,7 +99,7 @@
     &::before {
       color: var(--color-main);
       content: "\e873";
-      font-family: 'Material Symbols Outlined';
+      font-family: 'Material Symbols Outlined', sans-serif;
       font-weight: normal;
       font-size: var(--font-size-large);
       left: 1rem;
@@ -140,7 +140,7 @@
 
       &:before {
         content: "\e5cd";
-        font-family: 'Material Symbols Outlined';
+        font-family: 'Material Symbols Outlined', sans-serif;
         font-weight: bold;
         font-size: var(--font-size-large);
         position: absolute;
