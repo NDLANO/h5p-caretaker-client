@@ -52,6 +52,8 @@ export class MessageContent {
     if (params.message.type === 'libreText') {
       const status = `<h3>Status</h3><p>${params.message.details.status}</p>`;
       params.message.details.description = `${params.message.details.description}${status}`;
+      const licenseNote = `<h3>License Note</h3><p>${params.message.details.licenseNote}</p>`;
+      params.message.details.description = `${params.message.details.description}${licenseNote}`;
 
       const items = this.#parseLibreTextToArray(params.message.details.description);
       items.forEach((item) => {
