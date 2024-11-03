@@ -34,9 +34,6 @@ export class Dropzone {
       return;
     }
 
-    console.log(this.#params.l10n);
-
-
     this.#callbacks = callbacks ?? {};
     this.#callbacks.upload = this.#callbacks.upload ?? (() => {});
     this.#callbacks.reset = this.#callbacks.reset ?? (() => {});
