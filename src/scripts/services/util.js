@@ -17,3 +17,16 @@ export const createUUID = () =>
     const value = char === 'x' ? random : (random & MASK | OFFSET);
     return value.toString(HEX_BASE);
   });
+
+/**
+ * Capitalize a string.
+ * @param {string} string to be capitalized.
+ * @returns {string} Capitalized string.
+ */
+export const capitalize = (string) => {
+  if (typeof string !== 'string') {
+    return '';
+  }
+
+  return `${string[0].toUpperCase()}${string.slice(1)}`;
+};

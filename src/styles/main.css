@@ -10,6 +10,7 @@ html{
   --color-background-dark: #f6f6f6;
   --color-background-light: #ffffff;
   --color-background-separator: #dddddd;
+  --color-background-separator-dark: #bbbbbb;
   --color-main: #443e9f;
   --color-main-dark: #352d78;
   --color-main-very-light: #f7f5ff;
@@ -24,12 +25,19 @@ html{
   --color-warning: #754e00;
   --color-warning-light: #fff9e6;
 
+  --color-status-bad: #9e1010;
+  --color-status-neutral: #754e00;
+  --color-status-good: #0a7d00;
+
   --border-radius-default: 4px;
 
   --font-size-default: 1rem;
+  --font-size-smallest: calc(var(--font-size-default) * 0.5);
+  --font-size-smaller: calc(var(--font-size-default) * 0.6);
   --font-size-small: calc(var(--font-size-default) * 0.8);
   --font-size-large: calc(var(--font-size-default) * 1.2);
   --font-size-larger: calc(var(--font-size-default) * 1.5);
+  --font-size-largest: calc(var(--font-size-default) * 1.75);
 
   background-color: var(--color-background-dark);
   color: var(--color-text);

@@ -9,8 +9,10 @@ const __dirname = dirname(__filename);
 // Get the package name from the environment variable
 const libraryName = process.env.npm_package_name;
 
+const mode = process.argv.includes('--mode=production') ? 'production' : 'development';
+
 export default {
-  mode: 'production',
+  mode: mode,
   resolve: {
     alias: {
       '@assets': _resolve(__dirname, 'src/assets'),
@@ -24,12 +26,12 @@ export default {
     }
   },
   optimization: {
-    minimize: true,
+    minimize: mode === 'production',
     minimizer: [
       new TerserPlugin({
         terserOptions: {
           compress: {
-            drop_console: true,
+            drop_console: mode === 'production',
           }
         }
       })
@@ -71,5 +73,6 @@ export default {
   },
   stats: {
     colors: true // Enable colored console output
-  }
+  },
+  ...(mode !== 'production' && { devtool: 'eval-cheap-module-source-map' })
 };

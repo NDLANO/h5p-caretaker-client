@@ -15,7 +15,7 @@ export class MessageAccordion {
 
     const header = document.createElement('div');
     header.classList.add('message-accordion-header');
-    header.innerText = params.translations[`${params.type}s`];
+    header.innerText = params.translations[`${params.type}`];
     this.#dom.append(header);
 
     const panels = document.createElement('ul');

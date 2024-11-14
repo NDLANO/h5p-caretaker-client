@@ -1,3 +1,6 @@
+/*!************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/fonts.css ***!
+  \************************************************************************/
 /*
 Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins)
 
@@ -124,6 +127,9 @@ limitations under the License.
   src: url(6f154dbcb3a7aaff996c.woff2) format('woff2');
 }
 
+/*!*************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/header.css ***!
+  \*************************************************************************/
 .header {
   align-items: center;
   background-color: var(--color-background-light);
@@ -153,6 +159,9 @@ limitations under the License.
   }
 }
 
+/*!******************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/progressbar.css ***!
+  \******************************************************************************/
 .progressbar-wrapper {
   align-items: center;
   display: flex;
@@ -179,6 +188,9 @@ limitations under the License.
   }
 }
 
+/*!***************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/dropzone.css ***!
+  \***************************************************************************/
 .dropzone {
   --remove-button-size: 2rem;
   --file-info-padding: 0.75rem;
@@ -362,6 +374,9 @@ limitations under the License.
   }
 }
 
+/*!**********************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/message-content.css ***!
+  \**********************************************************************************/
 .message-content {
 
   .message-content-category-type {
@@ -393,6 +408,9 @@ limitations under the License.
   }
 }
 
+/*!******************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/message-accordion-panel.css ***!
+  \******************************************************************************************/
 .message-accordion-panel {
   --header-gap: 0.5rem;
   --header-icon-width: 1rem;
@@ -494,6 +512,9 @@ limitations under the License.
   }
 }
 
+/*!************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/message-accordion.css ***!
+  \************************************************************************************/
 .message-accordion {
   margin-top: 2rem;
 
@@ -515,6 +536,199 @@ limitations under the License.
   }
 }
 
+/*!**********************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/progress-circle.css ***!
+  \**********************************************************************************/
+.progress-circle-wrapper {
+  display: grid;
+  gap: 0.5rem;
+  overflow: hidden;
+  place-items: center;
+  width: var(--size);
+
+  svg.progress-circle {
+    grid-area: 1 / 1 / 1 / 1;
+
+    --half-size: calc(var(--size) / 2);
+    --radius: calc(var(--half-size) - var(--stroke-width) / 2);
+    --circumference: calc(var(--radius) * pi * 2);
+    --dash: calc((var(--progress) * var(--circumference)) / 100);
+
+    width: var(--size);
+    height: var(--size);
+
+    circle {
+      cx: var(--half-size);
+      cy: var(--half-size);
+      r: var(--radius);
+      stroke-width: var(--stroke-width);
+      fill: none;
+      stroke-linecap: round;
+
+      &.progress-circle-background {
+        stroke: #ddd;
+      }
+
+      &.progress-circle-foreground {
+        transform: rotate(-90deg);
+        transform-origin: var(--half-size) var(--half-size);
+        stroke-dasharray: var(--dash) calc(var(--circumference) - var(--dash));
+        transition: stroke-dasharray 0.3s linear 0s;
+        stroke: var(--stroke-color, var(--color-main));
+      }
+    }
+  }
+
+  .progress-circle-value {
+    font-size: var(--font-size-large);
+    font-weight: bold;
+    grid-area: 1 / 1 / 1 / 1;
+  }
+
+  .progress-circle-label {
+    display: -webkit-box;
+    font-size: var(--font-size-small);
+    grid-area: 2 / 1 / 2 / 1;
+    line-clamp: 3;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-align: center;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    width: inherit;
+  }
+}
+
+/*!**************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/results.css ***!
+  \**************************************************************************/
+.results {
+  margin-top: 2rem;
+
+  .results-header {
+    font-size: var(--font-size-large);
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-bottom: 1rem;
+  }
+
+  .results-box {
+    background-color: var(--color-background-light);
+    border: 1px solid var(--color-background-separator);
+    border-radius: calc(2 * var(--border-radius-default));
+    box-sizing: border-box;
+    container-type: inline-size;
+    width: 100%;
+
+    .results-row {
+      border-bottom: 1px solid var(--color-background-separator);
+      display: grid;
+      grid-template-columns: 8rem 1fr;
+      gap: 1rem;
+      padding: 1rem;
+
+      .overview {
+        align-self: baseline;
+        display: grid;
+        flex-shrink: 0;
+        gap: 0.5rem;
+        grid-template-rows: 1fr 1fr;
+        place-items: center;
+
+        .overview-header {
+          align-self: end;
+          color: var(--color-text-light);
+          text-align: center;
+        }
+
+        .overview-value {
+          align-self: start;
+          font-size: var(--font-size-largest);
+          font-weight: bold;
+          text-align: center;
+        }
+      }
+
+      .progress-circles {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+    }
+
+    .navigation-row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+
+      .select-grouping {
+        background-color: var(--color-background-light);
+        border-color: var(--color-background-separator);
+        border-width: 1px;
+        border-radius: 5px;
+        font-weight: bold;
+        padding: 0.3rem 1.3rem 0.3rem 0.3rem;
+      }
+
+      .button-download {
+        background-color: var(--color-background);
+        border: 1px solid var(--color-background-separator);
+        border-radius: var(--border-radius-default);
+        color: var(--color-main);
+        cursor: pointer;
+        font-size: var(--font-size-small);
+        font-weight: bold;
+        padding: 0.25rem 1rem 0.25rem 2rem;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.2s;
+
+        &:hover {
+          border-color: var(--color-background-separator-dark);
+        }
+
+        &::before {
+          content: "\f090";
+          font-family: 'Material Symbols Outlined', sans-serif;
+          font-weight: bold;
+          font-size: var(--font-size-small);
+          left: 0.5rem;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+
+  @container (max-width: 20rem) {
+    .results-box {
+      .results-row {
+        grid-template-columns: 1fr;
+
+        .progress-circle-wrapper {
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+
+      .navigation-row {
+        flex-direction: column;
+      }
+    }
+
+  }
+}
+
+/*!***********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/page.css ***!
+  \***********************************************************************/
 .page {
   margin-inline: auto;
   max-width: 50%;
@@ -530,6 +744,9 @@ limitations under the License.
   }
 }
 
+/*!***********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/main.css ***!
+  \***********************************************************************/
 html{
   font-size: 100%;
 }
@@ -538,6 +755,7 @@ html{
   --color-background-dark: #f6f6f6;
   --color-background-light: #ffffff;
   --color-background-separator: #dddddd;
+  --color-background-separator-dark: #bbbbbb;
   --color-main: #443e9f;
   --color-main-dark: #352d78;
   --color-main-very-light: #f7f5ff;
@@ -552,12 +770,19 @@ html{
   --color-warning: #754e00;
   --color-warning-light: #fff9e6;
 
+  --color-status-bad: #9e1010;
+  --color-status-neutral: #754e00;
+  --color-status-good: #0a7d00;
+
   --border-radius-default: 4px;
 
   --font-size-default: 1rem;
+  --font-size-smallest: calc(var(--font-size-default) * 0.5);
+  --font-size-smaller: calc(var(--font-size-default) * 0.6);
   --font-size-small: calc(var(--font-size-default) * 0.8);
   --font-size-large: calc(var(--font-size-default) * 1.2);
   --font-size-larger: calc(var(--font-size-default) * 1.5);
+  --font-size-largest: calc(var(--font-size-default) * 1.75);
 
   background-color: var(--color-background-dark);
   color: var(--color-text);

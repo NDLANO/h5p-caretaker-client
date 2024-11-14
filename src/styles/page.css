@@ -1,5 +1,6 @@
 @import url("dropzone.css");
 @import url("message-accordion.css");
+@import url("results.css");
 
 .page {
   margin-inline: auto;

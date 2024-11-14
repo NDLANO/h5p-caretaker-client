@@ -1,6 +1,8 @@
 import { Dropzone } from '@components/dropzone.js';
 import { MessageAccordion } from '@components/message-accordion.js';
 import '@styles/main.css';
+import { Results } from '@components/results.js';
+import { capitalize } from '@services/util.js';
 
 /** @constant {string} DEFAULT_UPLOAD_ENDPOINT Default upload endpoint. */
 const DEFAULT_UPLOAD_ENDPOINT = './upload';
@@ -9,6 +11,7 @@ const DEFAULT_UPLOAD_ENDPOINT = './upload';
 const DEFAULT_LOCALE_KEY = 'locale';
 
 /** @constant {object} DEFAULT_L10N Default localization. */
+// TODO: Add comment what these are used for
 const DEFAULT_L10N = {
   orDragTheFileHere: 'or drag the file here',
   removeFile: 'Remove file',
@@ -16,7 +19,11 @@ const DEFAULT_L10N = {
   uploadProgress: 'Upload progress',
   uploadYourH5Pfile: 'Upload your H5P file',
   yourFileIsBeingChecked: 'Your file is being checked',
-  yourFileWasCheckedSuccessfully: 'Your file was checked successfully'
+  yourFileWasCheckedSuccessfully: 'Your file was checked successfully',
+  totalMessages: 'Total messages',
+  totalIssues: 'Total issues',
+  groupBy: 'Group by',
+  download: 'Download'
 };
 
 /** @constant {object} XHR status codes */
@@ -160,7 +167,61 @@ class Main {
       // eslint-disable-next-line no-console
       console.log(data);
 
+      this.#l10n = { ...this.#l10n, ...data.client.translations };
+
       this.#dropzone.setStatus(this.#l10n.yourFileWasCheckedSuccessfully);
+
+      const typeItems = [
+        {
+          value: data.messages.filter((message) => message.level === 'error').length,
+          label: capitalize(this.#l10n.errors),
+          color: 'var(--color-error)'
+        },
+        {
+          value: data.messages.filter((message) => message.level === 'warning').length,
+          label: capitalize(this.#l10n.warnings),
+          color: 'var(--color-warning)'
+        },
+        {
+          value: data.messages.filter((message) => message.level === 'info').length,
+          label: capitalize(this.#l10n.infos),
+          color: 'var(--color-info)'
+        }
+      ];
+
+      const categoryNames = [...new Set(data.messages.map((message) => message.category))];
+      const categoryItems = categoryNames.map((category) => {
+        return {
+          value: data.messages.filter((message) => message.category === category).length,
+          label: capitalize(this.#l10n[category]),
+          color: 'status',
+          percentage: false
+        };
+      });
+
+      const resultsData = {
+        type: {
+          label: this.#l10n.type,
+          header: this.#l10n.totalIssues,
+          value: data.messages.length,
+          items: typeItems
+        },
+        category: {
+          label: this.#l10n.category,
+          header: this.#l10n.totalMessages,
+          value: data.messages.length,
+          items: categoryItems
+        }
+      };
+
+      const results = new Results({
+        results: resultsData,
+        l10n: {
+          groupBy: this.#l10n.groupBy,
+          download: this.#l10n.download
+        }
+      });
+      document.querySelector('.output').append(results.getDOM());
 
       ['error', 'warning', 'info'].forEach((type) => {
         const messages = data.messages
@@ -180,7 +241,7 @@ class Main {
 
         if (messages.length) {
           const accordion = new MessageAccordion({
-            type: type,
+            type: `${type}s`,
             messages: messages,
             translations: data.client.translations
           });
