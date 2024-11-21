@@ -1,0 +1,7 @@
+@import url("message-accordion.css");
+
+.message-set {
+  &.display-none {
+    display: none;
+  }
+}

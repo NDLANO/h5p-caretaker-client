@@ -1,5 +1,5 @@
 import { Dropzone } from '@components/dropzone.js';
-import { MessageAccordion } from '@components/message-accordion.js';
+import { MessageSets } from '@components/message-sets.js';
 import '@styles/main.css';
 import { Results } from '@components/results.js';
 import { capitalize } from '@services/util.js';
@@ -21,7 +21,6 @@ const DEFAULT_L10N = {
   yourFileIsBeingChecked: 'Your file is being checked',
   yourFileWasCheckedSuccessfully: 'Your file was checked successfully',
   totalMessages: 'Total messages',
-  totalIssues: 'Total issues',
   groupBy: 'Group by',
   download: 'Download',
   expandAllMessages: 'Expand all messages',
@@ -209,9 +208,9 @@ class Main {
       });
 
       const resultsData = {
-        type: {
-          label: this.#l10n.type,
-          header: this.#l10n.totalIssues,
+        level: {
+          label: this.#l10n.level,
+          header:this.#l10n.totalMessages,
           value: data.messages.length,
           items: typeItems
         },
@@ -223,45 +222,49 @@ class Main {
         }
       };
 
-      const results = new Results({
-        results: resultsData,
-        l10n: {
-          groupBy: this.#l10n.groupBy,
-          download: this.#l10n.download
+      const results = new Results(
+        {
+          results: resultsData,
+          l10n: {
+            groupBy: this.#l10n.groupBy,
+            download: this.#l10n.download
+          }
+        },
+        {
+          onGroupingChanged: (id) => {
+            messageSets.show(id);
+          }
         }
-      });
+      );
       document.querySelector('.output').append(results.getDOM());
 
-      ['error', 'warning', 'info'].forEach((type) => {
-        const messages = data.messages
-          .filter((message) => message.level === type)
-          .map((message) => {
-            // TODO: Media should be optional in messages? Add a parameter to the constructor?
-            const path = message.details?.path;
-            if (!path || !path.startsWith('images/')) {
-              return message;
-            }
-
-            if (message.details?.path && message.details?.path.startsWith('images/')) {
-              message.details.base64 = data.raw.media.images[path.split('/').pop()].base64;
-            }
-            return message;
-          });
-
-        if (messages.length) {
-          const accordion = new MessageAccordion({
-            type: `${type}s`,
-            messages: messages,
-            translations: data.client.translations,
-            l10n: {
-              expandAllMessages: this.#l10n.expandAllMessages,
-              collapseAllMessages: this.#l10n.collapseAllMessages
-            }
-          });
-          document.querySelector('.output').append(accordion.getDOM());
+      data.messages = data.messages.map((message) => {
+        // TODO: Media should be optional in messages? Add a parameter to the constructor?
+        const path = message.details?.path;
+        if (!path || !path.startsWith('images/')) {
+          return message;
         }
+
+        if (message.details?.path && message.details?.path.startsWith('images/')) {
+          message.details.base64 = data.raw.media.images[path.split('/').pop()].base64;
+        }
+
+        return message;
       });
 
+      const messageSets = new MessageSets({
+        sets: {
+          level: ['error', 'warning', 'info'],
+          category: categoryNames
+        },
+        messages: data.messages,
+        translations: data.client.translations,
+        l10n: {
+          expandAllMessages: this.#l10n.expandAllMessages,
+          collapseAllMessages: this.#l10n.collapseAllMessages
+        }
+      });
+      document.querySelector('.output').append(messageSets.getDOM());
     }
     else {
       this.#setErrorMessage(xhr.responseText);

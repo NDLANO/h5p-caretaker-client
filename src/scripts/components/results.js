@@ -7,14 +7,20 @@ export class Results {
   #resultsBox;
 
   #params;
+  #callbacks;
   #resultsRows;
 
   /**
    * @class Results
-   * @param {object} params Parameters for the results box
+   * @param {object} params Parameters for the results box.
+   * @param {object} params.results Results.
+   * @param {object} params.l10n Localization.
+   * @param {object} [callbacks] Callbacks.
    */
-  constructor(params = {}) {
+  constructor(params = {}, callbacks = {}) {
     this.#params = params;
+    this.#callbacks = callbacks;
+    this.#callbacks.onGroupingChanged = this.#callbacks.onGroupingChanged ?? (() => {});
 
     this.#resultsRows = this.#buildResultsRows(this.#params.results);
 
@@ -30,7 +36,7 @@ export class Results {
     this.#resultsBox.classList.add('results-box');
     this.#dom.append(this.#resultsBox);
 
-    this.#resultsBox.append(this.#resultsRows.type);
+    this.#resultsBox.append(this.#resultsRows.level);
     this.#resultsBox.append(this.#buildNavigationRow());
   }
 
@@ -143,5 +149,7 @@ export class Results {
   #handleGroupingChanged(event) {
     this.#resultsBox.querySelector('.results-row').remove();
     this.#resultsBox.prepend(this.#resultsRows[event.target.value]);
+
+    this.#callbacks.onGroupingChanged(event.target.value);
   }
 }
