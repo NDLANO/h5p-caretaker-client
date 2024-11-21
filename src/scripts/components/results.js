@@ -31,7 +31,7 @@ export class Results {
     this.#dom.append(this.#resultsBox);
 
     this.#resultsBox.append(this.#resultsRows.type);
-    this.#resultsBox.append(this.buildNavigationRow());
+    this.#resultsBox.append(this.#buildNavigationRow());
   }
 
   /**
@@ -42,6 +42,11 @@ export class Results {
     return this.#dom;
   }
 
+  /**
+   * Build the results rows.
+   * @param {object} results Results.
+   * @returns {object} Results rows.
+   */
   #buildResultsRows(results) {
     const resultsRows = {};
 
@@ -52,6 +57,19 @@ export class Results {
     return resultsRows;
   }
 
+  /**
+   * Build a results row.
+   * @param {object} params Parameters for the results row.
+   * @param {string} params.header Header.
+   * @param {string} params.value Value.
+   * @param {object[]} params.items Items.
+   * @param {number} params.items[].value Value.
+   * @param {number} params.items[].max Max value.
+   * @param {number} params.items[].percentage Percentage.
+   * @param {string} params.items[].label Label.
+   * @param {string} params.items[].color Color.
+   * @returns {HTMLElement} Results row.
+   */
   #buildResultsRow(params = {}) {
     const resultsRow = document.createElement('div');
     resultsRow.classList.add('results-row');
@@ -88,7 +106,11 @@ export class Results {
     return resultsRow;
   }
 
-  buildNavigationRow() {
+  /**
+   * Build the navigation row.
+   * @returns {HTMLElement} Navigation row.
+   */
+  #buildNavigationRow() {
     const navigationRow = document.createElement('div');
     navigationRow.classList.add('navigation-row');
 

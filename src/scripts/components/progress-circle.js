@@ -80,11 +80,19 @@ export class ProgressCircle {
     }
 
     value = Math.max(0, Math.min(max, value));
-    value = value / max * MAX_PERCENTAGE;
+    if (percentage) {
+      value = value / max * MAX_PERCENTAGE;
+    }
     value = Math.round(value);
 
     this.#params.value = value;
-    this.#dom.style.setProperty('--progress', value);
+
+    if (percentage) {
+      this.#dom.style.setProperty('--progress', value);
+    }
+    else {
+      this.#dom.style.setProperty('--progress', value / max * MAX_PERCENTAGE);
+    }
 
     this.#dom.classList.toggle('empty', value === 0);
 

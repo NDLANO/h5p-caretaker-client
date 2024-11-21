@@ -176,18 +176,24 @@ class Main {
       const typeItems = [
         {
           value: data.messages.filter((message) => message.level === 'error').length,
+          max: data.messages.length,
           label: capitalize(this.#l10n.errors),
-          color: 'var(--color-error)'
+          color: 'var(--color-error)',
+          percentage: false
         },
         {
           value: data.messages.filter((message) => message.level === 'warning').length,
+          max: data.messages.length,
           label: capitalize(this.#l10n.warnings),
-          color: 'var(--color-warning)'
+          color: 'var(--color-warning)',
+          percentage: false
         },
         {
           value: data.messages.filter((message) => message.level === 'info').length,
+          max: data.messages.length,
           label: capitalize(this.#l10n.infos),
-          color: 'var(--color-info)'
+          color: 'var(--color-info)',
+          percentage: false
         }
       ];
 
@@ -195,8 +201,9 @@ class Main {
       const categoryItems = categoryNames.map((category) => {
         return {
           value: data.messages.filter((message) => message.category === category).length,
+          max: data.messages.length,
           label: capitalize(this.#l10n[category]),
-          color: 'status',
+          color: 'var(--color-primary)',
           percentage: false
         };
       });
