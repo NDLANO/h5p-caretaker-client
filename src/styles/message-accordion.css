@@ -1,14 +1,28 @@
+@import url("expand-button.css");
 @import url("message-accordion-panel.css");
 
 .message-accordion {
   margin-top: 2rem;
 
   .message-accordion-header {
-    font-size: var(--font-size-large);
-    font-weight: bold;
-    text-transform: capitalize;
-    margin-bottom: 1rem;
+    align-items: flex-end;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+
+    .message-accordion-header-text {
+      font-size: var(--font-size-large);
+      font-weight: bold;
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-transform: capitalize;
+      white-space: nowrap;
+    }
   }
+
+
 
   .message-accordion-panels-list {
     list-style-type: none;

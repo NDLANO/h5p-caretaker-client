@@ -23,7 +23,9 @@ const DEFAULT_L10N = {
   totalMessages: 'Total messages',
   totalIssues: 'Total issues',
   groupBy: 'Group by',
-  download: 'Download'
+  download: 'Download',
+  expandAllMessages: 'Expand all messages',
+  collapseAllMessages: 'Collapse all messages',
 };
 
 /** @constant {object} XHR status codes */
@@ -243,7 +245,11 @@ class Main {
           const accordion = new MessageAccordion({
             type: `${type}s`,
             messages: messages,
-            translations: data.client.translations
+            translations: data.client.translations,
+            l10n: {
+              expandAllMessages: this.#l10n.expandAllMessages,
+              collapseAllMessages: this.#l10n.collapseAllMessages
+            }
           });
           document.querySelector('.output').append(accordion.getDOM());
         }

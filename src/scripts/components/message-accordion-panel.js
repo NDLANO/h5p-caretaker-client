@@ -4,14 +4,21 @@ import { MessageContent } from './message-content.js';
 export class MessageAccordionPanel {
 
   #dom;
+  #contentGrid;
+  #button;
+  #callbacks;
 
   /**
    * @class
    * @param {object} params Parameters for the message accordion panel.
    * @param {object} params.message Message object.
    * @param {object} params.translations Translations object.
+   * @param {object} callbacks Callbacks.
    */
-  constructor(params = {}) {
+  constructor(params = {}, callbacks = {}) {
+    this.#callbacks = callbacks;
+    this.#callbacks.expandedStateChanged = this.#callbacks.expandedStateChanged ?? (() => {});
+
     this.#dom = document.createElement('div');
     this.#dom.classList.add('message-accordion-panel');
 
@@ -26,12 +33,12 @@ export class MessageAccordionPanel {
     icon.classList.add('message-accordion-panel-icon');
     header.append(icon);
 
-    const button = document.createElement('button');
-    button.classList.add('message-accordion-panel-button');
-    button.setAttribute('aria-expanded', 'false');
-    button.setAttribute('aria-controls', contentId);
-    button.innerText = params.message.summary;
-    header.append(button);
+    this.#button = document.createElement('button');
+    this.#button.classList.add('message-accordion-panel-button');
+    this.#button.setAttribute('aria-expanded', 'false');
+    this.#button.setAttribute('aria-controls', contentId);
+    this.#button.innerText = params.message.summary;
+    header.append(this.#button);
 
     if (params.message.level && params.translations[params.message.level]) {
       const level = document.createElement('span');
@@ -43,12 +50,12 @@ export class MessageAccordionPanel {
 
     this.#dom.append(header);
 
-    const contentGrid = document.createElement('div');
-    contentGrid.setAttribute('Id', contentId);
-    contentGrid.classList.add('message-accordion-panel-content-grid');
-    contentGrid.setAttribute('role', 'region');
-    contentGrid.setAttribute('aria-labelledby', headerId);
-    contentGrid.setAttribute('aria-hidden', 'true');
+    this.#contentGrid = document.createElement('div');
+    this.#contentGrid.setAttribute('Id', contentId);
+    this.#contentGrid.classList.add('message-accordion-panel-content-grid');
+    this.#contentGrid.setAttribute('role', 'region');
+    this.#contentGrid.setAttribute('aria-labelledby', headerId);
+    this.#contentGrid.setAttribute('aria-hidden', 'true');
 
     const contentWrapper = document.createElement('div');
     contentWrapper.classList.add('message-accordion-panel-content-wrapper');
@@ -57,15 +64,12 @@ export class MessageAccordionPanel {
       translations: params.translations
     });
     contentWrapper.append(content.getDOM());
-    contentGrid.append(contentWrapper);
+    this.#contentGrid.append(contentWrapper);
 
-    this.#dom.append(contentGrid);
+    this.#dom.append(this.#contentGrid);
 
     this.#dom.addEventListener('click', () => {
-      const isExpanded = button.getAttribute('aria-expanded') === 'true';
-
-      contentGrid.setAttribute('aria-hidden', isExpanded.toString());
-      button.setAttribute('aria-expanded', (!isExpanded).toString());
+      this.toggle();
     });
   }
 
@@ -75,5 +79,50 @@ export class MessageAccordionPanel {
    */
   getDOM() {
     return this.#dom;
+  }
+
+  /**
+   * Check if the panel is expanded.
+   * @returns {boolean} Whether the panel is expanded.
+   */
+  isExpanded() {
+    return this.#button.getAttribute('aria-expanded') === 'true';
+  }
+
+  /**
+   * Toggle the panel's expanded state.
+   * @param {boolean} [state] The desired expanded state of the panel.
+   */
+  toggle(state) {
+    const targetState = (typeof state === 'boolean') ?
+      state :
+      this.#button.getAttribute('aria-expanded') !== 'true';
+
+    if (targetState) {
+      this.expand();
+    }
+    else {
+      this.collapse();
+    }
+  }
+
+  /**
+   * Expand the panel.
+   */
+  expand() {
+    this.#contentGrid.setAttribute('aria-hidden', 'false');
+    this.#button.setAttribute('aria-expanded', 'true');
+
+    this.#callbacks.expandedStateChanged(true);
+  }
+
+  /**
+   * Collapse the panel.
+   */
+  collapse() {
+    this.#contentGrid.setAttribute('aria-hidden', 'true');
+    this.#button.setAttribute('aria-expanded', 'false');
+
+    this.#callbacks.expandedStateChanged(false);
   }
 }
