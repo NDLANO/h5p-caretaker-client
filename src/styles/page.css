@@ -1,6 +1,6 @@
-@import url("dropzone.css");
-@import url("message-sets.css");
-@import url("results.css");
+@import url("@components/dropzone/dropzone.css");
+@import url("@components/message-sets/message-sets.css");
+@import url("@components/results/results.css");
 
 .page {
   margin-inline: auto;

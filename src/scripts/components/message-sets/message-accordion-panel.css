@@ -28,7 +28,7 @@
 
       &::before {
         content: " ";
-        font-family: 'Material Symbols Outlined', sans-serif;
+        font-family: var(--font-material-icons);
         font-size: var(--font-size-default);
         top: -0.125rem;
       }
@@ -71,13 +71,13 @@
       margin-bottom: 1rem;
 
       .message-accordion-panel-icon::before {
-        content: "\e316";
+        content: var(--icon-material-icons-keyboard-arrow-up);
       }
     }
 
     &:has(.message-accordion-panel-button[aria-expanded="false"]) {
       .message-accordion-panel-icon::before {
-        content: "\e313";
+        content: var(--icon-material-icons-keyboard-arrow-down);
       }
     }
   }

@@ -31,6 +31,9 @@ html{
 
   --border-radius-default: 4px;
 
+  --font-buttons: "Poppins", sans-serif;
+  --font-material-icons: "Material Symbols Outlined", sans-serif;
+
   --font-size-default: 1rem;
   --font-size-smallest: calc(var(--font-size-default) * 0.5);
   --font-size-smaller: calc(var(--font-size-default) * 0.6);
@@ -38,6 +41,15 @@ html{
   --font-size-large: calc(var(--font-size-default) * 1.2);
   --font-size-larger: calc(var(--font-size-default) * 1.5);
   --font-size-largest: calc(var(--font-size-default) * 1.75);
+
+  --icon-material-icons-keyboard-arrow-up: "\e316";
+  --icon-material-icons-keyboard-arrow-down: "\e313";
+  --icon-material-icons-expand-all: "\e944";
+  --icon-material-icons-collapse-all: "\e946";
+  --icon-material-icons-close: "\e5cd";
+  --icon-material-icons-description: "\e873";
+  --icon-material-icons-upload: "\f09b";
+  --icon-material-icons-download: "\f090";
 
   background-color: var(--color-background-dark);
   color: var(--color-text);

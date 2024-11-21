@@ -1,4 +1,4 @@
-import { ProgressCircle } from '@components/progress-circle.js';
+import { ProgressCircle } from './progress-circle.js';
 import { capitalize } from '@services/util.js';
 
 export class Results {

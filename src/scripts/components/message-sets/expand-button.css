@@ -13,7 +13,7 @@
   background-color: var(--color-main);
   color: var(--color-background-light);
   cursor: pointer;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-buttons);
   font-weight: bold;
   position: relative;
   text-align: center;
@@ -22,7 +22,7 @@
   user-select: none;
 
   &::before {
-    font-family: 'Material Symbols Outlined', sans-serif;
+    font-family: var(--font-material-icons);
     font-weight: normal;
     font-size: var(--font-size-default);
     left: 1rem;
@@ -32,10 +32,10 @@
   }
 
   &:not(.expanded)::before {
-    content: "\e946";
+    content: var(--icon-material-icons-collapse-all);
   }
 
   &.expanded::before {
-    content: "\e944";
+    content: var(--icon-material-icons-expand-all);
   }
 }

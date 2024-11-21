@@ -117,6 +117,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+/*
+ * Use
+ * https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=close,collapse_all,description,download,expand_all,keyboard_arrow_down,keyboard_arrow_up,upload
+ * to fetch only the icons you need - asjust the URL accordingly. Icon names must be separated by commas and sorted alphabetically.
+ */
+
 @font-face {
   font-family: 'Material Symbols Outlined';
   font-style: normal;

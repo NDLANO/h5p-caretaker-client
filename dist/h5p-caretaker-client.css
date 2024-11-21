@@ -1,6 +1,3 @@
-/*!************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/fonts.css ***!
-  \************************************************************************/
 /*
 Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins)
 
@@ -124,12 +121,9 @@ limitations under the License.
   font-family: 'Material Symbols Outlined';
   font-style: normal;
   font-weight: 100 700;
-  src: url(6f154dbcb3a7aaff996c.woff2) format('woff2');
+  src: url(d7891cbba4368b35959c.woff2) format('woff2');
 }
 
-/*!*************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/header.css ***!
-  \*************************************************************************/
 .header {
   align-items: center;
   background-color: var(--color-background-light);
@@ -138,7 +132,7 @@ limitations under the License.
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-buttons);
   justify-content: space-between;
   margin-bottom: 2rem;
   padding: 0.5rem 1.5rem;
@@ -159,9 +153,6 @@ limitations under the License.
   }
 }
 
-/*!******************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/progressbar.css ***!
-  \******************************************************************************/
 .progressbar-wrapper {
   align-items: center;
   display: flex;
@@ -188,9 +179,6 @@ limitations under the License.
   }
 }
 
-/*!***************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/dropzone.css ***!
-  \***************************************************************************/
 .dropzone {
   --remove-button-size: 2rem;
   --file-info-padding: 0.75rem;
@@ -236,7 +224,7 @@ limitations under the License.
       background-color: var(--color-main);
       color: var(--color-background-light);
       cursor: pointer;
-      font-family: "Poppins", sans-serif;
+      font-family: var(--font-buttons);
       font-weight: bold;
       grid-area: 1 / 1 / 1 / 1;
       margin: auto;
@@ -247,8 +235,8 @@ limitations under the License.
       user-select: none;
 
       &::before {
-        content: "\f09b";
-        font-family: 'Material Symbols Outlined', sans-serif;
+        content: var(--icon-material-icons-upload);
+        font-family: var(--font-material-icons);
         font-weight: normal;
         font-size: var(--font-size-default);
         left: 1rem;
@@ -289,8 +277,8 @@ limitations under the License.
 
     &::before {
       color: var(--color-main);
-      content: "\e873";
-      font-family: 'Material Symbols Outlined', sans-serif;
+      content: var(--icon-material-icons-description);
+      font-family: var(--font-material-icons);
       font-weight: normal;
       font-size: var(--font-size-large);
       left: 1rem;
@@ -330,8 +318,8 @@ limitations under the License.
       }
 
       &:before {
-        content: "\e5cd";
-        font-family: 'Material Symbols Outlined', sans-serif;
+        content: var(--icon-material-icons-close);
+        font-family: var(--font-material-icons);
         font-weight: bold;
         font-size: var(--font-size-large);
         position: absolute;
@@ -374,9 +362,6 @@ limitations under the License.
   }
 }
 
-/*!********************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/expand-button.css ***!
-  \********************************************************************************/
 .offsite {
   left: -9999px;
   opacity: 0;
@@ -392,7 +377,7 @@ limitations under the License.
   background-color: var(--color-main);
   color: var(--color-background-light);
   cursor: pointer;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-buttons);
   font-weight: bold;
   position: relative;
   text-align: center;
@@ -401,7 +386,7 @@ limitations under the License.
   user-select: none;
 
   &::before {
-    font-family: 'Material Symbols Outlined', sans-serif;
+    font-family: var(--font-material-icons);
     font-weight: normal;
     font-size: var(--font-size-default);
     left: 1rem;
@@ -411,17 +396,14 @@ limitations under the License.
   }
 
   &:not(.expanded)::before {
-    content: "\e946";
+    content: var(--icon-material-icons-collapse-all);
   }
 
   &.expanded::before {
-    content: "\e944";
+    content: var(--icon-material-icons-expand-all);
   }
 }
 
-/*!**********************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/message-content.css ***!
-  \**********************************************************************************/
 .message-content {
 
   .message-content-category-type {
@@ -453,9 +435,6 @@ limitations under the License.
   }
 }
 
-/*!******************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/message-accordion-panel.css ***!
-  \******************************************************************************************/
 .message-accordion-panel {
   --header-gap: 0.5rem;
   --header-icon-width: 1rem;
@@ -484,7 +463,7 @@ limitations under the License.
 
       &::before {
         content: " ";
-        font-family: 'Material Symbols Outlined', sans-serif;
+        font-family: var(--font-material-icons);
         font-size: var(--font-size-default);
         top: -0.125rem;
       }
@@ -527,13 +506,13 @@ limitations under the License.
       margin-bottom: 1rem;
 
       .message-accordion-panel-icon::before {
-        content: "\e316";
+        content: var(--icon-material-icons-keyboard-arrow-up);
       }
     }
 
     &:has(.message-accordion-panel-button[aria-expanded="false"]) {
       .message-accordion-panel-icon::before {
-        content: "\e313";
+        content: var(--icon-material-icons-keyboard-arrow-down);
       }
     }
   }
@@ -557,9 +536,6 @@ limitations under the License.
   }
 }
 
-/*!************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/message-accordion.css ***!
-  \************************************************************************************/
 .message-accordion {
   margin-top: 2rem;
 
@@ -594,23 +570,14 @@ limitations under the License.
   }
 }
 
-/*!******************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/message-set.css ***!
-  \******************************************************************************/
 .message-set {
   &.display-none {
     display: none;
   }
 }
 
-/*!*******************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/message-sets.css ***!
-  \*******************************************************************************/
 
 
-/*!**********************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/progress-circle.css ***!
-  \**********************************************************************************/
 .progress-circle-wrapper {
   display: grid;
   gap: 0.5rem;
@@ -672,9 +639,6 @@ limitations under the License.
   }
 }
 
-/*!**************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/results.css ***!
-  \**************************************************************************/
 .results {
   margin-top: 2rem;
 
@@ -766,8 +730,8 @@ limitations under the License.
         }
 
         &::before {
-          content: "\f090";
-          font-family: 'Material Symbols Outlined', sans-serif;
+          content: var(--icon-material-icons-download);
+          font-family: var(--font-material-icons);
           font-weight: bold;
           font-size: var(--font-size-small);
           left: 0.5rem;
@@ -798,9 +762,6 @@ limitations under the License.
   }
 }
 
-/*!***********************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/page.css ***!
-  \***********************************************************************/
 .page {
   margin-inline: auto;
   max-width: 50%;
@@ -816,9 +777,6 @@ limitations under the License.
   }
 }
 
-/*!***********************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/main.css ***!
-  \***********************************************************************/
 html{
   font-size: 100%;
 }
@@ -848,6 +806,9 @@ html{
 
   --border-radius-default: 4px;
 
+  --font-buttons: "Poppins", sans-serif;
+  --font-material-icons: "Material Symbols Outlined", sans-serif;
+
   --font-size-default: 1rem;
   --font-size-smallest: calc(var(--font-size-default) * 0.5);
   --font-size-smaller: calc(var(--font-size-default) * 0.6);
@@ -855,6 +816,15 @@ html{
   --font-size-large: calc(var(--font-size-default) * 1.2);
   --font-size-larger: calc(var(--font-size-default) * 1.5);
   --font-size-largest: calc(var(--font-size-default) * 1.75);
+
+  --icon-material-icons-keyboard-arrow-up: "\e316";
+  --icon-material-icons-keyboard-arrow-down: "\e313";
+  --icon-material-icons-expand-all: "\e944";
+  --icon-material-icons-collapse-all: "\e946";
+  --icon-material-icons-close: "\e5cd";
+  --icon-material-icons-description: "\e873";
+  --icon-material-icons-upload: "\f09b";
+  --icon-material-icons-download: "\f090";
 
   background-color: var(--color-background-dark);
   color: var(--color-text);

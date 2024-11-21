@@ -1,8 +1,8 @@
-import { Dropzone } from '@components/dropzone.js';
-import { MessageSets } from '@components/message-sets.js';
-import '@styles/main.css';
-import { Results } from '@components/results.js';
 import { capitalize } from '@services/util.js';
+import { Dropzone } from '@components/dropzone/dropzone.js';
+import { Results } from '@components/results/results.js';
+import { MessageSets } from '@components/message-sets/message-sets.js';
+import '@styles/main.css';
 
 /** @constant {string} DEFAULT_UPLOAD_ENDPOINT Default upload endpoint. */
 const DEFAULT_UPLOAD_ENDPOINT = './upload';
@@ -11,20 +11,19 @@ const DEFAULT_UPLOAD_ENDPOINT = './upload';
 const DEFAULT_LOCALE_KEY = 'locale';
 
 /** @constant {object} DEFAULT_L10N Default localization. */
-// TODO: Add comment what these are used for
 const DEFAULT_L10N = {
-  orDragTheFileHere: 'or drag the file here',
-  removeFile: 'Remove file',
-  selectYourLanguage: 'Select your language',
-  uploadProgress: 'Upload progress',
-  uploadYourH5Pfile: 'Upload your H5P file',
-  yourFileIsBeingChecked: 'Your file is being checked',
-  yourFileWasCheckedSuccessfully: 'Your file was checked successfully',
-  totalMessages: 'Total messages',
-  groupBy: 'Group by',
-  download: 'Download',
-  expandAllMessages: 'Expand all messages',
-  collapseAllMessages: 'Collapse all messages',
+  orDragTheFileHere: 'or drag the file here', // Dropzone: call to action
+  removeFile: 'Remove file', // Dropzone: remove file button
+  selectYourLanguage: 'Select your language', // Language select field
+  uploadProgress: 'Upload progress', // Dropzone: upload progress
+  uploadYourH5Pfile: 'Upload your H5P file', // Dropzone: upload call to action
+  yourFileIsBeingChecked: 'Your file is being checked', // Dropzone: file is being checked
+  yourFileWasCheckedSuccessfully: 'Your file was checked successfully', // Dropzone: file was checked successfully
+  totalMessages: 'Total messages', // Results: total messages
+  groupBy: 'Group by', // Results: group by
+  download: 'Download', // Results: download
+  expandAllMessages: 'Expand all messages', // MessageAccordion: expand all messages
+  collapseAllMessages: 'Collapse all messages', // MessageAccordion: collapse all messages
 };
 
 /** @constant {object} XHR status codes */
@@ -172,6 +171,20 @@ class Main {
 
       this.#dropzone.setStatus(this.#l10n.yourFileWasCheckedSuccessfully);
 
+      data.messages = data.messages.map((message) => {
+        // TODO: Media should be optional in messages? Add a parameter to the constructor?
+        const path = message.details?.path;
+        if (!path || !path.startsWith('images/')) {
+          return message;
+        }
+
+        if (message.details?.path && message.details?.path.startsWith('images/')) {
+          message.details.base64 = data.raw.media.images[path.split('/').pop()].base64;
+        }
+
+        return message;
+      });
+
       const typeItems = [
         {
           value: data.messages.filter((message) => message.level === 'error').length,
@@ -237,20 +250,6 @@ class Main {
         }
       );
       document.querySelector('.output').append(results.getDOM());
-
-      data.messages = data.messages.map((message) => {
-        // TODO: Media should be optional in messages? Add a parameter to the constructor?
-        const path = message.details?.path;
-        if (!path || !path.startsWith('images/')) {
-          return message;
-        }
-
-        if (message.details?.path && message.details?.path.startsWith('images/')) {
-          message.details.base64 = data.raw.media.images[path.split('/').pop()].base64;
-        }
-
-        return message;
-      });
 
       const messageSets = new MessageSets({
         sets: {
