@@ -190,6 +190,7 @@ class Main {
           value: data.messages.filter((message) => message.level === 'error').length,
           max: data.messages.length,
           label: capitalize(this.#l10n.errors),
+          link: `#${this.#l10n.error}`,
           color: 'var(--color-error)',
           percentage: false
         },
@@ -197,6 +198,7 @@ class Main {
           value: data.messages.filter((message) => message.level === 'warning').length,
           max: data.messages.length,
           label: capitalize(this.#l10n.warnings),
+          link: `#${this.#l10n.warning}`,
           color: 'var(--color-warning)',
           percentage: false
         },
@@ -204,6 +206,7 @@ class Main {
           value: data.messages.filter((message) => message.level === 'info').length,
           max: data.messages.length,
           label: capitalize(this.#l10n.infos),
+          link: `#${this.#l10n.info}`,
           color: 'var(--color-info)',
           percentage: false
         }
@@ -215,6 +218,7 @@ class Main {
           value: data.messages.filter((message) => message.category === category).length,
           max: data.messages.length,
           label: capitalize(this.#l10n[category]),
+          link: `#${category}`,
           color: 'var(--color-primary)',
           percentage: false
         };

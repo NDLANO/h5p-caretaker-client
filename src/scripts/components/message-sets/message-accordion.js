@@ -16,6 +16,11 @@ export class MessageAccordion {
 
     const panels = [];
 
+    const anchor = document.createElement('a');
+    anchor.classList.add('message-accordion-header-anchor');
+    anchor.setAttribute('name', `${params.type}`);
+    this.#dom.append(anchor);
+
     const header = document.createElement('div');
     header.classList.add('message-accordion-header');
     this.#dom.append(header);

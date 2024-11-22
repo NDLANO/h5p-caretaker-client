@@ -104,6 +104,7 @@ export class Results {
         max: item.max,
         percentage: item.percentage,
         label: item.label,
+        link: item.link,
         color: item.color
       });
       progressCirclesDOM.append(progressCircle.getDOM());

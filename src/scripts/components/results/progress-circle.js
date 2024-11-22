@@ -58,7 +58,7 @@ export class ProgressCircle {
 
     this.#label = document.createElement('span');
     this.#label.classList.add('progress-circle-label');
-    this.setLabel(this.#params.label);
+    this.setLabel(this.#params.label, this.#params.link);
     this.#dom.append(this.#label);
   }
 
@@ -111,12 +111,16 @@ export class ProgressCircle {
     }
   }
 
-  setLabel(label) {
+  setLabel(label, link) {
     if (typeof label !== 'string') {
       return;
     }
 
-    this.#label.innerText = label;
+    if (!link) {
+      this.#label.innerText = label;
+    }
+
+    this.#label.innerHTML = `<a href="${link}">${label}</a>`;
   }
 
   setColor(color) {
