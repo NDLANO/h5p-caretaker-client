@@ -5,7 +5,7 @@
   "main": "dist/h5p-caretaker-client.js",
   "style": "dist/h5p-caretaker-client.css",
   "scripts": {
-    "lint": "stylelint './styles/**/*.css' && eslint './scripts/**/*.js'",
+    "lint": "stylelint './src/**/*.css' && eslint './src/**/*.js'",
     "build": "webpack --mode=production",
     "watch": "webpack --mode=development --watch"
   },
