@@ -1,8 +1,13 @@
+/** @constant {string} DEFAULT_SIZE Default size. */
 const DEFAULT_SIZE = '5rem';
+
+/** @constant {string} DEFAULT_STROKE_WIDTH Default stroke width. */
 const DEFAULT_STROKE_WIDTH = '0.5rem';
 
+/** @constant {number} MAX_PERCENTAGE Maximum percentage. */
 const MAX_PERCENTAGE = 100;
 
+/** @constant {object} STATUS_RANGES Status ranges. */
 const STATUS_RANGES = {
   5: 'good',
   10: 'neutral',
@@ -62,10 +67,20 @@ export class ProgressCircle {
     this.#dom.append(this.#label);
   }
 
+  /**
+   * Get the DOM element of the progress circle.
+   * @returns {HTMLElement} DOM element of the progress circle.
+   */
   getDOM() {
     return this.#dom;
   }
 
+  /**
+   * Set value for the progress circle.
+   * @param {number} value Value for the progress circle.
+   * @param {number} [max] Maximum value for the progress circle.
+   * @param {boolean} [percentage] Whether the value is a percentage.
+   */
   setValue(value, max = MAX_PERCENTAGE, percentage = true) {
     if (typeof value !== 'number') {
       return;
@@ -111,18 +126,28 @@ export class ProgressCircle {
     }
   }
 
+  /**
+   * Set label for the progress circle.
+   * @param {string} label Label for the progress circle.
+   * @param {string} [link] Link for the label.
+   */
   setLabel(label, link) {
     if (typeof label !== 'string') {
       return;
     }
 
-    if (!link) {
+    if (typeof link !== 'string') {
       this.#label.innerText = label;
     }
-
-    this.#label.innerHTML = `<a href="${link}">${label}</a>`;
+    else {
+      this.#label.innerHTML = `<a href="${link}">${label}</a>`;
+    }
   }
 
+  /**
+   * Set color for the progress circle.
+   * @param {string} color Color for the progress circle.
+   */
   setColor(color) {
     if (typeof color !== 'string') {
       return;
