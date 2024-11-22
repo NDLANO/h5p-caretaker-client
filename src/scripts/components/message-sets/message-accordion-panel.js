@@ -55,7 +55,7 @@ export class MessageAccordionPanel {
     this.#contentGrid.classList.add('message-accordion-panel-content-grid');
     this.#contentGrid.setAttribute('role', 'region');
     this.#contentGrid.setAttribute('aria-labelledby', headerId);
-    this.#contentGrid.setAttribute('aria-hidden', 'true');
+    this.#contentGrid.setAttribute('hidden', '');
 
     const contentWrapper = document.createElement('div');
     contentWrapper.classList.add('message-accordion-panel-content-wrapper');
@@ -110,7 +110,7 @@ export class MessageAccordionPanel {
    * Expand the panel.
    */
   expand() {
-    this.#contentGrid.setAttribute('aria-hidden', 'false');
+    this.#contentGrid.removeAttribute('hidden');
     this.#button.setAttribute('aria-expanded', 'true');
 
     this.#callbacks.expandedStateChanged(true);
@@ -120,7 +120,7 @@ export class MessageAccordionPanel {
    * Collapse the panel.
    */
   collapse() {
-    this.#contentGrid.setAttribute('aria-hidden', 'true');
+    this.#contentGrid.setAttribute('hidden', '');
     this.#button.setAttribute('aria-expanded', 'false');
 
     this.#callbacks.expandedStateChanged(false);

@@ -1,3 +1,6 @@
+/*!************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/fonts.css ***!
+  \************************************************************************/
 /*
 Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins)
 
@@ -117,6 +120,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+/*
+ * Use
+ * https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=close,collapse_all,description,download,expand_all,keyboard_arrow_down,keyboard_arrow_up,upload
+ * to fetch only the icons you need - asjust the URL accordingly. Icon names must be separated by commas and sorted alphabetically.
+ */
+
 @font-face {
   font-family: 'Material Symbols Outlined';
   font-style: normal;
@@ -124,6 +134,9 @@ limitations under the License.
   src: url(d7891cbba4368b35959c.woff2) format('woff2');
 }
 
+/*!*************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/header.css ***!
+  \*************************************************************************/
 .header {
   align-items: center;
   background-color: var(--color-background-light);
@@ -153,6 +166,9 @@ limitations under the License.
   }
 }
 
+/*!***************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/dropzone/progressbar.css ***!
+  \***************************************************************************************************/
 .progressbar-wrapper {
   align-items: center;
   display: flex;
@@ -179,6 +195,9 @@ limitations under the License.
   }
 }
 
+/*!************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/dropzone/dropzone.css ***!
+  \************************************************************************************************/
 .dropzone {
   --remove-button-size: 2rem;
   --file-info-padding: 0.75rem;
@@ -362,6 +381,9 @@ limitations under the License.
   }
 }
 
+/*!*********************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/message-sets/expand-button.css ***!
+  \*********************************************************************************************************/
 .offsite {
   left: -9999px;
   opacity: 0;
@@ -404,6 +426,9 @@ limitations under the License.
   }
 }
 
+/*!***********************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/message-sets/message-content.css ***!
+  \***********************************************************************************************************/
 .message-content {
 
   .message-content-category-type {
@@ -435,6 +460,9 @@ limitations under the License.
   }
 }
 
+/*!*******************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/message-sets/message-accordion-panel.css ***!
+  \*******************************************************************************************************************/
 .message-accordion-panel {
   --header-gap: 0.5rem;
   --header-icon-width: 1rem;
@@ -519,14 +547,15 @@ limitations under the License.
 
   .message-accordion-panel-content-grid {
     display: grid;
-    grid-template-rows: 0fr;
-    opacity: 0;
+    grid-template-rows: 1fr;
+    opacity: 1;
     padding-left: calc(var(--header-icon-width) + var(--header-gap));
     transition: grid-template-rows, opacity var(--transition-time);
 
-    &[aria-hidden="false"] {
-      grid-template-rows: 1fr;
-      opacity: 1;
+    &[hidden] {
+      display: none;
+      grid-template-rows: 0fr;
+      opacity: 0;
     }
 
     .message-accordion-panel-content-wrapper {
@@ -536,6 +565,9 @@ limitations under the License.
   }
 }
 
+/*!*************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/message-sets/message-accordion.css ***!
+  \*************************************************************************************************************/
 .message-accordion {
   margin-top: 2rem;
 
@@ -570,14 +602,23 @@ limitations under the License.
   }
 }
 
+/*!*******************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/message-sets/message-set.css ***!
+  \*******************************************************************************************************/
 .message-set {
   &.display-none {
     display: none;
   }
 }
 
+/*!********************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/message-sets/message-sets.css ***!
+  \********************************************************************************************************/
 
 
+/*!******************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/results/progress-circle.css ***!
+  \******************************************************************************************************/
 .progress-circle-wrapper {
   display: grid;
   gap: 0.5rem;
@@ -639,6 +680,9 @@ limitations under the License.
   }
 }
 
+/*!**********************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/results/results.css ***!
+  \**********************************************************************************************/
 .results {
   margin-top: 2rem;
 
@@ -762,6 +806,9 @@ limitations under the License.
   }
 }
 
+/*!***********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/page.css ***!
+  \***********************************************************************/
 .page {
   margin-inline: auto;
   max-width: 50%;
@@ -777,6 +824,9 @@ limitations under the License.
   }
 }
 
+/*!***********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/main.css ***!
+  \***********************************************************************/
 html{
   font-size: 100%;
 }

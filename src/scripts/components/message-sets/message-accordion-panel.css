@@ -84,14 +84,15 @@
 
   .message-accordion-panel-content-grid {
     display: grid;
-    grid-template-rows: 0fr;
-    opacity: 0;
+    grid-template-rows: 1fr;
+    opacity: 1;
     padding-left: calc(var(--header-icon-width) + var(--header-gap));
     transition: grid-template-rows, opacity var(--transition-time);
 
-    &[aria-hidden="false"] {
-      grid-template-rows: 1fr;
-      opacity: 1;
+    &[hidden] {
+      display: none;
+      grid-template-rows: 0fr;
+      opacity: 0;
     }
 
     .message-accordion-panel-content-wrapper {
