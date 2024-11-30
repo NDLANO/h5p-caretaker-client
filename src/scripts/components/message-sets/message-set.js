@@ -8,13 +8,14 @@ export class MessageSet {
     this.#dom.classList.add('message-set');
 
     params.sections.forEach((section) => {
-      const messages = params.messages.filter((message) => message[params.id] === section);
+      const messages = params.messages.filter((message) => message[params.id] === section.id);
       if (!messages.length) {
         return;
       }
 
       const accordion = new MessageAccordion({
-        type: section,
+        type: section.id,
+        header: section.header,
         messages: messages,
         translations: params.translations,
         l10n: {

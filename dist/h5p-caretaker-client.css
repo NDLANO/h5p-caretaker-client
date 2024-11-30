@@ -710,7 +710,7 @@ limitations under the License.
       justify-content: space-between;
       padding: 0.5rem 1rem;
 
-      .select-grouping {
+      .select-results-type {
         background-color: var(--color-background-light);
         border-color: var(--color-background-separator);
         border-width: 1px;

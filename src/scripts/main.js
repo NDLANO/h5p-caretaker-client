@@ -20,6 +20,9 @@ const DEFAULT_L10N = {
   yourFileIsBeingChecked: 'Your file is being checked', // Dropzone: file is being checked
   yourFileWasCheckedSuccessfully: 'Your file was checked successfully', // Dropzone: file was checked successfully
   totalMessages: 'Total messages', // Results: total messages
+  totalIssues: 'Total issues', // Results: total issues
+  issues: 'issues', // Results: issues
+  filterBy: 'Filter by', // Results: group by
   groupBy: 'Group by', // Results: group by
   download: 'Download', // Results: download
   expandAllMessages: 'Expand all messages', // MessageAccordion: expand all messages
@@ -172,6 +175,9 @@ class Main {
       this.#dropzone.setStatus(this.#l10n.yourFileWasCheckedSuccessfully);
 
       data.messages = data.messages.map((message) => {
+        // Custom client requirement to have this property
+        message.issues = (message.level === 'error' || message.level === 'warning') ? 'issues' : false;
+
         // TODO: Media should be optional in messages? Add a parameter to the constructor?
         const path = message.details?.path;
         if (!path || !path.startsWith('images/')) {
@@ -224,18 +230,36 @@ class Main {
         };
       });
 
+      const issueItems = [{
+        value: data.messages.filter((message) => message.issues).length,
+        max: data.messages.length,
+        label: capitalize(this.#l10n.issues),
+        link: `#${this.#l10n.issues}`,
+        color: 'status',
+        percentage: false
+      }];
+
       const resultsData = {
+        issues: {
+          label: this.#l10n.issues,
+          header: this.#l10n.totalMessages,
+          value: data.messages.length,
+          items: issueItems,
+          type: 'filter'
+        },
         level: {
           label: this.#l10n.level,
           header:this.#l10n.totalMessages,
           value: data.messages.length,
-          items: typeItems
+          items: typeItems,
+          type: 'group'
         },
         category: {
           label: this.#l10n.category,
           header: this.#l10n.totalMessages,
           value: data.messages.length,
-          items: categoryItems
+          items: categoryItems,
+          type: 'group'
         }
       };
 
@@ -243,12 +267,13 @@ class Main {
         {
           results: resultsData,
           l10n: {
+            filterBy: this.#l10n.filterBy,
             groupBy: this.#l10n.groupBy,
             download: this.#l10n.download
           }
         },
         {
-          onGroupingChanged: (id) => {
+          onResultsTypeChanged: (id) => {
             messageSets.show(id);
           }
         }
@@ -257,6 +282,7 @@ class Main {
 
       const messageSets = new MessageSets({
         sets: {
+          issues: [{ id: 'issues', header: this.#l10n.issues }],
           level: ['error', 'warning', 'info'],
           category: categoryNames
         },

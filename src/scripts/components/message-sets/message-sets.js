@@ -11,6 +11,23 @@ export class MessageSets {
 
     this.#messageSets = {};
 
+    for (const id in params.sets) {
+      params.sets[id] = params.sets[id]
+        .filter((section) => typeof section === 'string' || typeof section?.id === 'string')
+        .map((section) => {
+          if (typeof section === 'string') {
+            section = { id: section };
+          }
+          section.header = section.header ?? params.translations[section.id];
+
+          return section;
+        });
+
+      if (!params.sets[id].length) {
+        delete params.sets[id];
+      }
+    }
+
     if (Object.keys(params.sets).length === 0) {
       return;
     }

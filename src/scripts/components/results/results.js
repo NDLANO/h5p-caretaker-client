@@ -16,11 +16,12 @@ export class Results {
    * @param {object} params.results Results.
    * @param {object} params.l10n Localization.
    * @param {object} [callbacks] Callbacks.
+   * @param {function} [callbacks.onResultsTypeChanged] Callback for when the results type is changed.
    */
   constructor(params = {}, callbacks = {}) {
     this.#params = params;
     this.#callbacks = callbacks;
-    this.#callbacks.onGroupingChanged = this.#callbacks.onGroupingChanged ?? (() => {});
+    this.#callbacks.onResultsTypeChanged = this.#callbacks.onResultsTypeChanged ?? (() => {});
 
     this.#resultsRows = this.#buildResultsRows(this.#params.results);
 
@@ -36,7 +37,7 @@ export class Results {
     this.#resultsBox.classList.add('results-box');
     this.#dom.append(this.#resultsBox);
 
-    this.#resultsBox.append(this.#resultsRows.level);
+    this.#resultsBox.append(this.#resultsRows[Object.keys(this.#params.results)[0]]);
     this.#resultsBox.append(this.#buildNavigationRow());
   }
 
@@ -121,22 +122,31 @@ export class Results {
     const navigationRow = document.createElement('div');
     navigationRow.classList.add('navigation-row');
 
-    const selectGrouping = document.createElement('select');
-    selectGrouping.classList.add('select-grouping');
-    selectGrouping.addEventListener('change', (event) => {
-      this.#handleGroupingChanged(event);
+    const selectResultsType = document.createElement('select');
+    selectResultsType.classList.add('select-results-type');
+    selectResultsType.addEventListener('change', (event) => {
+      this.#handleResultsTypeChanged(event);
     });
-    navigationRow.append(selectGrouping);
+    navigationRow.append(selectResultsType);
 
     for (const key in this.#params.results) {
       const option = document.createElement('option');
       option.value = key;
 
-      const groupBy = this.#params.l10n.groupBy;
+      const resultsType = this.#params.results[key].type;
       const label = capitalize(this.#params.results[key].label ?? key);
-      option.textContent = `${groupBy}: ${label}`;
 
-      selectGrouping.append(option);
+      if (resultsType === 'filter') {
+        option.textContent = `${this.#params.l10n.filterBy}: ${label}`;
+      }
+      else if (resultsType === 'group') {
+        option.textContent = `${this.#params.l10n.groupBy}: ${label}`;
+      }
+      else {
+        option.textContent = label;
+      }
+
+      selectResultsType.append(option);
     }
 
     const buttonDownload = document.createElement('button');
@@ -147,10 +157,14 @@ export class Results {
     return navigationRow;
   }
 
-  #handleGroupingChanged(event) {
+  /**
+   * Handle results type changed.
+   * @param {Event} event Event.
+   */
+  #handleResultsTypeChanged(event) {
     this.#resultsBox.querySelector('.results-row').remove();
     this.#resultsBox.prepend(this.#resultsRows[event.target.value]);
 
-    this.#callbacks.onGroupingChanged(event.target.value);
+    this.#callbacks.onResultsTypeChanged(event.target.value);
   }
 }

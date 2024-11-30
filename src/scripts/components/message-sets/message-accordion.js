@@ -27,7 +27,8 @@ export class MessageAccordion {
 
     const text = document.createElement('p');
     text.classList.add('message-accordion-header-text');
-    text.innerText = params.translations[`${params.type}`];
+    text.innerText = params.header;
+
     header.append(text);
 
     const expandButton = new ExpandButton(
