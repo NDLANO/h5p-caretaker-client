@@ -17,11 +17,13 @@ export class Results {
    * @param {object} params.l10n Localization.
    * @param {object} [callbacks] Callbacks.
    * @param {function} [callbacks.onResultsTypeChanged] Callback for when the results type is changed.
+   * @param {function} [callbacks.onDownload] Callback for when the download button is clicked.
    */
   constructor(params = {}, callbacks = {}) {
     this.#params = params;
     this.#callbacks = callbacks;
     this.#callbacks.onResultsTypeChanged = this.#callbacks.onResultsTypeChanged ?? (() => {});
+    this.#callbacks.onDownload = this.#callbacks.onDownload ?? (() => {});
 
     this.#resultsRows = this.#buildResultsRows(this.#params.results);
 
@@ -152,6 +154,9 @@ export class Results {
     const buttonDownload = document.createElement('button');
     buttonDownload.classList.add('button-download');
     buttonDownload.textContent = this.#params.l10n.download;
+    buttonDownload.addEventListener('click', () => {
+      this.#callbacks.onDownload();
+    });
     navigationRow.append(buttonDownload);
 
     return navigationRow;

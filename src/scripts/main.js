@@ -2,6 +2,7 @@ import { capitalize } from '@services/util.js';
 import { Dropzone } from '@components/dropzone/dropzone.js';
 import { Results } from '@components/results/results.js';
 import { MessageSets } from '@components/message-sets/message-sets.js';
+import { Report } from '@models/report.js';
 import '@styles/main.css';
 
 /** @constant {string} DEFAULT_UPLOAD_ENDPOINT Default upload endpoint. */
@@ -26,6 +27,7 @@ const DEFAULT_L10N = {
   download: 'Download', // Results: download
   expandAllMessages: 'Expand all messages', // MessageAccordion: expand all messages
   collapseAllMessages: 'Collapse all messages', // MessageAccordion: collapse all messages
+  reportTitleTemplate: 'H5P Caretaker report for @title', // Report: report title template
 };
 
 /** @constant {object} XHR status codes */
@@ -274,6 +276,18 @@ class Main {
         {
           onResultsTypeChanged: (id) => {
             messageSets.show(id);
+          },
+          onDownload: () => {
+            const title = this.#l10n.reportTitleTemplate
+              .replace('@title', `${data.raw.h5pJson.title} (${data.raw.h5pJson.mainLibrary})`);
+
+            const report = new Report({
+              title: title,
+              messages: data.messages,
+              l10n: this.#l10n,
+              translations: data.client.translations
+            });
+            report.download();
           }
         }
       );
