@@ -20,7 +20,6 @@ const DEFAULT_L10N = {
   yourFileIsBeingChecked: 'Your file is being checked', // Dropzone: file is being checked
   yourFileWasCheckedSuccessfully: 'Your file was checked successfully', // Dropzone: file was checked successfully
   totalMessages: 'Total messages', // Results: total messages
-  totalIssues: 'Total issues', // Results: total issues
   issues: 'issues', // Results: issues
   filterBy: 'Filter by', // Results: group by
   groupBy: 'Group by', // Results: group by
