@@ -11,6 +11,9 @@ export class MessageContent {
     this.#dom = document.createElement('div');
     this.#dom.classList.add('message-content');
 
+    // Prevent changing the original object
+    params = JSON.parse(JSON.stringify(params));
+
     if (params.message.category) {
       const categoryItem = document.createElement('div');
       categoryItem.classList.add('message-content-item');
