@@ -114,6 +114,7 @@
 
       .file-name {
         font-weight: bold;
+        overflow-wrap: anywhere;
         text-align: left;
       }
 
@@ -180,5 +181,11 @@
 
   100% {
     opacity: 1;
+  }
+}
+
+@container body (width <= 480px) {
+  .dropzone {
+    padding: 1rem;
   }
 }

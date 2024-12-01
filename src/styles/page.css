@@ -16,3 +16,9 @@
     line-height: 1.5rem;
   }
 }
+
+@container body (width <= 768px) {
+  .page {
+    max-width: 80%;
+  }
+}

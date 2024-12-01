@@ -1,3 +1,6 @@
+/*!************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/fonts.css ***!
+  \************************************************************************/
 /*
 Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins)
 
@@ -131,6 +134,9 @@ limitations under the License.
   src: url(d7891cbba4368b35959c.woff2) format('woff2');
 }
 
+/*!*************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/header.css ***!
+  \*************************************************************************/
 .header {
   align-items: center;
   background-color: var(--color-background-light);
@@ -160,6 +166,9 @@ limitations under the License.
   }
 }
 
+/*!***************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/dropzone/progressbar.css ***!
+  \***************************************************************************************************/
 .progressbar-wrapper {
   align-items: center;
   display: flex;
@@ -186,6 +195,9 @@ limitations under the License.
   }
 }
 
+/*!************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/dropzone/dropzone.css ***!
+  \************************************************************************************************/
 .dropzone {
   --remove-button-size: 2rem;
   --file-info-padding: 0.75rem;
@@ -300,6 +312,7 @@ limitations under the License.
 
       .file-name {
         font-weight: bold;
+        overflow-wrap: anywhere;
         text-align: left;
       }
 
@@ -369,6 +382,15 @@ limitations under the License.
   }
 }
 
+@container body (width <= 480px) {
+  .dropzone {
+    padding: 1rem;
+  }
+}
+
+/*!*********************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/message-sets/expand-button.css ***!
+  \*********************************************************************************************************/
 .offsite {
   left: -9999px;
   opacity: 0;
@@ -411,6 +433,9 @@ limitations under the License.
   }
 }
 
+/*!***********************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/message-sets/message-content.css ***!
+  \***********************************************************************************************************/
 .message-content {
 
   .message-content-category-type {
@@ -442,6 +467,9 @@ limitations under the License.
   }
 }
 
+/*!*******************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/message-sets/message-accordion-panel.css ***!
+  \*******************************************************************************************************************/
 .message-accordion-panel {
   --header-gap: 0.5rem;
   --header-icon-width: 1rem;
@@ -544,6 +572,9 @@ limitations under the License.
   }
 }
 
+/*!*************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/message-sets/message-accordion.css ***!
+  \*************************************************************************************************************/
 .message-accordion {
   margin-top: 2rem;
 
@@ -551,6 +582,7 @@ limitations under the License.
     align-items: flex-end;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin-bottom: 0.5rem;
 
@@ -578,14 +610,23 @@ limitations under the License.
   }
 }
 
+/*!*******************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/message-sets/message-set.css ***!
+  \*******************************************************************************************************/
 .message-set {
   &.display-none {
     display: none;
   }
 }
 
+/*!********************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/message-sets/message-sets.css ***!
+  \********************************************************************************************************/
 
 
+/*!******************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/results/progress-circle.css ***!
+  \******************************************************************************************************/
 .progress-circle-wrapper {
   display: grid;
   gap: 0.5rem;
@@ -647,6 +688,9 @@ limitations under the License.
   }
 }
 
+/*!**********************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/scripts/components/results/results.css ***!
+  \**********************************************************************************************/
 .results {
   margin-top: 2rem;
 
@@ -770,6 +814,9 @@ limitations under the License.
   }
 }
 
+/*!***********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/page.css ***!
+  \***********************************************************************/
 .page {
   margin-inline: auto;
   max-width: 50%;
@@ -785,6 +832,15 @@ limitations under the License.
   }
 }
 
+@container body (width <= 768px) {
+  .page {
+    max-width: 80%;
+  }
+}
+
+/*!***********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/main.css ***!
+  \***********************************************************************/
 html{
   font-size: 100%;
 }
@@ -836,6 +892,8 @@ html{
 
   background-color: var(--color-background-dark);
   color: var(--color-text);
+  container-name: body;
+  container-type: size;
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;

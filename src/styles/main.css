@@ -53,6 +53,8 @@ html{
 
   background-color: var(--color-background-dark);
   color: var(--color-text);
+  container-name: body;
+  container-type: size;
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
