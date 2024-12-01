@@ -115,6 +115,10 @@ export class Report {
       let details = `#### ${capitalize(this.#translations.details)}\n`;
 
       for (const key in message.details) {
+        if (key === 'base64') {
+          continue; // Don't show base64 data in markdown.
+        }
+
         if (message.type === 'libreText' && key === 'description') {
           details = `${details}* ${this.#translations[key]}: ${this.#libreTextToPlain(message.details[key])}\n`;
           continue;
