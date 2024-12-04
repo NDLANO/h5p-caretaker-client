@@ -4,6 +4,7 @@
   "description": "JavaScript reference client for using H5P Caretaker",
   "main": "dist/h5p-caretaker-client.js",
   "style": "dist/h5p-caretaker-client.css",
+  "files": [ "dist/" ],
   "scripts": {
     "lint": "stylelint './src/**/*.css' && eslint './src/**/*.js'",
     "build": "webpack --mode=production",
