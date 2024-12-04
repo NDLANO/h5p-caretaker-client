@@ -24,7 +24,7 @@
 
     .message-accordion-panel-icon {
       position: relative;
-      width: --var(header-icon-width);
+      width: var(--header-icon-width);
 
       &::before {
         content: " ";
