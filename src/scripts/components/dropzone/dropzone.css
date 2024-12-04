@@ -186,6 +186,7 @@
 
 @container body (width <= 480px) {
   .dropzone {
-    padding: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
