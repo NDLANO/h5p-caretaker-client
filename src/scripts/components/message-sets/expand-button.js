@@ -126,4 +126,18 @@ export class ExpandButton {
       offsiteDOM?.remove();
     });
   };
+
+  /**
+   * Show.
+   */
+  show() {
+    this.#dom.classList.remove('display-none');
+  }
+
+  /**
+   * Hide.
+   */
+  hide() {
+    this.#dom.classList.add('display-none');
+  }
 }

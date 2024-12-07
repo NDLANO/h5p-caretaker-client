@@ -4,6 +4,9 @@ import { MessageAccordionPanel } from './message-accordion-panel.js';
 export class MessageAccordion {
 
   #dom;
+  #expandButton;
+  #allFiltered;
+  #panels = [];
 
   /**
    * @class
@@ -13,8 +16,6 @@ export class MessageAccordion {
 
     this.#dom = document.createElement('div');
     this.#dom.classList.add('message-accordion');
-
-    const panels = [];
 
     const anchor = document.createElement('a');
     anchor.classList.add('message-accordion-header-anchor');
@@ -31,7 +32,7 @@ export class MessageAccordion {
 
     header.append(text);
 
-    const expandButton = new ExpandButton(
+    this.#expandButton = new ExpandButton(
       {
         l10n: {
           expandAllMessages: params.l10n.expandAllMessages,
@@ -40,14 +41,14 @@ export class MessageAccordion {
       },
       {
         expandedStateChanged: (state) => {
-          panels.forEach((panel) => {
+          this.#panels.forEach((panel) => {
             panel.toggle(state);
           });
         }
       }
     );
-    expandButton.setWidth();
-    header.append(expandButton.getDOM());
+    this.#expandButton.setWidth();
+    header.append(this.#expandButton.getDOM());
 
     const panelsDOM = document.createElement('ul');
     panelsDOM.classList.add('message-accordion-panels-list');
@@ -64,20 +65,26 @@ export class MessageAccordion {
         },
         {
           expandedStateChanged: (state) => {
-            if (panels.every((panel) => !panel.isExpanded())) {
-              expandButton.toggle(false, true);
+            if (this.#panels.every((panel) => !panel.isExpanded())) {
+              this.#expandButton.toggle(false, true);
             }
             else {
-              expandButton.toggle(true, true);
+              this.#expandButton.toggle(true, true);
             }
           }
         }
       );
       listItem.append(panel.getDOM());
-      panels.push(panel);
+      this.#panels.push(panel);
 
       panelsDOM.append(listItem);
     });
+
+    this.#allFiltered = document.createElement('div');
+    this.#allFiltered.classList.add('message-accordion-all-filtered');
+    this.#allFiltered.classList.add('display-none');
+    this.#allFiltered.innerHTML = params.l10n.allFilteredOut;
+    this.#dom.append(this.#allFiltered);
   }
 
   /**
@@ -86,5 +93,20 @@ export class MessageAccordion {
    */
   getDOM() {
     return this.#dom;
+  }
+
+  filter(subcontentIds) {
+    this.#panels.forEach((panel) => {
+      panel.filter(subcontentIds);
+    });
+
+    if (this.#panels.some((panel) => panel.isVisible())) {
+      this.#expandButton.show();
+      this.#allFiltered.classList.add('display-none');
+    }
+    else {
+      this.#expandButton.hide();
+      this.#allFiltered.classList.remove('display-none');
+    }
   }
 }

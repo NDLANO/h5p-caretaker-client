@@ -1,7 +1,7 @@
 @import url("./progress-circle.css");
 
 .results {
-  margin-top: 2rem;
+  margin-top: 1rem;
 
   .results-header {
     font-size: var(--font-size-large);

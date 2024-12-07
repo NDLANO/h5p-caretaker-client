@@ -8,7 +8,6 @@
   flex-wrap: wrap;
   font-family: var(--font-buttons);
   justify-content: space-between;
-  margin-bottom: 2rem;
   padding: 0.5rem 1.5rem;
 
   .title {

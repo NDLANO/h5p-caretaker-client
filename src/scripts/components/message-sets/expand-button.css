@@ -21,6 +21,10 @@
   transition: background-color 0.3s;
   user-select: none;
 
+  &.display-none {
+    display: none;
+  }
+
   &::before {
     font-family: var(--font-material-icons);
     font-weight: normal;

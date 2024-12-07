@@ -6,6 +6,8 @@ export class MessageAccordionPanel {
   #dom;
   #contentGrid;
   #button;
+  #content;
+  #isVisibleState = true;
   #callbacks;
 
   /**
@@ -59,11 +61,11 @@ export class MessageAccordionPanel {
 
     const contentWrapper = document.createElement('div');
     contentWrapper.classList.add('message-accordion-panel-content-wrapper');
-    const content = new MessageContent({
+    this.#content = new MessageContent({
       message: params.message,
       translations: params.translations
     });
-    contentWrapper.append(content.getDOM());
+    contentWrapper.append(this.#content.getDOM());
     this.#contentGrid.append(contentWrapper);
 
     this.#dom.append(this.#contentGrid);
@@ -79,6 +81,14 @@ export class MessageAccordionPanel {
    */
   getDOM() {
     return this.#dom;
+  }
+
+  /**
+   * Check if the panel is visible.
+   * @returns {boolean} True if panel is visible, else false.
+   */
+  isVisible() {
+    return this.#isVisibleState;
   }
 
   /**
@@ -104,6 +114,32 @@ export class MessageAccordionPanel {
     else {
       this.collapse();
     }
+  }
+
+  filter(subContentIds) {
+    if (!subContentIds || subContentIds.includes(this.#content.getSubContentId())) {
+      this.show();
+    }
+    else {
+      this.collapse();
+      this.hide();
+    }
+  }
+
+  /**
+   * Show.
+   */
+  show() {
+    this.#dom.classList.remove('display-none');
+    this.#isVisibleState = true;
+  }
+
+  /**
+   * Hide.
+   */
+  hide() {
+    this.#dom.classList.add('display-none');
+    this.#isVisibleState = false;
   }
 
   /**

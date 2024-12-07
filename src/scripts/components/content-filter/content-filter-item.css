@@ -1,0 +1,85 @@
+.content-filter-item {
+  box-sizing: border-box;
+  display: block;
+
+  &[aria-expanded="false"] {
+    & > .content-filter-item-wrapper > .content-filter-group {
+      display: none;
+    }
+  }
+
+  .content-filter-item-wrapper {
+
+    .content-filter-item-panel {
+      align-items: center;
+      background-color: var(--color-background-light);
+      display: grid;
+      gap: 0.5rem;
+      grid-template-columns: 1.5rem 1.5rem 1fr;
+      padding: 0.5rem;
+      user-select: none;
+
+      &.expandable {
+        cursor: pointer;
+      }
+
+      &.border-top {
+        border-top: 1px solid var(--color-background-separator);
+      }
+
+      &.border-bottom {
+        border-bottom: 1px solid var(--color-background-separator);
+      }
+
+      &.border-left {
+        border-left: 1px solid var(--color-background-separator);
+      }
+
+      .content-filter-item-expander {
+        background: none;
+        border: none;
+        box-sizing: border-box;
+        height: 1.5rem;
+        position: relative;
+        width: 1.5rem;
+
+        &::before {
+          content: ' ';
+          font-family: var(--font-material-icons);
+          font-size: var(--font-size-larger);
+          font-weight: bold;
+          left: 50%;
+          position: absolute;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+
+      .content-filter-item-checkbox {
+        accent-color: var(--color-main);
+        cursor: pointer;
+        height: 1rem;
+        width: 1rem;
+      }
+
+      .content-filter-item-label {
+        font-size: var(--font-size-small);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  &[aria-expanded="false"] {
+    & > .content-filter-item-wrapper > .content-filter-item-panel > .content-filter-item-expander::before {
+      content: var(--icon-material-icons-keyboard-arrow-right);
+    }
+  }
+
+  &[aria-expanded="true"] {
+    & > .content-filter-item-wrapper > .content-filter-item-panel > .content-filter-item-expander::before {
+      content: var(--icon-material-icons-keyboard-arrow-down);
+    }
+  }
+}

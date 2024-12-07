@@ -1,5 +1,6 @@
 export class MessageContent {
   #dom;
+  #subContentId;
 
   /**
    * @class
@@ -10,6 +11,8 @@ export class MessageContent {
   constructor(params = {}) {
     this.#dom = document.createElement('div');
     this.#dom.classList.add('message-content');
+
+    this.#subContentId = params.message.subContentId;
 
     // Prevent changing the original object
     params = JSON.parse(JSON.stringify(params));
@@ -136,6 +139,14 @@ export class MessageContent {
    */
   getDOM() {
     return this.#dom;
+  }
+
+  /**
+   * Get subContentId.
+   * @returns {string|undefined} Subcontent id.
+   */
+  getSubContentId() {
+    return this.#subContentId;
   }
 
   /**

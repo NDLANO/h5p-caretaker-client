@@ -3,8 +3,27 @@
 @import url("@components/results/results.css");
 
 .page {
-  margin-inline: auto;
-  max-width: 50%;
+
+  .centered-row {
+    margin-inline: auto;
+    max-width: 50%;
+  }
+
+  .block {
+    padding: 1rem;
+
+    &:not(:has(.block-visible)) {
+      display: none;
+    }
+  }
+
+  .background-light {
+    background-color: var(--color-background-light);
+  }
+
+  .background-dark {
+    background-color: var(--color-background-dark);
+  }
 
   h2.title {
     font-size: var(--font-size-larger);
@@ -18,7 +37,7 @@
 }
 
 @container body (width <= 768px) {
-  .page {
+  .page .centered-row {
     max-width: 80%;
   }
 }

@@ -40,7 +40,8 @@ export class MessageSets {
         translations: params.translations,
         l10n: {
           expandAllMessages: params.l10n.expandAllMessages,
-          collapseAllMessages: params.l10n.collapseAllMessages
+          collapseAllMessages: params.l10n.collapseAllMessages,
+          allFilteredOut: params.l10n.allFilteredOut
         }
       });
       this.#dom.append(this.#messageSets[id].getDOM());
@@ -73,6 +74,16 @@ export class MessageSets {
       else {
         this.#messageSets[key].hide();
       }
+    }
+  }
+
+  /**
+   * Filter for subcontent ids.
+   * @param {string[]} subcontentIds Massages to filter for by subcontent id.
+   */
+  filter(subcontentIds) {
+    for (const key in this.#messageSets) {
+      this.#messageSets[key].filter(subcontentIds);
     }
   }
 }

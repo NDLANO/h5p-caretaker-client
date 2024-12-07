@@ -1,4 +1,4 @@
-import { ProgressCircle } from './progress-circle.js';
+import { ResultsRow } from './results-row.js';
 import { capitalize } from '@services/util.js';
 
 export class Results {
@@ -29,17 +29,18 @@ export class Results {
 
     this.#dom = document.createElement('div');
     this.#dom.classList.add('results');
+    this.#dom.classList.add('block-visible');
 
     const resultsHeader = document.createElement('div');
     resultsHeader.classList.add('results-header');
-    resultsHeader.textContent = 'Results';
+    resultsHeader.textContent = params.l10n.results;
     this.#dom.append(resultsHeader);
 
     this.#resultsBox = document.createElement('div');
     this.#resultsBox.classList.add('results-box');
     this.#dom.append(this.#resultsBox);
 
-    this.#resultsBox.append(this.#resultsRows[Object.keys(this.#params.results)[0]]);
+    this.#resultsBox.append(this.#resultsRows[Object.keys(this.#params.results)[0]].getDOM());
     this.#resultsBox.append(this.#buildNavigationRow());
   }
 
@@ -51,6 +52,15 @@ export class Results {
     return this.#dom;
   }
 
+  update(results) {
+    for (const key in results) {
+      this.#resultsRows[key].update({
+        messageCount: results[key].value,
+        items: results[key].items
+      });
+    }
+  }
+
   /**
    * Build the results rows.
    * @param {object} results Results.
@@ -60,60 +70,10 @@ export class Results {
     const resultsRows = {};
 
     for (const key in results) {
-      resultsRows[key] = this.#buildResultsRow(results[key]);
+      resultsRows[key] = new ResultsRow(results[key]);
     }
 
     return resultsRows;
-  }
-
-  /**
-   * Build a results row.
-   * @param {object} params Parameters for the results row.
-   * @param {string} params.header Header.
-   * @param {string} params.value Value.
-   * @param {object[]} params.items Items.
-   * @param {number} params.items[].value Value.
-   * @param {number} params.items[].max Max value.
-   * @param {number} params.items[].percentage Percentage.
-   * @param {string} params.items[].label Label.
-   * @param {string} params.items[].color Color.
-   * @returns {HTMLElement} Results row.
-   */
-  #buildResultsRow(params = {}) {
-    const resultsRow = document.createElement('div');
-    resultsRow.classList.add('results-row');
-
-    const overview = document.createElement('div');
-    overview.classList.add('overview');
-    resultsRow.append(overview);
-
-    const overviewHeader = document.createElement('div');
-    overviewHeader.classList.add('overview-header');
-    overviewHeader.textContent = params.header;
-    overview.append(overviewHeader);
-
-    const overviewValue = document.createElement('div');
-    overviewValue.classList.add('overview-value');
-    overviewValue.textContent = params.value;
-    overview.append(overviewValue);
-
-    const progressCirclesDOM = document.createElement('div');
-    progressCirclesDOM.classList.add('progress-circles');
-    resultsRow.append(progressCirclesDOM);
-
-    params.items.forEach((item) => {
-      const progressCircle = new ProgressCircle({
-        value: item.value,
-        max: item.max,
-        percentage: item.percentage,
-        label: item.label,
-        link: item.link,
-        color: item.color
-      });
-      progressCirclesDOM.append(progressCircle.getDOM());
-    });
-
-    return resultsRow;
   }
 
   /**
@@ -168,7 +128,7 @@ export class Results {
    */
   #handleResultsTypeChanged(event) {
     this.#resultsBox.querySelector('.results-row').remove();
-    this.#resultsBox.prepend(this.#resultsRows[event.target.value]);
+    this.#resultsBox.prepend(this.#resultsRows[event.target.value].getDOM());
 
     this.#callbacks.onResultsTypeChanged(event.target.value);
   }
