@@ -17,6 +17,7 @@ export class Dropzone {
 
   // DOM elements
   #dropzone;
+  #status;
   #uploadWrapper;
   #fileInput;
   #fileInfo;
@@ -125,10 +126,10 @@ export class Dropzone {
     this.hideProgress();
     this.#dropzone.append(this.#progressbar.getDOM());
 
-    this.status = document.createElement('p');
-    this.status.classList.add('status');
-    this.status.innerText = this.#params.l10n.orDragTheFileHere;
-    this.#dropzone.append(this.status);
+    this.#status = document.createElement('p');
+    this.#status.classList.add('status');
+    this.#status.innerText = this.#params.l10n.orDragTheFileHere;
+    this.#dropzone.append(this.#status);
   }
 
   /**
@@ -187,10 +188,10 @@ export class Dropzone {
    * @param {string} className Class name for the status message.
    */
   setStatus(status = '', className = '') {
-    this.status.classList.toggle('display-none', !status);
-    this.status.classList.toggle('error', className === 'error');
-    this.status.classList.toggle('pulse', className === 'pulse');
-    this.status.innerText = status;
+    this.#status.classList.toggle('display-none', !status);
+    this.#status.classList.toggle('error', className === 'error');
+    this.#status.classList.toggle('pulse', className === 'pulse');
+    this.#status.innerText = status;
   }
 
   /**
