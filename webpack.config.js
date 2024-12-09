@@ -6,8 +6,9 @@ import TerserPlugin from 'terser-webpack-plugin';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Get the package name from the environment variable
+// Get the package name and version from the environment variable
 const libraryName = process.env.npm_package_name;
+const libraryVersion = process.env.npm_package_version;
 
 const mode = process.argv.includes('--mode=production') ? 'production' : 'development';
 
@@ -39,14 +40,14 @@ export default {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: `${libraryName}.css` // Output CSS filename
+      filename: `${libraryName}-${libraryVersion}.css` // Output CSS filename
     })
   ],
   entry: {
     main: '@scripts/main.js',
   },
   output: {
-    filename: `${libraryName}.js`,
+    filename: `${libraryName}-${libraryVersion}.js`,
     path: _resolve(__dirname, 'dist'),
     clean: true
   },
