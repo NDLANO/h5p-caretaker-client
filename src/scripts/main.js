@@ -300,7 +300,7 @@ class Main {
         value: messages.filter((message) => message.level === 'error').length,
         max: messages.length,
         label: capitalize(this.#l10n.errors),
-        link: 'error',
+        link: '#error',
         color: 'var(--color-error)',
         percentage: false
       },
@@ -309,7 +309,7 @@ class Main {
         value: messages.filter((message) => message.level === 'warning').length,
         max: messages.length,
         label: capitalize(this.#l10n.warnings),
-        link: 'warning',
+        link: '#warning',
         color: 'var(--color-warning)',
         percentage: false
       },
@@ -318,7 +318,7 @@ class Main {
         value: messages.filter((message) => message.level === 'info').length,
         max: messages.length,
         label: capitalize(this.#l10n.infos),
-        link: 'info',
+        link: '#info',
         color: 'var(--color-info)',
         percentage: false
       }
@@ -342,7 +342,7 @@ class Main {
       value: messages.filter((message) => message.issues).length,
       max: messages.length,
       label: capitalize(this.#l10n.issues),
-      link: `#${this.#l10n.issues}`,
+      link: '#issues',
       color: 'status',
       percentage: false
     }];
