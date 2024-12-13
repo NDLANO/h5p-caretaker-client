@@ -1,6 +1,7 @@
 @import url("fonts.css");
 @import url("header.css");
 @import url("page.css");
+@import url("footer.css");
 
 html {
   font-size: 100%;
