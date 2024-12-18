@@ -14,9 +14,8 @@ export class ContentFilterItem {
   /**
    * @class ContentFilterItem
    * @param {object} params Parameters.
-   * @param {object} callbacks Callbacks.
    */
-  constructor(params = {}, callbacks = {}) {
+  constructor(params = {}) {
     this.#params = params;
 
     this.#dom = document.createElement('li');
@@ -82,42 +81,82 @@ export class ContentFilterItem {
     return this.#dom;
   }
 
+  /**
+   * Get the name of the content filter item.
+   * @returns {string} The name of the content filter item.
+   */
   getName() {
     return this.#params.name;
   }
 
+  /**
+   * Get the subcontent ID of the content filter item.
+   * @returns {string} The subcontent ID of the content filter item.
+   */
   getSubcontentId() {
     return this.#params.subcontentId;
   }
 
+  /**
+   * Get the level of the content filter item.
+   * @returns {string} The level of the content filter item.
+   */
   getLevel() {
     return this.#params.level;
   }
 
+  /**
+   * Get the label of the content filter item.
+   * @returns {string} The label of the content filter item.
+   */
   getLabel() {
     return this.#params.label;
   }
 
+  /**
+   * Get the items of the content filter item.
+   * @returns {ContentFilterItem[]} The items of the content filter item.
+   */
   getItems() {
     return this.#items;
   }
 
+  /**
+   * Determine if the content filter item is selected.
+   * @returns {boolean} True if the content filter item is selected, else false.
+   */
   isSelected() {
     return this.#checkbox.checked;
   }
 
+  /**
+   * Determine if the content filter item is expandable.
+   * @returns {boolean} True if the content filter item is expandable, else false.
+   */
   isExpandable() {
     return this.#isExpandable;
   }
 
+  /**
+   * Determine if the content filter item is expanded.
+   * @returns {boolean} True if the content filter item is expanded, else false.
+   */
   isExpanded() {
     return this.#isExpandedState;
   }
 
+  /**
+   * Determine if the content filter item is visible.
+   * @returns {boolean} True if the content filter item is visible, else false.
+   */
   isVisible() {
     return this.#isVisibleState;
   }
 
+  /**
+   * Toggle the selected state of the content filter item.
+   * @param {boolean} [state] True for selected, false for unselected, undefined for toggling.
+   */
   toggleSelectedState(state) {
     state = state ?? !this.#checkbox.checked;
 
@@ -127,14 +166,26 @@ export class ContentFilterItem {
     this.#dom.setAttribute('aria-checked', state);
   }
 
+  /**
+   * Toggle the expanded state of the content filter item.
+   * @param {boolean} [state] True for expanded, false for collapsed.
+   */
   toggleTabbable(state) {
     this.#dom.setAttribute('tabindex', state ? '0' : '-1');
   }
 
+  /**
+   * Focus on the content filter item.
+   */
   focus() {
     this.#dom.focus();
   }
 
+  /**
+   * Toggle the border of the content filter item.
+   * @param {string} name Name of the border to toggle ['top'|'bottom'|'left'].
+   * @param {boolean} state True for border, false for no border.
+   */
   toggleBorder(name, state) {
     if (!['top', 'bottom', 'left'].includes(name) || typeof state !== 'boolean') {
       return;
@@ -143,6 +194,10 @@ export class ContentFilterItem {
     this.#panel.classList.toggle(`border-${name}`, state);
   }
 
+  /**
+   * Toggle the expanded state of the content filter item.
+   * @param {boolean} [state] True for expanded, false for collapsed, undefined for toggling.
+   */
   toggleExpandedState(state) {
     if (!this.#isExpandable) {
       return;
@@ -160,6 +215,10 @@ export class ContentFilterItem {
     });
   }
 
+  /**
+   * Toggle the visibility of the content filter item.
+   * @param {boolean} state True for visible, false for hidden.
+   */
   toggleVisibility(state) {
     if (typeof state !== 'boolean') {
       return;

@@ -5,6 +5,14 @@ export class MessageSets {
   #dom;
   #messageSets;
 
+  /**
+   * @class MessageSets
+   * @param {object} params Parameters for the message sets.
+   * @param {object} params.sets Sets of messages.
+   * @param {object} params.messages Messages object.
+   * @param {object} params.translations Translations object.
+   * @param {object} params.l10n Localization object.
+   */
   constructor(params = {}) {
     this.#dom = document.createElement('div');
     this.#dom.classList.add('message-sets');

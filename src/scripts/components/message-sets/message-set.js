@@ -4,6 +4,10 @@ export class MessageSet {
   #dom;
   #accordions = [];
 
+  /**
+   * @class MessageSet
+   * @param {object} params Parameters for the message set.
+   */
   constructor(params = {}) {
     this.#dom = document.createElement('div');
     this.#dom.classList.add('message-set');
@@ -31,20 +35,34 @@ export class MessageSet {
     });
   }
 
+  /**
+   * Get the DOM element.
+   * @returns {HTMLElement} The DOM element of the message set.
+   */
   getDOM() {
     return this.#dom;
   }
 
+  /**
+   * Filter the message set.
+   * @param {string[]} subcontentIds Subcontent IDs of contents to show.
+   */
   filter(subcontentIds) {
     this.#accordions.forEach((accordion) => {
       accordion.filter(subcontentIds);
     });
   }
 
+  /**
+   * Show the message set.
+   */
   show() {
     this.#dom.classList.remove('display-none');
   }
 
+  /**
+   * Hide the message set.
+   */
   hide() {
     this.#dom.classList.add('display-none');
   }

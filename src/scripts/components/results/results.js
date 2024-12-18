@@ -5,7 +5,6 @@ export class Results {
 
   #dom;
   #resultsBox;
-
   #params;
   #callbacks;
   #resultsRows;
@@ -52,6 +51,10 @@ export class Results {
     return this.#dom;
   }
 
+  /**
+   * Update the results.
+   * @param {object} results Results.
+   */
   update(results) {
     for (const key in results) {
       this.#resultsRows[key].update({

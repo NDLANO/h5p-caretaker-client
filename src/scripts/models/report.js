@@ -2,7 +2,6 @@ import { capitalize } from '@services/util.js';
 
 export class Report {
   #messages;
-  #l10n;
   #translations;
   #title;
 
@@ -16,7 +15,6 @@ export class Report {
    */
   constructor(params = {}) {
     this.#messages = params.messages;
-    this.#l10n = params.l10n;
     this.#translations = params.translations;
     this.#title = params.title;
   }

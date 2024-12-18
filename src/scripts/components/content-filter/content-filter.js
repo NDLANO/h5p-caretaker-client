@@ -15,6 +15,7 @@ export class ContentFilter {
    * @class ContentFilter
    * @param {object} params Parameters for the content filter.
    * @param {object} callbacks Callbacks for the content filter.
+   * @param {function} callbacks.onFilterChange Callback for when the filter changes.
    */
   constructor(params = {}, callbacks = {}) {
     // Add level to each item.
@@ -93,11 +94,18 @@ export class ContentFilter {
     this.#updateBorders();
   }
 
+  /**
+   * Recursively flatten the items.
+   * @param {ContentFilterItem} item Item to flatten.
+   * @param {ContentFilterItem[]} items Flattened items.
+   * @returns {ContentFilterItem[]} Flattened items.
+   */
   flattenItems(item, items = []) {
     items.push(item);
     item.getItems().forEach((item) => {
       this.flattenItems(item, items);
     });
+
     return items;
   }
 
@@ -109,6 +117,10 @@ export class ContentFilter {
     return this.#dom;
   }
 
+  /**
+   * Handle click event on the content filter (delegated).
+   * @param {Event} event Click event.
+   */
   #handleClick(event) {
     if (
       event.target.classList.contains('content-filter-item-wrapper') ||
@@ -126,6 +138,10 @@ export class ContentFilter {
     this.#updateBorders();
   }
 
+  /**
+   * Handle change event (delegated).
+   * @param {Event} event Change event.
+   */
   #handleChange(event) {
     if (!event.target.classList.contains('content-filter-item-checkbox')) {
       return;
@@ -134,6 +150,10 @@ export class ContentFilter {
     this.#updateSelection();
   }
 
+  /**
+   * Handle keydown event.
+   * @param {KeyboardEvent} event Keydown event.
+   */
   #handleKeydown(event) {
     if (event.code === 'Enter' || event.code === 'Space') {
       this.#activeItem.toggleSelectedState();
@@ -194,6 +214,9 @@ export class ContentFilter {
     }
   }
 
+  /**
+   * Update the selection.
+   */
   #updateSelection() {
     const selectedItems = this.#items.filter((item) => item.isSelected());
 
@@ -215,6 +238,9 @@ export class ContentFilter {
     this.#callbacks.onFilterChange(selectedItems.map((item) => item.getSubcontentId()));
   }
 
+  /**
+   * Reset the content filter.
+   */
   #reset() {
     this.#items.forEach((item) => {
       item.toggleSelectedState(true);
@@ -223,6 +249,10 @@ export class ContentFilter {
     this.#updateSelection();
   }
 
+  /**
+   * Focus on an item.
+   * @param {ContentFilterItem} item Item to focus on.
+   */
   #focusItem(item) {
     if (!item) {
       return;
@@ -234,6 +264,11 @@ export class ContentFilter {
     this.#activeItem.focus();
   }
 
+  /**
+   * Get siblings of an item.
+   * @param {ContentFilterItem} item Item to get siblings of.
+   * @returns {ContentFilterItem[]} Siblings of the item.
+   */
   #getSiblings(item) {
     if (!item || !item.isVisible()) {
       return [];
@@ -266,10 +301,18 @@ export class ContentFilter {
     return [...beforeOut, ...afterOut];
   }
 
+  /**
+   * Get visible items.
+   * @returns {ContentFilterItem[]} Visible items.
+   */
   #getVisibleItems() {
     return this.#items.filter((item) => item.isVisible());
   }
 
+  /**
+   * Get previous expandable item to the active item.
+   * @returns {ContentFilterItem} Previous expandable item.
+   */
   #getPreviousExpandableItem() {
     const visibleItems = this.#getVisibleItems();
     const activeIndex = visibleItems.indexOf(this.#activeItem);
@@ -283,6 +326,10 @@ export class ContentFilter {
     return null;
   }
 
+  /**
+   * Get previous item to the active item.
+   * @returns {ContentFilterItem} Previous item.
+   */
   #getPreviousItem() {
     const visibleItems = this.#getVisibleItems();
     const activeIndex = visibleItems.indexOf(this.#activeItem);
@@ -293,6 +340,10 @@ export class ContentFilter {
     return visibleItems[activeIndex - 1];
   }
 
+  /**
+   * Get next item to the active item.
+   * @returns {ContentFilterItem} Next item.
+   */
   #getNextItem() {
     const visibleItems = this.#getVisibleItems();
     const activeIndex = visibleItems.indexOf(this.#activeItem);
@@ -304,6 +355,9 @@ export class ContentFilter {
     return visibleItems[activeIndex + 1];
   }
 
+  /**
+   * Update borders of the items.
+   */
   #updateBorders() {
     this.#getVisibleItems()
       .forEach((item, index, allItems) => {

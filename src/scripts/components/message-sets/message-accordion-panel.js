@@ -116,6 +116,10 @@ export class MessageAccordionPanel {
     }
   }
 
+  /**
+   * Filter the panel
+   * @param {string[]} subContentIds Sub-content IDs of contents to show.
+   */
   filter(subContentIds) {
     if (!subContentIds || subContentIds.includes(this.#content.getSubContentId())) {
       this.show();

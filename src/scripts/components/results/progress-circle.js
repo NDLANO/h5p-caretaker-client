@@ -19,7 +19,6 @@ export class ProgressCircle {
   #dom;
   #valueText;
   #label;
-
   #params;
 
   /**

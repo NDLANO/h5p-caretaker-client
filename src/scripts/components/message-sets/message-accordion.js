@@ -95,6 +95,10 @@ export class MessageAccordion {
     return this.#dom;
   }
 
+  /**
+   * Filter the message accordion.
+   * @param {string[]} subcontentIds Subcontent IDs of contents to show.
+   */
   filter(subcontentIds) {
     this.#panels.forEach((panel) => {
       panel.filter(subcontentIds);

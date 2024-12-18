@@ -293,6 +293,11 @@ class Main {
     }
   }
 
+  /**
+   * Compute the results.
+   * @param {object[]} messages Messages received from the server.
+   * @returns {object} Results.
+   */
   #computeResults(messages) {
     const typeItems = [
       {

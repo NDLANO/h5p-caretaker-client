@@ -3,7 +3,7 @@ export class MessageContent {
   #subContentId;
 
   /**
-   * @class
+   * @class MessageContent
    * @param {object} params Parameters for the message content.
    * @param {object} params.message Message object.
    * @param {object} params.translations Translations object.
