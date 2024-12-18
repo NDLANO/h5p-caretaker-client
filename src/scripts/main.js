@@ -58,7 +58,7 @@ class Main {
   constructor() {
     this.#l10n = { ...DEFAULT_L10N, ...window.H5P_CARETAKER_L10N };
 
-    const mainDOMElement = document.querySelector('main');
+    const mainDOMElement = document.querySelector('.h5p-caretaker');
     this.#endpoint = mainDOMElement?.dataset.uploadEndpoint ?? DEFAULT_UPLOAD_ENDPOINT;
 
     document.addEventListener('DOMContentLoaded', () => {
