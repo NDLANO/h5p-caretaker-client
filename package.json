@@ -1,21 +1,30 @@
 {
   "name": "h5p-caretaker-client",
-  "version": "1.0.0",
   "description": "JavaScript reference client for using H5P Caretaker",
-  "main": "dist/h5p-caretaker-client.js",
-  "style": "dist/h5p-caretaker-client.css",
-  "files": [ "dist/" ],
+  "version": "1.0.0",
   "scripts": {
     "lint": "stylelint './src/**/*.css' && eslint './src/**/*.js'",
     "build": "webpack --mode=production",
-    "watch": "webpack --mode=development --watch"
+    "watch": "webpack --mode=development --watch",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ndlano/h5p-caretaker-client.git"
   },
   "keywords": [
     "H5P",
     "maintenance"
   ],
-  "author": "NDLA",
+  "author": "NDLA (https://ndla.no)",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NDLANO/h5p-caretaker-client/issues"
+  },
+  "homepage": "https://github.com/ndlano/h5p-caretaker-client",
+  "main": "dist/h5p-caretaker-client.js",
+  "style": "dist/h5p-caretaker-client.css",
+  "files": [ "dist/" ],
   "type": "module",
   "devDependencies": {
     "css-loader": "^7.1.2",
