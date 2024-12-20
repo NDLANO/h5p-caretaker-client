@@ -97,6 +97,8 @@ class Main {
         }
       }
     );
+
+    window.postMessage({ source: 'h5p-caretaker-client', action: 'initialized' }, '*');
   }
 
   /**
@@ -104,6 +106,8 @@ class Main {
    * @param {File} file File to upload.
    */
   #upload(file) {
+    window.postMessage({ source: 'h5p-caretaker-client', action: 'upload_started' }, '*');
+
     const formData = new FormData();
     formData.append('file', file);
     formData.set('locale', document.querySelector('.select-language')?.value ?? 'en');
@@ -125,6 +129,7 @@ class Main {
 
     xhr.addEventListener('load', () => {
       this.#handleFileUploaded(xhr);
+      window.postMessage({ source: 'h5p-caretaker-client', action: 'upload_succeeded' }, '*');
     });
 
     xhr.addEventListener('error', () => {
@@ -139,8 +144,18 @@ class Main {
    * Handle reset.
    */
   #reset() {
+    // Remove id query parameter from URL in browser bar without reloading the page
+    const queryParams = new URLSearchParams(window.location.search);
+    queryParams.delete('id'); // May be used by the integration
+
+    window.history.replaceState(
+      {}, document.title, `${window.location.pathname}?${queryParams.toString()}${window.location.hash}`
+    );
+
     document.querySelector('.filter-tree').innerHTML = '';
     document.querySelector('.output').innerHTML = '';
+
+    window.postMessage({ source: 'h5p-caretaker-client', action: 'reset' }, '*');
   }
 
   /**
@@ -383,6 +398,8 @@ class Main {
    */
   #setErrorMessage(message) {
     this.#dropzone.setStatus(message, 'error');
+
+    window.postMessage({ source: 'h5p-caretaker-client', action: 'upload_failed' }, '*');
   }
 }
 
