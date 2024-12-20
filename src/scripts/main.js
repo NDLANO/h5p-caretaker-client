@@ -146,7 +146,12 @@ class Main {
   #reset() {
     // Remove id query parameter from URL in browser bar without reloading the page
     const queryParams = new URLSearchParams(window.location.search);
-    queryParams.delete('id'); // May be used by the integration
+    // delete everything but not `locale`
+    for (const key of queryParams.keys()) {
+      if (key !== DEFAULT_LOCALE_KEY) {
+        queryParams.delete(key);
+      }
+    }
 
     window.history.replaceState(
       {}, document.title, `${window.location.pathname}?${queryParams.toString()}${window.location.hash}`
