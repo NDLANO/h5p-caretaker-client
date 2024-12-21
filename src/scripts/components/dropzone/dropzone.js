@@ -260,8 +260,8 @@ export class Dropzone {
     }
 
     this.#dropzone.classList.remove('dragging');
-    this.#fileInput.files = event.dataTransfer.files;
-    this.#upload(this.#fileInput.files[0]);
+
+    this.upload(event.dataTransfer.files);
   }
 
   /**
@@ -270,6 +270,15 @@ export class Dropzone {
    */
   #handleFileChange(event) {
     this.#upload(event.target.files[0]);
+  }
+
+  /**
+   * Upload a file.
+   * @param {FileList} fileList File list to upload.
+   */
+  upload(fileList) {
+    this.#fileInput.files = fileList;
+    this.#upload(this.#fileInput.files[0]);
   }
 
   /**

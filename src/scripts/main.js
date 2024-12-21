@@ -39,31 +39,54 @@ const DEFAULT_L10N = {
   reset: 'Reset', // ContentFilter: reset
 };
 
-/** @constant {object} XHR status codes */
+/** @constant {object} XHR_STATUS_CODES XHR status codes */
 const XHR_STATUS_CODES = {
   OK: 200,
   MULTIPLE_CHOICES: 300
 };
 
-class Main {
+class H5PCaretaker {
   #dropzone;
   #results;
   #messageSets;
   #endpoint;
   #l10n;
+  #callbacks = {};
 
   /**
    * @class
+   * @param {object} params Parameters.
+   * @param {string} params.endpoint Endpoint for the upload.
+   * @param {object} params.l10n Localization.
+   * @param {object} callbacks Callbacks.
+   * @param {function} callbacks.onInitialized Callback when initialized.
+   * @param {function} callbacks.onUploadStarted Callback when upload started.
+   * @param {function} callbacks.onUploadEnded Callback when upload ended.
+   * @param {function} callbacks.onReset Callback when reset.
    */
-  constructor() {
-    this.#l10n = { ...DEFAULT_L10N, ...window.H5P_CARETAKER_L10N };
+  constructor(params = {}, callbacks = {}) {
+    this.#l10n = { ...DEFAULT_L10N, ...window.H5P_CARETAKER_L10N, ...params.l10n };
 
-    const mainDOMElement = document.querySelector('.h5p-caretaker');
-    this.#endpoint = mainDOMElement?.dataset.uploadEndpoint ?? DEFAULT_UPLOAD_ENDPOINT;
+    this.#endpoint = params.endpoint;
+    if (!this.#endpoint) {
+      const mainDOMElement = document.querySelector('.h5p-caretaker');
+      this.#endpoint = mainDOMElement?.dataset.uploadEndpoint ?? DEFAULT_UPLOAD_ENDPOINT;
+    }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    this.#callbacks = callbacks;
+    this.#callbacks.onInitialized = this.#callbacks.onInitialized ?? (() => {});
+    this.#callbacks.onUploadStarted = this.#callbacks.onUploadStarted ?? (() => {});
+    this.#callbacks.onUploadEnded = this.#callbacks.onUploadEnded ?? (() => {});
+    this.#callbacks.onReset = this.#callbacks.onReset ?? (() => {});
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        this.#initialize();
+      });
+    }
+    else {
       this.#initialize();
-    });
+    }
   }
 
   /**
@@ -98,7 +121,41 @@ class Main {
       }
     );
 
-    window.postMessage({ source: 'h5p-caretaker-client', action: 'initialized' }, '*');
+    window.setTimeout(() => {
+      this.#callbacks.onInitialized();
+    }, 0);
+  }
+
+  /**
+   * Upload an H5P file to be checked by the library.
+   * @param {string} url URL to upload from.
+   */
+  async uploadByURL(url) {
+    this.#reset();
+
+    if (typeof url !== 'string') {
+      this.#callbacks.onUploadEnded(false);
+      return;
+    }
+
+    url = encodeURI(url);
+
+    try {
+      const response = await fetch(url);
+      const arrayBuffer = await response.arrayBuffer();
+
+      const binary = new Uint8Array(arrayBuffer);
+      const name = url.split('/').pop();
+      const file = new File([binary], name, { type: 'application/zip' });
+
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+
+      this.#dropzone.upload(dataTransfer.files);
+    }
+    catch (error) {
+      this.#callbacks.onUploadEnded(false);
+    }
   }
 
   /**
@@ -106,7 +163,7 @@ class Main {
    * @param {File} file File to upload.
    */
   #upload(file) {
-    window.postMessage({ source: 'h5p-caretaker-client', action: 'upload_started' }, '*');
+    this.#callbacks.onUploadStarted();
 
     const formData = new FormData();
     formData.append('file', file);
@@ -129,6 +186,8 @@ class Main {
 
     xhr.addEventListener('load', () => {
       this.#handleFileUploaded(xhr);
+      this.#callbacks.onUploadEnded(true);
+      // TODO: Replace
       window.postMessage({ source: 'h5p-caretaker-client', action: 'upload_succeeded' }, '*');
     });
 
@@ -160,7 +219,7 @@ class Main {
     document.querySelector('.filter-tree').innerHTML = '';
     document.querySelector('.output').innerHTML = '';
 
-    window.postMessage({ source: 'h5p-caretaker-client', action: 'reset' }, '*');
+    this.#callbacks.onReset();
   }
 
   /**
@@ -404,8 +463,11 @@ class Main {
   #setErrorMessage(message) {
     this.#dropzone.setStatus(message, 'error');
 
+    this.#callbacks.onUploadEnded(false);
+    // TODO: Replace
     window.postMessage({ source: 'h5p-caretaker-client', action: 'upload_failed' }, '*');
   }
 }
 
-new Main();
+window.H5PCaretaker = H5PCaretaker;
+// new H5PCaretaker();
