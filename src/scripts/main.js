@@ -187,8 +187,6 @@ class H5PCaretaker {
     xhr.addEventListener('load', () => {
       this.#handleFileUploaded(xhr);
       this.#callbacks.onUploadEnded(true);
-      // TODO: Replace
-      window.postMessage({ source: 'h5p-caretaker-client', action: 'upload_succeeded' }, '*');
     });
 
     xhr.addEventListener('error', () => {
@@ -464,8 +462,6 @@ class H5PCaretaker {
     this.#dropzone.setStatus(message, 'error');
 
     this.#callbacks.onUploadEnded(false);
-    // TODO: Replace
-    window.postMessage({ source: 'h5p-caretaker-client', action: 'upload_failed' }, '*');
   }
 }
 
