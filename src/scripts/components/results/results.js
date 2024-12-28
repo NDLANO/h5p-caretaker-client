@@ -88,6 +88,7 @@ export class Results {
     navigationRow.classList.add('navigation-row');
 
     const selectResultsType = document.createElement('select');
+    selectResultsType.name = 'select-results-type';
     selectResultsType.classList.add('select-results-type');
     selectResultsType.addEventListener('change', (event) => {
       this.#handleResultsTypeChanged(event);

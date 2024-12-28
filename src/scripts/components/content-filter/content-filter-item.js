@@ -61,6 +61,7 @@ export class ContentFilterItem {
     }
 
     this.#checkbox = document.createElement('input');
+    this.#checkbox.name = params.subcontentId;
     this.#checkbox.classList.add('content-filter-item-checkbox');
     this.#checkbox.setAttribute('tabindex', '-1');
     this.#checkbox.type = 'checkbox';
