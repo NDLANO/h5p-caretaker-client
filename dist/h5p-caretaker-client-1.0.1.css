@@ -842,7 +842,6 @@ limitations under the License.
 
 html {
   font-size: 100%;
-  height: -webkit-fill-available;
 }
 
 .h5p-caretaker {
@@ -910,12 +909,6 @@ html {
   box-sizing: border-box;
   display: block;
 
-  &[aria-expanded="false"] {
-    & > .content-filter-item-wrapper > .content-filter-group {
-      display: none;
-    }
-  }
-
   .content-filter-item-wrapper {
 
     .content-filter-item-panel {
@@ -980,6 +973,10 @@ html {
   }
 
   &[aria-expanded="false"] {
+    & > .content-filter-item-wrapper > .content-filter-group {
+      display: none;
+    }
+
     & > .content-filter-item-wrapper > .content-filter-item-panel > .content-filter-item-expander::before {
       content: var(--icon-material-icons-keyboard-arrow-right);
     }
