@@ -24,10 +24,13 @@
   "homepage": "https://github.com/ndlano/h5p-caretaker-client",
   "main": "dist/h5p-caretaker-client.js",
   "style": "dist/h5p-caretaker-client.css",
-  "files": [ "dist/" ],
+  "files": [
+    "dist/"
+  ],
   "type": "module",
   "devDependencies": {
     "css-loader": "^7.1.2",
+    "css-minimizer-webpack-plugin": "^7.0.0",
     "eslint-config-snordian-h5p": "github:otacke/eslint-config-snordian-h5p",
     "mini-css-extract-plugin": "^2.9.2",
     "stylelint": "^16.11.0",
