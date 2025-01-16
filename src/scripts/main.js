@@ -59,6 +59,8 @@ class H5PCaretaker {
    * @class
    * @param {object} params Parameters.
    * @param {string} params.endpoint Endpoint for the upload.
+   * @param {string} [params.sessionKeyName] Session key name.
+   * @param {string} [params.sessionKeyValue] Session key value.
    * @param {object} params.l10n Localization.
    * @param {object} callbacks Callbacks.
    * @param {function} callbacks.onInitialized Callback when initialized.

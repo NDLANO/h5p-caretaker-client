@@ -78,7 +78,7 @@ export class Dropzone {
       const sessionInput = document.createElement('input');
       sessionInput.type = 'hidden';
       sessionInput.name = this.#params.sessionKeyName;
-      sessionInput.value = this.#params.session;
+      sessionInput.value = this.#params.sessionKeyValue;
       this.#uploadWrapper.append(sessionInput);
     }
 
