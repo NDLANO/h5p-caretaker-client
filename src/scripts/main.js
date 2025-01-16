@@ -121,8 +121,8 @@ class H5PCaretaker {
         }
       },
       {
-        upload: async (file) => {
-          this.#upload(file);
+        upload: async (params) => {
+          this.#upload(params);
         },
         reset: () => {
           this.#reset();
@@ -171,11 +171,15 @@ class H5PCaretaker {
    * Handle file upload via dropzone.
    * @param {File} file File to upload.
    */
-  #upload(file) {
+  #upload(params = {}) {
     this.#callbacks.onUploadStarted();
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', params.file);
+    if (params.session?.key && params.session?.value) {
+      formData.append(params.session.key, params.session.value);
+    }
+    formData.append('sessionKeyName', this.#sessionKeyName);
     formData.set('locale', document.querySelector('.select-language')?.value ?? 'en');
 
     this.#dropzone.setStatus('');

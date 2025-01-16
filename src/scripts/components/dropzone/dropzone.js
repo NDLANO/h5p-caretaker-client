@@ -302,6 +302,15 @@ export class Dropzone {
     this.#fileInput.value = '';
 
     this.#dropzone.classList.remove('active');
-    this.#callbacks.upload(file);
+
+    const uploadParams = { file: file };
+    if (this.#params.sessionKeyName && this.#params.sessionKeyValue) {
+      uploadParams.session = {
+        key: this.#params.sessionKeyName,
+        value: this.#params.sessionKeyValue,
+      };
+    }
+
+    this.#callbacks.upload(uploadParams);
   }
 }
