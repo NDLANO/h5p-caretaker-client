@@ -50,6 +50,8 @@ class H5PCaretaker {
   #results;
   #messageSets;
   #endpoint;
+  #sessionKeyName;
+  #sessionKeyValue;
   #l10n;
   #callbacks = {};
 
@@ -68,6 +70,9 @@ class H5PCaretaker {
     this.#l10n = { ...DEFAULT_L10N, ...window.H5P_CARETAKER_L10N, ...params.l10n };
 
     this.#endpoint = params.endpoint;
+    this.#sessionKeyName = params.sessionKeyName;
+    this.#sessionKeyValue = params.sessionKeyValue;
+
     if (!this.#endpoint) {
       const mainDOMElement = document.querySelector('.h5p-caretaker');
       this.#endpoint = mainDOMElement?.dataset.uploadEndpoint ?? DEFAULT_UPLOAD_ENDPOINT;
@@ -104,6 +109,8 @@ class H5PCaretaker {
     this.#dropzone = new Dropzone(
       {
         selectorDropzone: '.h5p-caretaker .dropzone',
+        ...(this.#sessionKeyName && { sessionKeyName: this.#sessionKeyName }),
+        ...(this.#sessionKeyValue && { sessionKeyValue: this.#sessionKeyValue }),
         l10n: {
           orDragTheFileHere: this.#l10n.orDragTheFileHere,
           removeFile: this.#l10n.removeFile,

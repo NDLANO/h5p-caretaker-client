@@ -74,6 +74,14 @@ export class Dropzone {
     this.#uploadWrapper = document.createElement('div');
     this.#uploadWrapper.classList.add('upload-wrapper');
 
+    if (this.#params.sessionKeyName && this.#params.sessionKeyValue) {
+      const sessionInput = document.createElement('input');
+      sessionInput.type = 'hidden';
+      sessionInput.name = this.#params.sessionKeyName;
+      sessionInput.value = this.#params.session;
+      this.#uploadWrapper.append(sessionInput);
+    }
+
     this.#fileInput = document.createElement('input');
     this.#fileInput.classList.add('file-input');
     this.#fileInput.id = 'file-input';
