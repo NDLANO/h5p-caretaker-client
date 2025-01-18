@@ -277,6 +277,7 @@ class H5PCaretaker {
 
     if (!isXHROK || data === false) {
       this.#setErrorMessage(xhr.responseText);
+      return;
     }
 
     // TODO: This is a general debug output, remove this once done
