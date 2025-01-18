@@ -265,122 +265,129 @@ class H5PCaretaker {
    */
   #handleFileUploaded(xhr) {
     this.#dropzone.hideProgress();
-    if (xhr.status >= XHR_STATUS_CODES.OK && xhr.status < XHR_STATUS_CODES.MULTIPLE_CHOICES) {
-      const data = JSON.parse(xhr.responseText);
 
-      // TODO: This is a general debug output, remove this once done
-      // eslint-disable-next-line no-console
-      console.log(data);
-
-      this.#l10n = { ...this.#l10n, ...data.client.translations };
-
-      this.#dropzone.setStatus(this.#l10n.yourFileWasCheckedSuccessfully);
-
-      // Map content tree to the format expected by the content filter
-      const mapContentTree = (input) => {
-        const mapped = {
-          label: input.label,
-          subcontentId: input.subContentId
-        };
-
-        if (Array.isArray(input.children)) {
-          mapped.items = input.children.map((child) => mapContentTree(child));
-        }
-
-        return mapped;
-      };
-
-      const contentFilter = new ContentFilter(
-        {
-          item: mapContentTree(data.contentTree),
-          l10n: {
-            contentFilter: this.#l10n.contentFilter,
-            showAll: this.#l10n.showAll,
-            showSelected: this.#l10n.showSelected,
-            showNone: this.#l10n.showNone,
-            filterByContent: this.#l10n.filterByContent,
-            reset: this.#l10n.reset
-          }
-        },
-        {
-          onFilterChange: (subContentIds) => {
-            const filteredResults = this.#computeResults(data.messages.filter((message) => {
-              return subContentIds.includes(message.subContentId);
-            }));
-
-            this.#results.update(filteredResults);
-            this.#messageSets.filter(subContentIds);
-          }
-        }
-      );
-      document.querySelector('.filter-tree').append(contentFilter.getDOM());
-
-      data.messages = data.messages.map((message) => {
-        // Custom client requirement to have this property
-        message.issues = (message.level === 'error' || message.level === 'warning') ? 'issues' : false;
-
-        const path = message.details?.path;
-        if (!path || !path.startsWith('images/')) {
-          return message;
-        }
-
-        if (message.details?.path && message.details?.path.startsWith('images/')) {
-          message.details.base64 = data.raw.media.images[path.split('/').pop()].base64;
-        }
-
-        return message;
-      });
-
-      this.#results = new Results(
-        {
-          results: this.#computeResults(data.messages),
-          l10n: {
-            results: this.#l10n.results,
-            filterBy: this.#l10n.filterBy,
-            groupBy: this.#l10n.groupBy,
-            download: this.#l10n.download
-          }
-        },
-        {
-          onResultsTypeChanged: (id) => {
-            this.#messageSets.show(id);
-          },
-          onDownload: () => {
-            const title = this.#l10n.reportTitleTemplate
-              .replace('@title', `${data.raw.h5pJson.title} (${data.raw.h5pJson.mainLibrary})`);
-
-            const report = new Report({
-              title: title,
-              messages: data.messages,
-              l10n: this.#l10n,
-              translations: data.client.translations
-            });
-            report.download();
-          }
-        }
-      );
-      document.querySelector('.output').append(this.#results.getDOM());
-
-      const categoryNames = [...new Set(data.messages.map((message) => message.category))];
-      this.#messageSets = new MessageSets({
-        sets: {
-          issues: [{ id: 'issues', header: this.#l10n.issues }],
-          level: ['error', 'warning', 'info'],
-          category: categoryNames
-        },
-        messages: data.messages,
-        translations: data.client.translations,
-        l10n: {
-          expandAllMessages: this.#l10n.expandAllMessages,
-          collapseAllMessages: this.#l10n.collapseAllMessages,
-          allFilteredOut: this.#l10n.allFilteredOut
-        }
-      });
-      document.querySelector('.output').append(this.#messageSets.getDOM());
+    const isXHROK = xhr.status >= XHR_STATUS_CODES.OK && xhr.status < XHR_STATUS_CODES.MULTIPLE_CHOICES;
+    let data;
+    try {
+      data = JSON.parse(xhr.responseText);
     }
-    else {
+    catch (error) {
+      data = false;
+    }
+
+    if (!isXHROK || data === false) {
       this.#setErrorMessage(xhr.responseText);
     }
+
+    // TODO: This is a general debug output, remove this once done
+    // eslint-disable-next-line no-console
+    console.log(data);
+
+    this.#l10n = { ...this.#l10n, ...data.client.translations };
+
+    this.#dropzone.setStatus(this.#l10n.yourFileWasCheckedSuccessfully);
+
+    // Map content tree to the format expected by the content filter
+    const mapContentTree = (input) => {
+      const mapped = {
+        label: input.label,
+        subcontentId: input.subContentId
+      };
+
+      if (Array.isArray(input.children)) {
+        mapped.items = input.children.map((child) => mapContentTree(child));
+      }
+
+      return mapped;
+    };
+
+    const contentFilter = new ContentFilter(
+      {
+        item: mapContentTree(data.contentTree),
+        l10n: {
+          contentFilter: this.#l10n.contentFilter,
+          showAll: this.#l10n.showAll,
+          showSelected: this.#l10n.showSelected,
+          showNone: this.#l10n.showNone,
+          filterByContent: this.#l10n.filterByContent,
+          reset: this.#l10n.reset
+        }
+      },
+      {
+        onFilterChange: (subContentIds) => {
+          const filteredResults = this.#computeResults(data.messages.filter((message) => {
+            return subContentIds.includes(message.subContentId);
+          }));
+
+          this.#results.update(filteredResults);
+          this.#messageSets.filter(subContentIds);
+        }
+      }
+    );
+    document.querySelector('.filter-tree').append(contentFilter.getDOM());
+
+    data.messages = data.messages.map((message) => {
+      // Custom client requirement to have this property
+      message.issues = (message.level === 'error' || message.level === 'warning') ? 'issues' : false;
+
+      const path = message.details?.path;
+      if (!path || !path.startsWith('images/')) {
+        return message;
+      }
+
+      if (message.details?.path && message.details?.path.startsWith('images/')) {
+        message.details.base64 = data.raw.media.images[path.split('/').pop()].base64;
+      }
+
+      return message;
+    });
+
+    this.#results = new Results(
+      {
+        results: this.#computeResults(data.messages),
+        l10n: {
+          results: this.#l10n.results,
+          filterBy: this.#l10n.filterBy,
+          groupBy: this.#l10n.groupBy,
+          download: this.#l10n.download
+        }
+      },
+      {
+        onResultsTypeChanged: (id) => {
+          this.#messageSets.show(id);
+        },
+        onDownload: () => {
+          const title = this.#l10n.reportTitleTemplate
+            .replace('@title', `${data.raw.h5pJson.title} (${data.raw.h5pJson.mainLibrary})`);
+
+          const report = new Report({
+            title: title,
+            messages: data.messages,
+            l10n: this.#l10n,
+            translations: data.client.translations
+          });
+          report.download();
+        }
+      }
+    );
+    document.querySelector('.output').append(this.#results.getDOM());
+
+    const categoryNames = [...new Set(data.messages.map((message) => message.category))];
+    this.#messageSets = new MessageSets({
+      sets: {
+        issues: [{ id: 'issues', header: this.#l10n.issues }],
+        level: ['error', 'warning', 'info'],
+        category: categoryNames
+      },
+      messages: data.messages,
+      translations: data.client.translations,
+      l10n: {
+        expandAllMessages: this.#l10n.expandAllMessages,
+        collapseAllMessages: this.#l10n.collapseAllMessages,
+        allFilteredOut: this.#l10n.allFilteredOut
+      }
+    });
+    document.querySelector('.output').append(this.#messageSets.getDOM());
   }
 
   /**
