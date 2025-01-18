@@ -169,7 +169,8 @@ class H5PCaretaker {
 
   /**
    * Handle file upload via dropzone.
-   * @param {File} file File to upload.
+   * @param {object} params Parameters.
+   * @param {File} params.file File to upload.
    */
   #upload(params = {}) {
     this.#callbacks.onUploadStarted();
