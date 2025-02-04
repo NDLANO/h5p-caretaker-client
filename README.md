@@ -37,6 +37,24 @@ document.addEventListener('DOMContentLoaded', () => {
 ```
 You will have to take care of additional styling yourself.
 
+### Session keys
+Your platform may support session keys that can/need to be set in the form in order to prevent
+cross-site request forgery. You can pass the session key name (`sessionKeyName`) and the session key value (`sessionKeyValue`) to the
+constructor, and they will be passed to the request.
+
+_Example for moodle (to satisfy `require_sesskey()`)_
+```
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  new H5PCaretaker({
+    endpoint: '<Whatever your endpoint is>'
+    sessionKeyName: 'sesskey', // `sesskey` is what moodle uses
+    sessionKeyValue: '<Value returned by moodle's PHP `sesskey()`>'
+  });
+});
+</script>
+```
+
 ### Localization
 The client expects the constructor to be passed an `l10n` object holding key-value pairs for translatable strings. The values should be the desired translation for strings that the client uses. If not set, the client will fall back to the English defaults.
 
