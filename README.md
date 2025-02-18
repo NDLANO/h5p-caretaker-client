@@ -8,10 +8,11 @@ You can see a fully working example on integrating this client in the the [H5P C
 Load the `h5p-caretaker-client-*.js` file from the dist folder and `h5p-caretaker-client-*.css` file from the dist folder, e.g. with amending your HTML page's `head` with
 
 ```
-  <link rel="stylesheet" href="node_modules/h5p-caretaker-client/dist/h5p-caretaker-client-1.0.0.css" />
-  <script type="module" src="node_modules/h5p-caretaker-client/dist/node_modules/h5p-caretaker-client/dist/h5p-caretaker-client-1.0.0.css"></script>
+  <link rel="stylesheet" href="node_modules/@explorendla/h5p-caretaker-client/dist/h5p-caretaker-client-1.0.0.css" />
+  <script type="module" src="node_modules/@explorendla/h5p-caretaker-client/dist/node_modules/h5p-caretaker-client/dist/h5p-caretaker-client-1.0.0.css"></script>
 ```
-The exact path will depend on your setup, of course.
+The exact path will depend on your setup, of course. Also note that the version number will need to be set in the path
+if you do not have set up some auto-retrieval anyway.
 
 In your HTML page, you will need 4 things:
 1. an element bearing the class name `h5p-caretaker` to scope the caretaker elements.
