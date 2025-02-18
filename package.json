@@ -16,7 +16,7 @@
     "H5P",
     "maintenance"
   ],
-  "author": "NDLA (https://ndla.no)",
+  "author": "NDLA <explore@ndla.no> (https://ndla.no)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/NDLANO/h5p-caretaker-client/issues"
