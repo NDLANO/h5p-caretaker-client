@@ -1,5 +1,5 @@
 {
-  "name": "h5p-caretaker-client",
+  "name": "@explorendla/h5p-caretaker-client",
   "description": "JavaScript reference client for using H5P Caretaker",
   "version": "1.0.9",
   "scripts": {
