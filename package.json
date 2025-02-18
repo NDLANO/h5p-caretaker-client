@@ -22,8 +22,8 @@
     "url": "https://github.com/NDLANO/h5p-caretaker-client/issues"
   },
   "homepage": "https://github.com/ndlano/h5p-caretaker-client",
-  "main": "dist/h5p-caretaker-client.js",
-  "style": "dist/h5p-caretaker-client.css",
+  "main": "dist/@explorendla/h5p-caretaker-client.js",
+  "style": "dist/@explorendla/h5p-caretaker-client.css",
   "files": [
     "dist/"
   ],
