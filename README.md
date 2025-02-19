@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
       uploadProgress: 'Upload progress',
       uploadYourH5Pfile: 'Upload your H5P file',
       yourFileIsBeingChecked: 'Your file is being checked',
-      yourFileWasCheckedSuccessfully: 'Your file was checked successfully',
+      yourFileWasCheckedSuccessfully: 'Your file check was completed',
       totalMessages: 'Total messages',
       issues: 'issues',
       results: 'results',

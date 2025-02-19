@@ -20,7 +20,7 @@ const DEFAULT_L10N = {
   uploadProgress: 'Upload progress', // Dropzone: upload progress
   uploadYourH5Pfile: 'Upload your H5P file', // Dropzone: upload call to action
   yourFileIsBeingChecked: 'Your file is being checked', // Dropzone: file is being checked
-  yourFileWasCheckedSuccessfully: 'Your file was checked successfully', // Dropzone: file was checked successfully
+  yourFileWasCheckedSuccessfully: 'Your file check was completed', // Dropzone: file was checked successfully
   totalMessages: 'Total messages', // Results: total messages
   issues: 'issues', // Results: issues
   results: 'results', // Results: results
