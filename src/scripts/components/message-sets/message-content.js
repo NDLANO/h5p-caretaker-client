@@ -17,6 +17,23 @@ export class MessageContent {
     // Prevent changing the original object
     params = JSON.parse(JSON.stringify(params));
 
+    if (params.message.description) {
+      const descriptionItem = document.createElement('div');
+      descriptionItem.classList.add('message-content-item');
+
+      const descriptionItemLabel = document.createElement('p');
+      descriptionItemLabel.classList.add('message-content-item-label');
+      descriptionItemLabel.innerText = params.translations.description;
+      descriptionItem.append(descriptionItemLabel);
+
+      const descriptionItemText = document.createElement('p');
+      descriptionItemText.classList.add('message-content-item-text');
+      descriptionItemText.innerText = params.message.description;
+      descriptionItem.append(descriptionItemText);
+
+      this.#dom.append(descriptionItem);
+    }
+
     if (params.message.category) {
       const categoryItem = document.createElement('div');
       categoryItem.classList.add('message-content-item');
