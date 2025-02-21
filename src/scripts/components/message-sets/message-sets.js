@@ -46,11 +46,7 @@ export class MessageSets {
         sections: params.sets[id],
         messages: params.messages,
         translations: params.translations,
-        l10n: {
-          expandAllMessages: params.l10n.expandAllMessages,
-          collapseAllMessages: params.l10n.collapseAllMessages,
-          allFilteredOut: params.l10n.allFilteredOut
-        }
+        l10n: params.l10n
       });
       this.#dom.append(this.#messageSets[id].getDOM());
     }

@@ -1,6 +1,9 @@
 export class MessageContent {
   #dom;
   #subContentId;
+  #params;
+  #detailsButton;
+  #details;
 
   /**
    * @class MessageContent
@@ -15,39 +18,39 @@ export class MessageContent {
     this.#subContentId = params.message.subContentId;
 
     // Prevent changing the original object
-    params = JSON.parse(JSON.stringify(params));
+    this.#params = JSON.parse(JSON.stringify(params));
 
-    if (params.message.description) {
+    if (this.#params.message.description) {
       const descriptionItem = document.createElement('div');
       descriptionItem.classList.add('message-content-item');
 
       const descriptionItemLabel = document.createElement('p');
       descriptionItemLabel.classList.add('message-content-item-label');
-      descriptionItemLabel.innerText = params.translations.description;
+      descriptionItemLabel.innerText = this.#params.translations.description;
       descriptionItem.append(descriptionItemLabel);
 
       const descriptionItemText = document.createElement('p');
       descriptionItemText.classList.add('message-content-item-text');
-      descriptionItemText.innerText = params.message.description;
+      descriptionItemText.innerText = this.#params.message.description;
       descriptionItem.append(descriptionItemText);
 
       this.#dom.append(descriptionItem);
     }
 
-    if (params.message.category) {
+    if (this.#params.message.category) {
       const categoryItem = document.createElement('div');
       categoryItem.classList.add('message-content-item');
 
       const categoryItemLabel = document.createElement('p');
       categoryItemLabel.classList.add('message-content-item-label');
-      categoryItemLabel.innerText = params.translations.category;
+      categoryItemLabel.innerText = this.#params.translations.category;
       categoryItem.append(categoryItemLabel);
 
       const categoryType = document.createElement('p');
       categoryType.classList.add('message-content-item-text');
-      let categoryTypeText = params.translations[params.message.category];
-      if (params.message.type) {
-        categoryTypeText = `${categoryTypeText} > ${params.translations[params.message.type]}`;
+      let categoryTypeText = this.#params.translations[this.#params.message.category];
+      if (this.#params.message.type) {
+        categoryTypeText = `${categoryTypeText} > ${this.#params.translations[this.#params.message.type]}`;
       }
       categoryType.innerText = categoryTypeText;
       categoryItem.append(categoryType);
@@ -55,30 +58,31 @@ export class MessageContent {
       this.#dom.append(categoryItem);
     }
 
-    if (params.message.recommendation) {
+    if (this.#params.message.recommendation) {
       const recommendationItem = document.createElement('div');
       recommendationItem.classList.add('message-content-item');
 
       const recommendationItemLabel = document.createElement('p');
       recommendationItemLabel.classList.add('message-content-item-label');
-      recommendationItemLabel.innerText = params.translations.recommendation;
+      recommendationItemLabel.innerText = this.#params.translations.recommendation;
       recommendationItem.append(recommendationItemLabel);
 
       const recommendationItemText = document.createElement('p');
       recommendationItemText.classList.add('message-content-item-text');
-      recommendationItemText.innerText = params.message.recommendation;
+      recommendationItemText.innerText = this.#params.message.recommendation;
       recommendationItem.append(recommendationItemText);
 
       this.#dom.append(recommendationItem);
     }
 
-    if (params.message.type === 'libreText') {
-      const status = `<h3>${params.translations.status}</h3><p>${params.message.details.status}</p>`;
-      params.message.details.description = `${params.message.details.description}${status}`;
-      const licenseNote = `<h3>${params.translations.licenseNote}</h3><p>${params.message.details.licenseNote}</p>`;
-      params.message.details.description = `${params.message.details.description}${licenseNote}`;
+    if (this.#params.message.type === 'libreText') {
+      const status = `<h3>${this.#params.translations.status}</h3><p>${this.#params.message.details.status}</p>`;
+      this.#params.message.details.description = `${this.#params.message.details.description}${status}`;
+      const licenseNote =
+        `<h3>${this.#params.translations.licenseNote}</h3><p>${this.#params.message.details.licenseNote}</p>`;
+      this.#params.message.details.description = `${this.#params.message.details.description}${licenseNote}`;
 
-      const items = this.#parseLibreTextToArray(params.message.details.description);
+      const items = this.#parseLibreTextToArray(this.#params.message.details.description);
       items.forEach((item) => {
         const detailsItem = document.createElement('div');
         detailsItem.classList.add('message-content-item');
@@ -96,56 +100,63 @@ export class MessageContent {
         this.#dom.append(detailsItem);
       });
     }
-    else if (params.message.details) {
+
+    if (this.#params.message.details?.base64) {
       const detailsItem = document.createElement('div');
       detailsItem.classList.add('message-content-item');
 
       const detailsItemLabel = document.createElement('p');
       detailsItemLabel.classList.add('message-content-item-label');
-      detailsItemLabel.innerText = params.translations.details;
+      detailsItemLabel.innerText = this.#params.translations.image;
       detailsItem.append(detailsItemLabel);
 
-      const details = document.createElement('ul');
-      details.classList.add('message-content-details');
+      const base64 = document.createElement('img');
+      base64.classList.add('message-content-image');
+      base64.src = this.#params.message.details.base64;
+      detailsItem.append(base64);
 
-      Object.keys(params.message.details).forEach((key) => {
+      this.#dom.append(detailsItem);
+    }
+
+    if (this.#params.message.type !== 'libreText' && this.#params.message.details) {
+      const detailsItem = document.createElement('div');
+      detailsItem.classList.add('message-content-item');
+
+      this.#detailsButton = document.createElement('button');
+      this.#detailsButton.classList.add('message-content-details-button');
+      this.#detailsButton.addEventListener('click', (event) => {
+        this.#handleDetailsButtonClick(event);
+      });
+
+      detailsItem.append(this.#detailsButton);
+
+      this.#details = document.createElement('ul');
+      this.#details.classList.add('message-content-details');
+      this.#details.classList.add('display-none');
+
+      Object.keys(this.#params.message.details).forEach((key) => {
         if (key === 'reference' || key === 'base64') {
           return; // Will be handled separately
         }
 
         const detail = document.createElement('li');
         detail.classList.add('message-content-detail');
-        detail.innerText = `${key}: ${params.message.details[key]}`;
-        details.append(detail);
+        detail.innerText = `${key}: ${this.#params.message.details[key]}`;
+        this.#details.append(detail);
       });
-      detailsItem.append(details);
+      detailsItem.append(this.#details);
+
+      this.#toggleDetailsVisibility(false);
 
       this.#dom.append(detailsItem);
     }
 
-    if (params.message.details?.base64) {
-      const detailsItem = document.createElement('div');
-      detailsItem.classList.add('message-content-item');
-
-      const detailsItemLabel = document.createElement('p');
-      detailsItemLabel.classList.add('message-content-item-label');
-      detailsItemLabel.innerText = params.translations.image;
-      detailsItem.append(detailsItemLabel);
-
-      const base64 = document.createElement('img');
-      base64.classList.add('message-content-image');
-      base64.src = params.message.details.base64;
-      detailsItem.append(base64);
-
-      this.#dom.append(detailsItem);
-    }
-
-    if (params.message.details?.reference) {
+    if (this.#params.message.details?.reference) {
       const reference = document.createElement('a');
       reference.classList.add('message-content-reference');
-      reference.href = params.message.details.reference;
+      reference.href = this.#params.message.details.reference;
       reference.target = '_blank';
-      reference.innerText = params.translations.learnMore;
+      reference.innerText = this.#params.translations.learnMore;
       this.#dom.append(reference);
     }
   }
@@ -164,6 +175,26 @@ export class MessageContent {
    */
   getSubContentId() {
     return this.#subContentId;
+  }
+
+  /**
+   * Handle click on details button.
+   * @param {MouseEvent} event Mouse event.
+   */
+  #handleDetailsButtonClick(event) {
+    event.stopPropagation();
+    this.#toggleDetailsVisibility();
+  }
+
+  /**
+   * Toggle visibility of details.
+   * @param {boolean} [isVisible] State to set visibility to.
+   */
+  #toggleDetailsVisibility(isVisible) {
+    isVisible =
+      !this.#details.classList.toggle('display-none', typeof isVisible === 'boolean' ? !isVisible : undefined);
+
+    this.#detailsButton.innerText = isVisible ? this.#params.l10n.hideDetails : this.#params.l10n.showDetails;
   }
 
   /**

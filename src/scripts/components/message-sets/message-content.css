@@ -19,6 +19,33 @@
       text-transform: capitalize;
     }
 
+    .message-content-details-button {
+      background: none;
+      border: none;
+      color: linktext;
+      cursor: pointer;
+      margin: 0;
+      padding: 0;
+      text-decoration: underline;
+      text-transform: inherit;
+
+      &:hover {
+        color: highlight;
+      }
+
+      &:focus {
+        color: highlight;
+      }
+    }
+
+    .message-content-details {
+      margin-top: 0.5rem;
+
+      &.display-none {
+        display: none;
+      }
+    }
+
     .message-content-item-text {
       margin-top: 0;
     }

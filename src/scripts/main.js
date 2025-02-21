@@ -36,7 +36,9 @@ const DEFAULT_L10N = {
   showSelected: 'Various selected contents', // ContentFilter: show selected
   showNone: 'Show none', // ContentFilter: show none
   filterByContent: 'Filter by content:', // ContentFilter: filter by content
-  reset: 'Reset', // ContentFilter: reset
+  reset: 'Reset', // ContentFilter: reset,
+  showDetails: 'Show details', // MessageContent: show details
+  hideDetails: 'Hide details', // MessageContent: hide details
 };
 
 /** @constant {object} XHR_STATUS_CODES XHR status codes */
@@ -386,7 +388,9 @@ class H5PCaretaker {
       l10n: {
         expandAllMessages: this.#l10n.expandAllMessages,
         collapseAllMessages: this.#l10n.collapseAllMessages,
-        allFilteredOut: this.#l10n.allFilteredOut
+        allFilteredOut: this.#l10n.allFilteredOut,
+        showDetails: this.#l10n.showDetails,
+        hideDetails: this.#l10n.hideDetails
       }
     });
     document.querySelector('.output').append(this.#messageSets.getDOM());

@@ -23,11 +23,7 @@ export class MessageSet {
         header: section.header,
         messages: messages,
         translations: params.translations,
-        l10n: {
-          expandAllMessages: params.l10n.expandAllMessages,
-          collapseAllMessages: params.l10n.collapseAllMessages,
-          allFilteredOut: params.l10n.allFilteredOut
-        }
+        l10n: params.l10n
       });
       this.#accordions.push(accordion);
 

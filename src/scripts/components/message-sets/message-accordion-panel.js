@@ -63,7 +63,8 @@ export class MessageAccordionPanel {
     contentWrapper.classList.add('message-accordion-panel-content-wrapper');
     this.#content = new MessageContent({
       message: params.message,
-      translations: params.translations
+      translations: params.translations,
+      l10n: params.l10n
     });
     contentWrapper.append(this.#content.getDOM());
     this.#contentGrid.append(contentWrapper);

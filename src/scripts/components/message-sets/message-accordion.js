@@ -61,7 +61,11 @@ export class MessageAccordion {
       const panel = new MessageAccordionPanel(
         {
           message: message,
-          translations: params.translations
+          translations: params.translations,
+          l10n: {
+            showDetails: params.l10n.showDetails,
+            hideDetails: params.l10n.hideDetails
+          }
         },
         {
           expandedStateChanged: (state) => {
