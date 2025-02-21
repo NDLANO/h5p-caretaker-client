@@ -79,6 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
       filterBy: 'Filter by',
       groupBy: 'Group by',
       download: 'Download',
+      showDetails: 'Show details',
+      hideDetails: 'Hide details',
       expandAllMessages: 'Expand all messages',
       collapseAllMessages: 'Collapse all messages',
       allFilteredOut: 'All messages have been filtered out by content.',
