@@ -456,13 +456,6 @@ class H5PCaretaker {
     }];
 
     return {
-      issues: {
-        label: this.#l10n.issues,
-        header: this.#l10n.totalMessages,
-        value: messages.length,
-        items: issueItems,
-        type: 'filter'
-      },
       level: {
         label: this.#l10n.level,
         header:this.#l10n.totalMessages,
@@ -476,6 +469,13 @@ class H5PCaretaker {
         value: messages.length,
         items: categoryItems,
         type: 'group'
+      },
+      issues: {
+        label: this.#l10n.issues,
+        header: this.#l10n.totalMessages,
+        value: messages.length,
+        items: issueItems,
+        type: 'filter'
       }
     };
   }
