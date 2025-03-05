@@ -101,6 +101,9 @@ export class Report {
   #generateMessageTextMarkdown(message) {
     let text = `### ${message.summary}\n\n`;
 
+    const description = `#### ${capitalize(this.#translations.description)}\n${message.description}\n`;
+    text = `${text}${description}\n`;
+
     // eslint-disable-next-line max-len
     const category = `#### ${capitalize(this.#translations.category)}\n${this.#translations[message.category]} > ${this.#translations[message.type]}\n`;
     text = `${text}${category}\n`;
