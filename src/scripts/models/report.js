@@ -52,7 +52,8 @@ export class Report {
       }
       else {
         const dateString = (new Date()).toISOString().split('.')[0].replace(/[-T:]/g, '');
-        anchor.download = `h5p-caretaker-report-${dateString}.md`;
+        // Using .txt here instead of .md to compensate for the file handling deficiencies of Windows.
+        anchor.download = `h5p-caretaker-report-${dateString}.txt`;
       }
     }
     else {
