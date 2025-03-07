@@ -379,9 +379,9 @@ class H5PCaretaker {
     const categoryNames = [...new Set(data.messages.map((message) => message.category))];
     this.#messageSets = new MessageSets({
       sets: {
-        issues: [{ id: 'issues', header: this.#l10n.issues }],
         level: ['error', 'warning', 'info'],
-        category: categoryNames
+        category: categoryNames,
+        issues: [{ id: 'issues', header: this.#l10n.issues }],
       },
       messages: data.messages,
       translations: data.client.translations,
