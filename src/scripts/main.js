@@ -340,7 +340,7 @@ class H5PCaretaker {
       }
 
       if (message.details?.path && message.details?.path.startsWith('images/')) {
-        message.details.base64 = data.raw.media.images[path.split('/').pop()].base64;
+        message.details.base64 = data.raw.media.images[path.split('/').pop()]?.base64;
       }
 
       return message;
