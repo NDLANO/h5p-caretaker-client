@@ -30,3 +30,13 @@ export const capitalize = (string) => {
 
   return `${string[0].toUpperCase()}${string.slice(1)}`;
 };
+
+/**
+ * Check if a string contains HTML tags.
+ * @param {string} text to be checked.
+ * @returns {boolean} True if the text contains HTML tags, false otherwise.
+ */
+export const containsHtmlTags = (text = '') => {
+  const htmlTagPattern = /<\/?[^>]+(>|$)/;
+  return htmlTagPattern.test(text);
+};

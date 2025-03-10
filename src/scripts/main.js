@@ -1,10 +1,10 @@
-import { capitalize } from '@services/util.js';
+import { capitalize, containsHtmlTags } from '@services/util.js';
 import { Dropzone } from '@components/dropzone/dropzone.js';
 import { Results } from '@components/results/results.js';
 import { MessageSets } from '@components/message-sets/message-sets.js';
 import { Report } from '@models/report.js';
-import '@styles/main.css';
 import { ContentFilter } from '@components/content-filter/content-filter.js';
+import '@styles/main.css';
 
 /** @constant {string} DEFAULT_UPLOAD_ENDPOINT Default upload endpoint. */
 const DEFAULT_UPLOAD_ENDPOINT = './upload';
@@ -39,6 +39,8 @@ const DEFAULT_L10N = {
   reset: 'Reset', // ContentFilter: reset,
   showDetails: 'Show details', // MessageContent: show details
   hideDetails: 'Hide details', // MessageContent: hide details
+  unknownError: 'Something went wrong, but I dunno what, sorry!', // General error message
+  checkServerLog: 'Please check the server log.', // Ask for help
 };
 
 /** @constant {object} XHR_STATUS_CODES XHR status codes */
@@ -270,16 +272,12 @@ class H5PCaretaker {
     this.#dropzone.hideProgress();
 
     const isXHROK = xhr.status >= XHR_STATUS_CODES.OK && xhr.status < XHR_STATUS_CODES.MULTIPLE_CHOICES;
-    let data;
-    try {
-      data = JSON.parse(xhr.responseText);
-    }
-    catch (error) {
-      data = false;
-    }
 
-    if (!isXHROK || data === false) {
-      this.#setErrorMessage(xhr.responseText);
+    let data, errorMessage;
+    [data, errorMessage] = this.parseResponse(xhr);
+
+    if (!isXHROK || errorMessage) {
+      this.#setErrorMessage(errorMessage);
       return;
     }
 
@@ -394,6 +392,39 @@ class H5PCaretaker {
       }
     });
     document.querySelector('.output').append(this.#messageSets.getDOM());
+  }
+
+  parseResponse(xhr) {
+    let data;
+    let errorMessage = null;
+
+    try {
+      data = JSON.parse(xhr.responseText);
+    }
+    catch (error) {
+      data = false;
+      errorMessage = this.#handleNonJsonResponse(xhr.responseText);
+    }
+
+    if (data.error) {
+      errorMessage = data.error;
+    }
+
+    return [data, errorMessage];
+  }
+
+  /**
+   * Clean non-JSON response.
+   * @param {string} responseText Response text.
+   * @returns {string} Cleaned response text.
+   */
+  #handleNonJsonResponse(responseText) {
+    // If HTML is present, it's likely a server error with formatting that might give away sensitive information
+    if (!responseText || containsHtmlTags(responseText)) {
+      return `${this.#l10n.unknownError} ${this.#l10n.checkServerLog}`;
+    }
+
+    return responseText;
   }
 
   /**
