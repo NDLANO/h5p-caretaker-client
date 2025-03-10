@@ -66,31 +66,33 @@ document.addEventListener('DOMContentLoaded', () => {
   new H5PCaretaker({
     // endpoint and other parameters here, too
     l10: {
-      orDragTheFileHere: 'or drag the file here',
-      removeFile: 'Remove file',
-      selectYourLanguage: 'Select your language',
-      uploadProgress: 'Upload progress',
-      uploadYourH5Pfile: 'Upload your H5P file',
-      yourFileIsBeingChecked: 'Your file is being checked',
-      yourFileWasCheckedSuccessfully: 'Your file check was completed',
-      totalMessages: 'Total messages',
-      issues: 'issues',
-      results: 'results',
-      filterBy: 'Filter by',
-      groupBy: 'Group by',
-      download: 'Download',
-      showDetails: 'Show details',
-      hideDetails: 'Hide details',
-      expandAllMessages: 'Expand all messages',
-      collapseAllMessages: 'Collapse all messages',
-      allFilteredOut: 'All messages have been filtered out by content.',
-      reportTitleTemplate: 'H5P Caretaker report for @title',
-      contentFilter: 'Content type filter',
-      showAll: 'Show all',
-      showSelected: 'Various selected contents',
-      showNone: 'Show none',
-      filterByContent: 'Filter by content:',
-      reset: 'Reset',
+      orDragTheFileHere: 'or drag the file here', // Dropzone: call to action
+      removeFile: 'Remove file', // Dropzone: remove file button
+      selectYourLanguage: 'Select your language', // Language select field
+      uploadProgress: 'Upload progress', // Dropzone: upload progress
+      uploadYourH5Pfile: 'Upload your H5P file', // Dropzone: upload call to action
+      yourFileIsBeingChecked: 'Your file is being checked', // Dropzone: file is being checked
+      yourFileWasCheckedSuccessfully: 'Your file check was completed', // Dropzone: file was checked successfully
+      totalMessages: 'Total messages', // Results: total messages
+      issues: 'issues', // Results: issues
+      results: 'results', // Results: results
+      filterBy: 'Filter by', // Results: group by
+      groupBy: 'Group by', // Results: group by
+      download: 'Download', // Results: download
+      expandAllMessages: 'Expand all messages', // MessageAccordion: expand all messages
+      collapseAllMessages: 'Collapse all messages', // MessageAccordion: collapse all messages
+      allFilteredOut: 'All messages have been filtered out by content.', // MessageAccordion
+      reportTitleTemplate: 'H5P Caretaker report for @title', // Report: report title template
+      contentFilter: 'Content filter', // ContentFilter: filter by content
+      showAll: 'Show all', // ContentFilter: show all
+      showSelected: 'Various selected contents', // ContentFilter: show selected
+      showNone: 'Show none', // ContentFilter: show none
+      filterByContent: 'Filter by content:', // ContentFilter: filter by content
+      reset: 'Reset', // ContentFilter: reset,
+      showDetails: 'Show details', // MessageContent: show details
+      hideDetails: 'Hide details', // MessageContent: hide details
+      unknownError: 'Something went wrong, but I dunno what, sorry!', // General error message
+      checkServerLog: 'Please check the server log.', // Ask for help
     }
   });
 });
