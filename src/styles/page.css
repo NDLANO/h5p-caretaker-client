@@ -14,6 +14,12 @@
     &:not(:has(.block-visible)) {
       display: none;
     }
+
+    &:has(.filter-tree) {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
   }
 
   .background-light {
