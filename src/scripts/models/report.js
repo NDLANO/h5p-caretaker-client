@@ -73,7 +73,7 @@ export class Report {
   #getMarkdown() {
     let markdown = `# ${this.#title}\n\n`;
 
-    const report = ['error', 'warning', 'info']
+    const report = ['error', 'caution', 'info']
       .filter((level) => this.#messages.some((message) => message.level === level))
       .map((level) => {
         return {

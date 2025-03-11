@@ -61,9 +61,9 @@
         background-color: var(--color-error-light);
         color: var(--color-error);
       }
-      &.warning {
-        background-color: var(--color-warning-light);
-        color: var(--color-warning);
+      &.caution {
+        background-color: var(--color-caution-light);
+        color: var(--color-caution);
       }
       &.info {
         background-color: var(--color-info-light);

@@ -330,7 +330,7 @@ class H5PCaretaker {
 
     data.messages = data.messages.map((message) => {
       // Custom client requirement to have this property
-      message.issues = (message.level === 'error' || message.level === 'warning') ? 'issues' : false;
+      message.issues = (message.level === 'error' || message.level === 'caution') ? 'issues' : false;
 
       const path = message.details?.path;
       if (!path || !path.startsWith('images/')) {
@@ -377,7 +377,7 @@ class H5PCaretaker {
     const categoryNames = [...new Set(data.messages.map((message) => message.category))];
     this.#messageSets = new MessageSets({
       sets: {
-        level: ['error', 'warning', 'info'],
+        level: ['error', 'caution', 'info'],
         category: categoryNames,
         issues: [{ id: 'issues', header: this.#l10n.issues }],
       },
@@ -438,25 +438,25 @@ class H5PCaretaker {
         id: 'error',
         value: messages.filter((message) => message.level === 'error').length,
         max: messages.length,
-        label: capitalize(this.#l10n.errors),
+        label: capitalize(this.#l10n.error),
         link: '#error',
         color: 'var(--color-error)',
         percentage: false
       },
       {
-        id: 'warning',
-        value: messages.filter((message) => message.level === 'warning').length,
+        id: 'caution',
+        value: messages.filter((message) => message.level === 'caution').length,
         max: messages.length,
-        label: capitalize(this.#l10n.warnings),
-        link: '#warning',
-        color: 'var(--color-warning)',
+        label: capitalize(this.#l10n.caution),
+        link: '#caution',
+        color: 'var(--color-caution)',
         percentage: false
       },
       {
         id: 'info',
         value: messages.filter((message) => message.level === 'info').length,
         max: messages.length,
-        label: capitalize(this.#l10n.infos),
+        label: capitalize(this.#l10n.info),
         link: '#info',
         color: 'var(--color-info)',
         percentage: false

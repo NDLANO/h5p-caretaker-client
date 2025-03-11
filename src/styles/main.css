@@ -28,8 +28,8 @@ body {
   --color-error-light: #ffe9e9;
   --color-info: #443e9f;
   --color-info-light: #f7f5ff;
-  --color-warning: #754e00;
-  --color-warning-light: #fff9e6;
+  --color-caution: #754e00;
+  --color-caution-light: #fff9e6;
 
   --color-status-bad: #9e1010;
   --color-status-neutral: #754e00;
