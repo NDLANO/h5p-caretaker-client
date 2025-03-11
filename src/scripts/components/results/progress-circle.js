@@ -35,15 +35,19 @@ export class ProgressCircle {
     this.#params.max = params.max ?? MAX_PERCENTAGE;
 
     this.#dom = document.createElement('div');
-    this.#dom.classList.add('progress-circle-wrapper');
+    this.#dom.classList.add('progress-circle-container');
     this.#dom.style.setProperty('--size', this.#params.size);
     this.#dom.style.setProperty('--stroke-width', this.#params.strokeWidth);
+
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('progress-circle-wrapper');
+    this.#dom.append(wrapper);
 
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     circle.classList.add('progress-circle');
     circle.setAttribute('width', '100%');
     circle.setAttribute('height', '100%');
-    this.#dom.append(circle);
+    wrapper.append(circle);
 
     const backgroundCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     backgroundCircle.setAttribute('class', 'progress-circle-background');
@@ -58,7 +62,7 @@ export class ProgressCircle {
     this.#valueText = document.createElement('span');
     this.#valueText.classList.add('progress-circle-value');
     this.setValue(this.#params.value, this.#params.max, this.#params.percentage);
-    this.#dom.append(this.#valueText);
+    wrapper.append(this.#valueText);
 
     this.#label = document.createElement('span');
     this.#label.classList.add('progress-circle-label');

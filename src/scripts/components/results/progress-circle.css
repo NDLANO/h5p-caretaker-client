@@ -1,48 +1,55 @@
-.progress-circle-wrapper {
+.progress-circle-container {
+  align-items: center;
   display: grid;
+  grid-template-rows: var(--size) 1fr;
   gap: 0.5rem;
-  overflow: hidden;
-  place-items: center;
   width: var(--size);
 
-  svg.progress-circle {
-    grid-area: 1 / 1 / 1 / 1;
+  .progress-circle-wrapper {
+    display: grid;
+    gap: 0.5rem;
+    overflow: hidden;
+    place-items: center;
 
-    --pi: 3.14159265359;
-    --half-size: calc(var(--size) / 2);
-    --radius: calc(var(--half-size) - var(--stroke-width) / 2);
-    --circumference: calc(var(--radius) * var(--pi) * 2);
-    --dash: calc((var(--progress) * var(--circumference)) / 100);
+    svg.progress-circle {
+      grid-area: 1 / 1 / 1 / 1;
 
-    width: var(--size);
-    height: var(--size);
+      --pi: 3.14159265359;
+      --half-size: calc(var(--size) / 2);
+      --radius: calc(var(--half-size) - var(--stroke-width) / 2);
+      --circumference: calc(var(--radius) * var(--pi) * 2);
+      --dash: calc((var(--progress) * var(--circumference)) / 100);
 
-    circle {
-      cx: var(--half-size);
-      cy: var(--half-size);
-      r: var(--radius);
-      stroke-width: var(--stroke-width);
-      fill: none;
-      stroke-linecap: round;
+      width: var(--size);
+      height: var(--size);
 
-      &.progress-circle-background {
-        stroke: #ddd;
-      }
+      circle {
+        cx: var(--half-size);
+        cy: var(--half-size);
+        r: var(--radius);
+        stroke-width: var(--stroke-width);
+        fill: none;
+        stroke-linecap: round;
 
-      &.progress-circle-foreground {
-        transform: rotate(-90deg);
-        transform-origin: var(--half-size) var(--half-size);
-        stroke-dasharray: var(--dash) calc(var(--circumference) - var(--dash));
-        transition: stroke-dasharray 0.3s linear 0s;
-        stroke: var(--stroke-color, var(--color-main));
+        &.progress-circle-background {
+          stroke: #ddd;
+        }
+
+        &.progress-circle-foreground {
+          transform: rotate(-90deg);
+          transform-origin: var(--half-size) var(--half-size);
+          stroke-dasharray: var(--dash) calc(var(--circumference) - var(--dash));
+          transition: stroke-dasharray 0.3s linear 0s;
+          stroke: var(--stroke-color, var(--color-main));
+        }
       }
     }
-  }
 
-  .progress-circle-value {
-    font-size: var(--font-size-large);
-    font-weight: bold;
-    grid-area: 1 / 1 / 1 / 1;
+    .progress-circle-value {
+      font-size: var(--font-size-large);
+      font-weight: bold;
+      grid-area: 1 / 1 / 1 / 1;
+    }
   }
 
   .progress-circle-label {
