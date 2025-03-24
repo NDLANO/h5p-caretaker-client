@@ -211,6 +211,19 @@ class H5PCaretaker {
       this.#setErrorMessage(xhr.statusText);
     });
 
+    if (params.signal) {
+      params.signal.addEventListener('abort', () => {
+        xhr.abort();
+        this.#callbacks.onUploadEnded(false);
+      });
+
+      if (params.signal.aborted) {
+        xhr.abort();
+        this.#callbacks.onUploadEnded(false);
+        return;
+      }
+    }
+
     // Send the request
     xhr.send(formData);
   }

@@ -10,6 +10,7 @@ export class Dropzone {
 
   // State
   #isUploadDisabled = false;
+  #currentUploadController = null;
 
   // Params
   #params;
@@ -181,10 +182,16 @@ export class Dropzone {
    * Reset dropzone.
    */
   reset() {
+    if (this.#currentUploadController) {
+      this.#currentUploadController.abort();
+      this.#currentUploadController = null;
+    }
+
     this.#fileInfo.classList.add('display-none');
     this.#uploadWrapper.classList.remove('display-none');
 
     this.setStatus(this.#params.l10n.orDragTheFileHere);
+    this.hideProgress();
 
     this.#enableUpload();
     this.#callbacks.reset();
@@ -303,7 +310,13 @@ export class Dropzone {
 
     this.#dropzone.classList.remove('active');
 
-    const uploadParams = { file: file };
+    this.#currentUploadController = new AbortController();
+
+    const uploadParams = {
+      file: file,
+      signal: this.#currentUploadController.signal,
+    };
+
     if (this.#params.sessionKeyName && this.#params.sessionKeyValue) {
       uploadParams.session = {
         key: this.#params.sessionKeyName,
