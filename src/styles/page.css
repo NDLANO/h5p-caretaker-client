@@ -16,6 +16,8 @@
     }
 
     &:has(.filter-tree) {
+      max-height: 50vh;
+      overflow: auto;
       position: sticky;
       top: 0;
       z-index: 1;
