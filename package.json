@@ -1,7 +1,7 @@
 {
   "name": "@explorendla/h5p-caretaker-client",
   "description": "JavaScript reference client for using H5P Caretaker",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "scripts": {
     "lint": "stylelint './src/**/*.css' && eslint './src/**/*.js'",
     "build": "webpack --mode=production",
