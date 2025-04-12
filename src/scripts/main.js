@@ -392,7 +392,7 @@ class H5PCaretaker {
       sets: {
         level: ['error', 'caution', 'info'],
         category: categoryNames,
-        issues: [{ id: 'issues', header: this.#l10n.issues }],
+        issues: [{ id: 'issues', header: this.#l10n.issues }], // Custom filter option
       },
       messages: data.messages,
       translations: data.client.translations,

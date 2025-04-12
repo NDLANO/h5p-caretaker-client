@@ -1,7 +1,8 @@
 import { createUUID } from '@services/util.js';
-import { MessageContent } from './message-content.js';
+import { TypeContent } from './type-content.js';
+import { MessageAccordionPanel } from './message-accordion-panel.js';
 
-export class MessageAccordionPanel {
+export class TypeAccordionPanel {
 
   #dom;
   #contentGrid;
@@ -9,11 +10,12 @@ export class MessageAccordionPanel {
   #content;
   #isVisibleState = true;
   #callbacks;
+  // #panels = [];
 
   /**
    * @class
-   * @param {object} params Parameters for the message accordion panel.
-   * @param {object} params.message Message object.
+   * @param {object} params Parameters for the type accordion panel.
+   * @param {object} params.type Type object.
    * @param {object} params.translations Translations object.
    * @param {object} callbacks Callbacks.
    */
@@ -22,47 +24,47 @@ export class MessageAccordionPanel {
     this.#callbacks.expandedStateChanged = this.#callbacks.expandedStateChanged ?? (() => {});
 
     this.#dom = document.createElement('div');
-    this.#dom.classList.add('message-accordion-panel');
+    this.#dom.classList.add('type-accordion-panel');
+    const iconCategory = 'var(--message-accordion-header-icon)';
+    const iconType = `var(--type-accordion-header-icon-${params.type}, ${iconCategory})`;
+    this.#dom.style.setProperty( '--type-accordion-header-icon', iconType);
 
     const headerId = createUUID();
     const contentId = createUUID();
 
     const header = document.createElement('div');
-    header.classList.add('message-accordion-panel-header');
+    header.classList.add('type-accordion-panel-header');
     header.setAttribute('id', headerId);
 
-    const icon = document.createElement('span');
-    icon.classList.add('message-accordion-panel-icon');
-    header.append(icon);
-
     this.#button = document.createElement('button');
-    this.#button.classList.add('message-accordion-panel-button');
+    this.#button.classList.add('type-accordion-panel-button');
     this.#button.setAttribute('aria-expanded', 'false');
     this.#button.setAttribute('aria-controls', contentId);
-    this.#button.innerText = params.message.summary;
+    this.#button.innerText = params.translations[params.type];
     header.append(this.#button);
 
-    if (params.message.level && params.translations[params.message.level]) {
-      const level = document.createElement('span');
-      level.classList.add('message-accordion-panel-level');
-      level.classList.add(params.message.level);
-      level.innerText = params.translations[params.message.level];
-      header.append(level);
-    }
+    const count = document.createElement('span');
+    count.classList.add('type-accordion-panel-count');
+    count.innerText = `${params.messages.length}`;
+    header.append(count);
+
+    const icon = document.createElement('span');
+    icon.classList.add('type-accordion-panel-icon');
+    header.append(icon);
 
     this.#dom.append(header);
 
     this.#contentGrid = document.createElement('div');
     this.#contentGrid.setAttribute('id', contentId);
-    this.#contentGrid.classList.add('message-accordion-panel-content-grid');
+    this.#contentGrid.classList.add('type-accordion-panel-content-grid');
     this.#contentGrid.setAttribute('role', 'region');
     this.#contentGrid.setAttribute('aria-labelledby', headerId);
     this.#contentGrid.setAttribute('hidden', '');
 
     const contentWrapper = document.createElement('div');
-    contentWrapper.classList.add('message-accordion-panel-content-wrapper');
-    this.#content = new MessageContent({
-      message: params.message,
+    contentWrapper.classList.add('type-accordion-panel-content-wrapper');
+    this.#content = new TypeContent({
+      type: params.type,
       translations: params.translations,
       l10n: params.l10n
     });
@@ -71,15 +73,48 @@ export class MessageAccordionPanel {
 
     this.#dom.append(this.#contentGrid);
 
-    this.#dom.addEventListener('click', (event) => {
-      event.stopPropagation();
+    this.#dom.addEventListener('click', () => {
       this.toggle();
+    });
+
+    const panelsDOM = document.createElement('ul');
+    panelsDOM.classList.add('message-accordion-panels-list');
+    contentWrapper.append(panelsDOM);
+
+    params.messages.forEach((message) => {
+      const listItem = document.createElement('li');
+      listItem.classList.add('message-accordion-panels-list-item');
+
+      const panel = new MessageAccordionPanel(
+        {
+          message: message,
+          translations: params.translations,
+          l10n: {
+            showDetails: params.l10n.showDetails,
+            hideDetails: params.l10n.hideDetails
+          }
+        },
+        {
+          expandedStateChanged: (state) => {
+            // if (this.#panels.every((panel) => !panel.isExpanded())) {
+            //   this.#expandButton.toggle(false, true);
+            // }
+            // else {
+            //   this.#expandButton.toggle(true, true);
+            // }
+          }
+        }
+      );
+      listItem.append(panel.getDOM());
+      // this.#panels.push(panel);
+
+      panelsDOM.append(listItem);
     });
   }
 
   /**
-   * Get DOM element of the message accordion panel.
-   * @returns {HTMLElement} The DOM element of the message accordion panel.
+   * Get DOM element of the type accordion panel.
+   * @returns {HTMLElement} The DOM element of the type accordion panel.
    */
   getDOM() {
     return this.#dom;

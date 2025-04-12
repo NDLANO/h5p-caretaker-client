@@ -20,6 +20,7 @@ body {
   --color-main: #443e9f;
   --color-main-dark: #352d78;
   --color-main-very-light: #f7f5ff;
+  --color-main-ultra-light: #fcfaff;
   --color-text: #101010;
   --color-text-light: #666666;
   --color-shadow: rgba(0, 0, 0, 0.1);
@@ -66,6 +67,16 @@ body {
   --icon-material-icons-license: "\eb04";
   --icon-material-icons-cycle: "\f854";
   --icon-material-icons-monitoring: "\f190";
+  --icon-material-icons-image: "\e3f4";
+  --icon-material-icons-signature: "\f74c";
+  --icon-material-icons-storage: "\e1db";
+  --icon-material-icons-gavel: "\e90e";
+  --icon-material-icons-resume: "\f7d0";
+  --icon-material-icons-import-contacts: "\e0e0";
+  --icon-material-icons-api: "\f1b7";
+  --icon-material-icons-comment: "\e0b9";
+  --icon-material-icons-counter-1: "\f784";
+  --icon-material-icons-groups: "\f233";
 
   color: var(--color-text);
   container-name: body;
