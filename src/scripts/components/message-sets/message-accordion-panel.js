@@ -29,7 +29,7 @@ export class MessageAccordionPanel {
 
     const header = document.createElement('div');
     header.classList.add('message-accordion-panel-header');
-    header.setAttribute('Id', headerId);
+    header.setAttribute('id', headerId);
 
     const icon = document.createElement('span');
     icon.classList.add('message-accordion-panel-icon');
@@ -53,7 +53,7 @@ export class MessageAccordionPanel {
     this.#dom.append(header);
 
     this.#contentGrid = document.createElement('div');
-    this.#contentGrid.setAttribute('Id', contentId);
+    this.#contentGrid.setAttribute('id', contentId);
     this.#contentGrid.classList.add('message-accordion-panel-content-grid');
     this.#contentGrid.setAttribute('role', 'region');
     this.#contentGrid.setAttribute('aria-labelledby', headerId);
