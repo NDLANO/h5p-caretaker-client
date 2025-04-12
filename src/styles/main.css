@@ -57,6 +57,15 @@ body {
   --icon-material-icons-description: "\e873";
   --icon-material-icons-upload: "\f09b";
   --icon-material-icons-download: "\f090";
+  --icon-material-icons-error: "\e000";
+  --icon-material-icons-warning: "\e002";
+  --icon-material-icons-info: "\e88e";
+  --icon-material-icons-accessibility: "\e84e";
+  --icon-material-icons-speed: "\e9e4";
+  --icon-material-icons-label: "\e892";
+  --icon-material-icons-license: "\eb04";
+  --icon-material-icons-cycle: "\f854";
+  --icon-material-icons-monitoring: "\f190";
 
   color: var(--color-text);
   container-name: body;

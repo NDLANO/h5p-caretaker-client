@@ -24,6 +24,8 @@ export class MessageAccordion {
 
     const header = document.createElement('div');
     header.classList.add('message-accordion-header');
+    header.style.setProperty('--message-accordion-header-icon', `var(--message-accordion-header-icon-${params.type})`);
+
     this.#dom.append(header);
 
     const text = document.createElement('p');
