@@ -1,3 +1,4 @@
+import { createUUID } from '@services/util.js';
 import './content-filter-item.css';
 
 export class ContentFilterItem {
@@ -18,6 +19,7 @@ export class ContentFilterItem {
   constructor(params = {}) {
     this.#params = params;
 
+    const uuid = createUUID();
     this.#dom = document.createElement('li');
     this.#dom.classList.add('content-filter-item');
     this.#dom.setAttribute('role', 'treeitem');
@@ -54,6 +56,8 @@ export class ContentFilterItem {
         group.append(childItem.getDOM());
         this.#items.push(childItem);
       });
+
+      this.toggleExpandedState(false);
     }
     else {
       const spacer = document.createElement('div');
@@ -63,12 +67,14 @@ export class ContentFilterItem {
     this.#checkbox = document.createElement('input');
     this.#checkbox.name = params.subcontentId;
     this.#checkbox.classList.add('content-filter-item-checkbox');
+    this.#checkbox.setAttribute('aria-labelledby', uuid);
     this.#checkbox.setAttribute('tabindex', '-1');
     this.#checkbox.type = 'checkbox';
     this.#checkbox.checked = true;
     this.#panel.append(this.#checkbox);
 
     const label = document.createElement('span');
+    label.setAttribute('id', uuid);
     label.classList.add('content-filter-item-label');
     label.innerText = params.label;
     this.#panel.append(label);
@@ -210,6 +216,13 @@ export class ContentFilterItem {
 
     this.#dom.setAttribute('aria-expanded', state);
     this.#isExpandedState = state;
+
+    if (state) {
+      this.#expander.setAttribute('aria-label', this.#params.l10n.collapseList);
+    }
+    else {
+      this.#expander.setAttribute('aria-label', this.#params.l10n.expandList);
+    }
 
     this.#items.forEach((item) => {
       item.toggleVisibility(state);

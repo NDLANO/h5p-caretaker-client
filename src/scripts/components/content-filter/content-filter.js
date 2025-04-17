@@ -71,7 +71,13 @@ export class ContentFilter {
     tree.setAttribute('aria-label', this.#l10n.contentFilter);
     this.#dom.append(tree);
 
-    const item = new ContentFilterItem(params.item);
+    const item = new ContentFilterItem({
+      ...params.item,
+      l10n: {
+        expandList: params.l10n.expandList,
+        collapseList: params.l10n.collapseList,
+      }
+    });
     item.toggleVisibility(true);
     tree.append(item.getDOM());
 
