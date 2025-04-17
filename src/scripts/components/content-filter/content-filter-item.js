@@ -54,6 +54,8 @@ export class ContentFilterItem {
         group.append(childItem.getDOM());
         this.#items.push(childItem);
       });
+
+      this.toggleExpandedState(false);
     }
     else {
       const spacer = document.createElement('div');
@@ -210,6 +212,13 @@ export class ContentFilterItem {
 
     this.#dom.setAttribute('aria-expanded', state);
     this.#isExpandedState = state;
+
+    if (state) {
+      this.#expander.setAttribute('aria-label', this.#params.l10n.collapseList);
+    }
+    else {
+      this.#expander.setAttribute('aria-label', this.#params.l10n.expandList);
+    }
 
     this.#items.forEach((item) => {
       item.toggleVisibility(state);

@@ -41,6 +41,8 @@ const DEFAULT_L10N = {
   hideDetails: 'Hide details', // MessageContent: hide details
   unknownError: 'Something went wrong, but I dunno what, sorry!', // General error message
   checkServerLog: 'Please check the server log.', // Ask for help
+  expandList: 'Expand list', // Expand list
+  collapseList: 'Collapse list', // Collapse list
 };
 
 /** @constant {object} XHR_STATUS_CODES XHR status codes */
@@ -325,7 +327,9 @@ class H5PCaretaker {
           showSelected: this.#l10n.showSelected,
           showNone: this.#l10n.showNone,
           filterByContent: this.#l10n.filterByContent,
-          reset: this.#l10n.reset
+          reset: this.#l10n.reset,
+          expandList: this.#l10n.expandList,
+          collapseList: this.#l10n.collapseList
         }
       },
       {
