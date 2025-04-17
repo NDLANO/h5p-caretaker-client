@@ -43,6 +43,7 @@ const DEFAULT_L10N = {
   checkServerLog: 'Please check the server log.', // Ask for help
   expandList: 'Expand list', // Expand list
   collapseList: 'Collapse list', // Collapse list
+  changeSortingGrouping: 'Change sorting/grouping', // Select results type
 };
 
 /** @constant {object} XHR_STATUS_CODES XHR status codes */
@@ -368,7 +369,8 @@ class H5PCaretaker {
           results: this.#l10n.results,
           filterBy: this.#l10n.filterBy,
           groupBy: this.#l10n.groupBy,
-          download: this.#l10n.download
+          download: this.#l10n.download,
+          changeSortingGrouping: this.#l10n.changeSortingGrouping
         }
       },
       {

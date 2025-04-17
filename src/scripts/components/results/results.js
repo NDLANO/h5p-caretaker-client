@@ -89,6 +89,7 @@ export class Results {
 
     const selectResultsType = document.createElement('select');
     selectResultsType.name = 'select-results-type';
+    selectResultsType.setAttribute('aria-label', this.#params.l10n.changeSortingGrouping);
     selectResultsType.classList.add('select-results-type');
     selectResultsType.addEventListener('change', (event) => {
       this.#handleResultsTypeChanged(event);
