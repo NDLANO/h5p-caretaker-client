@@ -44,6 +44,8 @@ const DEFAULT_L10N = {
   expandList: 'Expand list', // Expand list
   collapseList: 'Collapse list', // Collapse list
   changeSortingGrouping: 'Change sorting/grouping', // Select results type
+  nextMessage: 'Next message', // Carousel: next message
+  previousMessage: 'Previous message', // Carousel: previous message
 };
 
 /** @constant {object} XHR_STATUS_CODES XHR status codes */
@@ -406,6 +408,8 @@ class H5PCaretaker {
         expandAllMessages: this.#l10n.expandAllMessages,
         collapseAllMessages: this.#l10n.collapseAllMessages,
         allFilteredOut: this.#l10n.allFilteredOut,
+        nextMessage: this.#l10n.nextMessage,
+        previousMessage: this.#l10n.previousMessage,
         showDetails: this.#l10n.showDetails,
         hideDetails: this.#l10n.hideDetails
       }

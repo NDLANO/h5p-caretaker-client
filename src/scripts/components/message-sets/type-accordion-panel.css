@@ -1,5 +1,6 @@
 @import url("type-content.css");
 @import url("message-accordion-panel.css");
+@import url("./carousel/carousel.css");
 
 .type-accordion-panel {
   --header-gap: 0.5rem;
@@ -18,10 +19,6 @@
   --type-accordion-header-icon-notCulturalWork: var(--icon-material-icons-groups);
   --type-accordion-header-icon-contentTypeCount: var(--icon-material-icons-counter-1);
 
-  &.display-none {
-    display: none;
-  }
-
   background-color: var(--color-main-ultra-light);
   border: 1px solid var(--color-background-separator);
   border-radius: calc(2 * var(--border-radius-default));
@@ -29,6 +26,16 @@
   cursor: pointer;
   font-size: var(--font-size-small);
   padding: 1rem;
+  transition: background-color 0.3s; border-color: 0.3s;
+
+  &:hover {
+    background-color: var(--color-main-very-light);
+    border-color: var(--color-background-separator-dark);
+  }
+
+  &.display-none {
+    display: none;
+  }
 
   .type-accordion-panel-header {
     align-items: center;

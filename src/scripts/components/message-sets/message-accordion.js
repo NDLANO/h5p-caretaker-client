@@ -69,6 +69,8 @@ export class MessageAccordion {
         messages: params.messages.filter((message) => message.type === type),
         translations: params.translations,
         l10n: {
+          nextMessage: params.l10n.nextMessage,
+          previousMessage: params.l10n.previousMessage,
           showDetails: params.l10n.showDetails,
           hideDetails: params.l10n.hideDetails
         }
