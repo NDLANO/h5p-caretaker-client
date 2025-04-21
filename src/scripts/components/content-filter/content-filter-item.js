@@ -52,7 +52,10 @@ export class ContentFilterItem {
       itemWrapper.append(group);
 
       params.items.forEach((itemParams) => {
-        const childItem = new ContentFilterItem(itemParams);
+        const childItem = new ContentFilterItem({
+          ...itemParams,
+          l10n: params.l10n,
+        });
         group.append(childItem.getDOM());
         this.#items.push(childItem);
       });
