@@ -27,8 +27,6 @@ const DEFAULT_L10N = {
   filterBy: 'Filter by', // Results: group by
   groupBy: 'Group by', // Results: group by
   download: 'Download', // Results: download
-  expandAllMessages: 'Expand all messages', // MessageAccordion: expand all messages
-  collapseAllMessages: 'Collapse all messages', // MessageAccordion: collapse all messages
   allFilteredOut: 'All messages have been filtered out by content.', // MessageAccordion
   reportTitleTemplate: 'H5P Caretaker report for @title', // Report: report title template
   contentFilter: 'Content filter', // ContentFilter: filter by content
@@ -44,6 +42,8 @@ const DEFAULT_L10N = {
   expandList: 'Expand list', // Expand list
   collapseList: 'Collapse list', // Collapse list
   changeSortingGrouping: 'Change sorting/grouping', // Select results type
+  nextMessage: 'Next message', // Carousel: next message
+  previousMessage: 'Previous message', // Carousel: previous message
 };
 
 /** @constant {object} XHR_STATUS_CODES XHR status codes */
@@ -398,14 +398,14 @@ class H5PCaretaker {
       sets: {
         level: ['error', 'caution', 'info'],
         category: categoryNames,
-        issues: [{ id: 'issues', header: this.#l10n.issues }],
+        issues: [{ id: 'issues', header: this.#l10n.issues }], // Custom filter option
       },
       messages: data.messages,
       translations: data.client.translations,
       l10n: {
-        expandAllMessages: this.#l10n.expandAllMessages,
-        collapseAllMessages: this.#l10n.collapseAllMessages,
         allFilteredOut: this.#l10n.allFilteredOut,
+        nextMessage: this.#l10n.nextMessage,
+        previousMessage: this.#l10n.previousMessage,
         showDetails: this.#l10n.showDetails,
         hideDetails: this.#l10n.hideDetails
       }

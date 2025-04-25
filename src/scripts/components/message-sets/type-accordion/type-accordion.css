@@ -1,0 +1,57 @@
+@import url("type-accordion-panel.css");
+
+.type-accordion {
+  margin-top: 2rem;
+  --type-accordion-header-icon-error: var(--icon-material-icons-error);
+  --type-accordion-header-icon-caution: var(--icon-material-icons-warning);
+  --type-accordion-header-icon-info: var(--icon-material-icons-info);
+  --type-accordion-header-icon-accessibility: var(--icon-material-icons-accessibility);
+  --type-accordion-header-icon-efficiency: var(--icon-material-icons-speed);
+  --type-accordion-header-icon-features: var(--icon-material-icons-label);
+  --type-accordion-header-icon-license: var(--icon-material-icons-license);
+  --type-accordion-header-icon-reuse: var(--icon-material-icons-cycle);
+  --type-accordion-header-icon-statistics: var(--icon-material-icons-monitoring);
+
+  .type-accordion-header {
+    align-items: flex-end;
+    color: var(--color-main-dark);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: var(--font-size-large);
+    font-weight: bold;
+    gap: 0.25rem;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+
+    .type-accordion-header-text {
+      margin: 0 auto 0 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-transform: capitalize;
+      white-space: nowrap;
+    }
+
+    &::before {
+      content: var(--type-accordion-header-icon);
+      font-family: var(--font-material-icons);
+    }
+  }
+
+  .type-accordion-panels-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    .type-accordion-panels-list-item {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .type-accordion-all-filtered {
+    color: var(--color-text-light);
+    &.display-none {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,61 @@
+
+@import url("carousel-item.css");
+
+.h5p-caretaker-carousel {
+  --button-size: 2rem;
+  --default-spacing: 0.5rem;
+
+  background-color: var(--color-background-light);
+  border: 1px solid var(--color-background-separator);
+  border-radius: var(--border-radius-default);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+
+  .carousel-controls {
+    border-bottom: 1px solid var(--color-background-separator);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--default-spacing);
+    justify-content: flex-end;
+    padding: var(--default-spacing);
+
+    .carousel-button {
+      background-color: var(--color-main-ultra-light);
+      border: 1px solid var(--color-background-separator);
+      border-radius: calc(var(--border-radius-default));
+      cursor: pointer;
+      font-family: var(--font-material-icons);
+      font-size: var(--font-size-default);
+      height: var(--button-size);
+      transition: background-color 0.3s, border-color 0.3s;
+      width: var(--button-size);
+
+      &:hover {
+        background-color: var(--color-main-very-light);
+        border-color: var(--color-background-separator-dark);
+      }
+
+      &.previous {
+        &::before {
+          content: var(--icon-material-icons-keyboard-arrow-left);
+        }
+      }
+
+      &.next {
+        &::before {
+          content: var(--icon-material-icons-keyboard-arrow-right);
+        }
+      }
+    }
+
+    .carousel-count {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      width: var(--count-width);
+    }
+  }
+}

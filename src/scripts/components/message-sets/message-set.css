@@ -1,4 +1,4 @@
-@import url("message-accordion.css");
+@import url("type-accordion/type-accordion.css");
 
 .message-set {
   &.display-none {

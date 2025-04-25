@@ -1,4 +1,4 @@
-import { MessageAccordion } from './message-accordion.js';
+import { TypeAccordion } from './type-accordion/type-accordion.js';
 
 export class MessageSet {
   #dom;
@@ -18,7 +18,7 @@ export class MessageSet {
         return;
       }
 
-      const accordion = new MessageAccordion({
+      const accordion = new TypeAccordion({
         type: section.id,
         header: section.header,
         messages: messages,

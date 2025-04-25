@@ -1,19 +1,20 @@
 import { createUUID } from '@services/util.js';
-import { MessageContent } from './message-content.js';
+import { Carousel } from '../carousel/carousel.js';
 
-export class MessageAccordionPanel {
+export class TypeAccordionPanel {
 
   #dom;
   #contentGrid;
   #button;
-  #content;
+  #carousel;
+  #messageCount;
   #isVisibleState = true;
   #callbacks;
 
   /**
    * @class
-   * @param {object} params Parameters for the message accordion panel.
-   * @param {object} params.message Message object.
+   * @param {object} params Parameters for the type accordion panel.
+   * @param {object} params.type Type object.
    * @param {object} params.translations Translations object.
    * @param {object} callbacks Callbacks.
    */
@@ -22,51 +23,52 @@ export class MessageAccordionPanel {
     this.#callbacks.expandedStateChanged = this.#callbacks.expandedStateChanged ?? (() => {});
 
     this.#dom = document.createElement('div');
-    this.#dom.classList.add('message-accordion-panel');
+    this.#dom.classList.add('type-accordion-panel');
+    const iconCategory = 'var(--type-accordion-header-icon)';
+    const iconType = `var(--type-accordion-panel-header-icon-${params.type}, ${iconCategory})`;
+    this.#dom.style.setProperty( '--type-accordion-panel-header-icon', iconType);
 
     const headerId = createUUID();
     const contentId = createUUID();
 
     const header = document.createElement('div');
-    header.classList.add('message-accordion-panel-header');
+    header.classList.add('type-accordion-panel-header');
     header.setAttribute('id', headerId);
 
-    const icon = document.createElement('span');
-    icon.classList.add('message-accordion-panel-icon');
-    header.append(icon);
-
     this.#button = document.createElement('button');
-    this.#button.classList.add('message-accordion-panel-button');
+    this.#button.classList.add('type-accordion-panel-button');
     this.#button.setAttribute('aria-expanded', 'false');
     this.#button.setAttribute('aria-controls', contentId);
-    this.#button.innerText = params.message.summary;
+    this.#button.innerText = params.translations[params.type];
     header.append(this.#button);
 
-    if (params.message.level && params.translations[params.message.level]) {
-      const level = document.createElement('span');
-      level.classList.add('message-accordion-panel-level');
-      level.classList.add(params.message.level);
-      level.innerText = params.translations[params.message.level];
-      header.append(level);
-    }
+    this.#messageCount = document.createElement('span');
+    this.#messageCount.classList.add('type-accordion-panel-count');
+    header.append(this.#messageCount);
+
+    const icon = document.createElement('span');
+    icon.classList.add('type-accordion-panel-icon');
+    header.append(icon);
 
     this.#dom.append(header);
 
     this.#contentGrid = document.createElement('div');
     this.#contentGrid.setAttribute('id', contentId);
-    this.#contentGrid.classList.add('message-accordion-panel-content-grid');
+    this.#contentGrid.classList.add('type-accordion-panel-content-grid');
     this.#contentGrid.setAttribute('role', 'region');
     this.#contentGrid.setAttribute('aria-labelledby', headerId);
     this.#contentGrid.setAttribute('hidden', '');
 
     const contentWrapper = document.createElement('div');
-    contentWrapper.classList.add('message-accordion-panel-content-wrapper');
-    this.#content = new MessageContent({
-      message: params.message,
+    contentWrapper.classList.add('type-accordion-panel-content-wrapper');
+
+    this.#carousel = new Carousel({
+      ariaLabel: params.translations[params.type],
+      messages: params.messages,
       translations: params.translations,
-      l10n: params.l10n
+      l10n: params.l10n,
     });
-    contentWrapper.append(this.#content.getDOM());
+    contentWrapper.append(this.#carousel.getDOM());
     this.#contentGrid.append(contentWrapper);
 
     this.#dom.append(this.#contentGrid);
@@ -74,11 +76,13 @@ export class MessageAccordionPanel {
     this.#dom.addEventListener('click', () => {
       this.toggle();
     });
+
+    this.updateMessageCount();
   }
 
   /**
-   * Get DOM element of the message accordion panel.
-   * @returns {HTMLElement} The DOM element of the message accordion panel.
+   * Get DOM element of the type accordion panel.
+   * @returns {HTMLElement} The DOM element of the type accordion panel.
    */
   getDOM() {
     return this.#dom;
@@ -122,13 +126,23 @@ export class MessageAccordionPanel {
    * @param {string[]} subContentIds Sub-content IDs of contents to show.
    */
   filter(subContentIds) {
-    if (!subContentIds || subContentIds.includes(this.#content.getSubContentId())) {
+    this.#carousel.filter(subContentIds);
+    this.updateMessageCount();
+
+    if (!subContentIds || this.#carousel.getNumberOfAvailableItems() > 0) {
       this.show();
     }
     else {
       this.collapse();
       this.hide();
     }
+  }
+
+  /**
+   * Update message count.
+   */
+  updateMessageCount() {
+    this.#messageCount.innerText = this.#carousel.getNumberOfAvailableItems();
   }
 
   /**

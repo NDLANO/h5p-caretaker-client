@@ -79,8 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
       filterBy: 'Filter by', // Results: group by
       groupBy: 'Group by', // Results: group by
       download: 'Download', // Results: download
-      expandAllMessages: 'Expand all messages', // MessageAccordion: expand all messages
-      collapseAllMessages: 'Collapse all messages', // MessageAccordion: collapse all messages
       allFilteredOut: 'All messages have been filtered out by content.', // MessageAccordion
       reportTitleTemplate: 'H5P Caretaker report for @title', // Report: report title template
       contentFilter: 'Content filter', // ContentFilter: filter by content
@@ -93,6 +91,11 @@ document.addEventListener('DOMContentLoaded', () => {
       hideDetails: 'Hide details', // MessageContent: hide details
       unknownError: 'Something went wrong, but I dunno what, sorry!', // General error message
       checkServerLog: 'Please check the server log.', // Ask for help
+      expandList: 'Expand list', // Expand list
+      collapseList: 'Collapse list', // Collapse list
+      changeSortingGrouping: 'Change sorting/grouping', // Select results type
+      nextMessage: 'Next message', // Carousel: next message
+      previousMessage: 'Previous message', // Carousel: previous message
     }
   });
 });
