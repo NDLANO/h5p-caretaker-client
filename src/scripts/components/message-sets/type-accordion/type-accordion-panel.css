@@ -117,14 +117,3 @@
     }
   }
 }
-
-/* TODO: Put at proper hierarchy position */
-.message-accordion-panels-list {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-
-  .message-accordion-panels-list-item {
-    margin-bottom: 0.5rem;
-  }
-}
