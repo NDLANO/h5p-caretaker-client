@@ -78,6 +78,8 @@ body {
   --icon-material-icons-comment: "\e0b9";
   --icon-material-icons-counter-1: "\f784";
   --icon-material-icons-groups: "\f233";
+  --icon-material-icons-broken-image: "\e3ad";
+  --icon-material-icons-edit: "\e3c9";
 
   color: var(--color-text);
   container-name: body;

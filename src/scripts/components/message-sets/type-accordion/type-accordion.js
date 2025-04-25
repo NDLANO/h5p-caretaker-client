@@ -1,6 +1,6 @@
 import { TypeAccordionPanel } from './type-accordion-panel.js';
 
-export class MessageAccordion {
+export class TypeAccordion {
 
   #dom;
   #allFiltered;
@@ -13,24 +13,24 @@ export class MessageAccordion {
   constructor(params = {}) {
 
     this.#dom = document.createElement('div');
-    this.#dom.classList.add('message-accordion');
+    this.#dom.classList.add('type-accordion');
     this.#dom.style.setProperty(
-      '--message-accordion-header-icon',
-      `var(--message-accordion-header-icon-${params.type})`
+      '--type-accordion-header-icon',
+      `var(--type-accordion-header-icon-${params.type})`
     );
 
     const anchor = document.createElement('a');
-    anchor.classList.add('message-accordion-header-anchor');
+    anchor.classList.add('type-accordion-header-anchor');
     anchor.setAttribute('name', `${params.type}`);
     this.#dom.append(anchor);
 
     const header = document.createElement('div');
-    header.classList.add('message-accordion-header');
+    header.classList.add('type-accordion-header');
 
     this.#dom.append(header);
 
     const text = document.createElement('p');
-    text.classList.add('message-accordion-header-text');
+    text.classList.add('type-accordion-header-text');
     text.innerText = params.header;
 
     header.append(text);
@@ -61,7 +61,7 @@ export class MessageAccordion {
     });
 
     this.#allFiltered = document.createElement('div');
-    this.#allFiltered.classList.add('message-accordion-all-filtered');
+    this.#allFiltered.classList.add('type-accordion-all-filtered');
     this.#allFiltered.classList.add('display-none');
     this.#allFiltered.innerHTML = params.l10n.allFilteredOut;
     this.#dom.append(this.#allFiltered);

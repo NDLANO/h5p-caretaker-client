@@ -1,4 +1,4 @@
-import { MessageContent } from '../message-content.js';
+import { MessageContent } from './message-content.js';
 
 export class CarouselItem {
   #dom;

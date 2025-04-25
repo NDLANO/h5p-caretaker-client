@@ -1,23 +1,23 @@
-@import url("type-content.css");
-@import url("message-accordion-panel.css");
-@import url("./carousel/carousel.css");
+@import url("../carousel/carousel.css");
 
 .type-accordion-panel {
   --header-gap: 0.5rem;
   --header-icon-width: 1rem;
   --transition-time: 250ms;
 
-  --type-accordion-header-icon-missingAltText: var(--icon-material-icons-image);
-  --type-accordion-header-icon-missingAuthor: var(--icon-material-icons-signature);
-  --type-accordion-header-icon-missingLicense: var(--icon-material-icons-license);
-  --type-accordion-header-icon-imageSize: var(--icon-material-icons-storage);
-  --type-accordion-header-icon-questionTypeContract: var(--icon-material-icons-gavel);
-  --type-accordion-header-icon-resume: var(--icon-material-icons-resume);
-  --type-accordion-header-icon-libreText: var(--icon-material-icons-import-contacts);
-  --type-accordion-header-icon-xAPI: var(--icon-material-icons-api);
-  --type-accordion-header-icon-noAuthorComments: var(--icon-material-icons-comment);
-  --type-accordion-header-icon-notCulturalWork: var(--icon-material-icons-groups);
-  --type-accordion-header-icon-contentTypeCount: var(--icon-material-icons-counter-1);
+  --type-accordion-panel-header-icon-missingAltText: var(--icon-material-icons-image);
+  --type-accordion-panel-header-icon-missingAuthor: var(--icon-material-icons-signature);
+  --type-accordion-panel-header-icon-missingLicense: var(--icon-material-icons-license);
+  --type-accordion-panel-header-icon-missingChanges: var(--icon-material-icons-edit);
+  --type-accordion-panel-header-icon-discouragedLicenseAdaptation: var(--icon-material-icons-thumb-down);
+  --type-accordion-panel-header-icon-imageSize: var(--icon-material-icons-storage);
+  --type-accordion-panel-header-icon-questionTypeContract: var(--icon-material-icons-gavel);
+  --type-accordion-panel-header-icon-resume: var(--icon-material-icons-resume);
+  --type-accordion-panel-header-icon-libreText: var(--icon-material-icons-import-contacts);
+  --type-accordion-panel-header-icon-xAPI: var(--icon-material-icons-api);
+  --type-accordion-panel-header-icon-noAuthorComments: var(--icon-material-icons-comment);
+  --type-accordion-panel-header-icon-notCulturalWork: var(--icon-material-icons-groups);
+  --type-accordion-panel-header-icon-contentTypeCount: var(--icon-material-icons-counter-1);
 
   background-color: var(--color-main-ultra-light);
   border: 1px solid var(--color-background-separator);
@@ -48,7 +48,7 @@
     width: 100%;
 
     &::before {
-      content: var(--type-accordion-header-icon);
+      content: var(--type-accordion-panel-header-icon);
       font-family: var(--font-material-icons);
       font-size: var(--font-size-default);
     }

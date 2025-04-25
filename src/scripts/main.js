@@ -27,8 +27,6 @@ const DEFAULT_L10N = {
   filterBy: 'Filter by', // Results: group by
   groupBy: 'Group by', // Results: group by
   download: 'Download', // Results: download
-  expandAllMessages: 'Expand all messages', // MessageAccordion: expand all messages
-  collapseAllMessages: 'Collapse all messages', // MessageAccordion: collapse all messages
   allFilteredOut: 'All messages have been filtered out by content.', // MessageAccordion
   reportTitleTemplate: 'H5P Caretaker report for @title', // Report: report title template
   contentFilter: 'Content filter', // ContentFilter: filter by content
@@ -405,8 +403,6 @@ class H5PCaretaker {
       messages: data.messages,
       translations: data.client.translations,
       l10n: {
-        expandAllMessages: this.#l10n.expandAllMessages,
-        collapseAllMessages: this.#l10n.collapseAllMessages,
         allFilteredOut: this.#l10n.allFilteredOut,
         nextMessage: this.#l10n.nextMessage,
         previousMessage: this.#l10n.previousMessage,
