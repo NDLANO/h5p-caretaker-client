@@ -1,6 +1,4 @@
 import { createUUID } from '@services/util.js';
-import { TypeContent } from './type-content.js';
-import { MessageAccordionPanel } from './message-accordion-panel.js';
 import { Carousel } from './carousel/carousel.js';
 
 export class TypeAccordionPanel {
@@ -8,10 +6,10 @@ export class TypeAccordionPanel {
   #dom;
   #contentGrid;
   #button;
-  #content;
+  #carousel;
+  #messageCount;
   #isVisibleState = true;
   #callbacks;
-  // #panels = [];
 
   /**
    * @class
@@ -44,10 +42,9 @@ export class TypeAccordionPanel {
     this.#button.innerText = params.translations[params.type];
     header.append(this.#button);
 
-    const count = document.createElement('span');
-    count.classList.add('type-accordion-panel-count');
-    count.innerText = `${params.messages.length}`;
-    header.append(count);
+    this.#messageCount = document.createElement('span');
+    this.#messageCount.classList.add('type-accordion-panel-count');
+    header.append(this.#messageCount);
 
     const icon = document.createElement('span');
     icon.classList.add('type-accordion-panel-icon');
@@ -64,24 +61,15 @@ export class TypeAccordionPanel {
 
     const contentWrapper = document.createElement('div');
     contentWrapper.classList.add('type-accordion-panel-content-wrapper');
-    const carousel = new Carousel({
+
+    this.#carousel = new Carousel({
       ariaLabel: params.translations[params.type],
       messages: params.messages,
       translations: params.translations,
-      l10n: params.l10n
+      l10n: params.l10n,
     });
-    contentWrapper.append(carousel.getDOM());
+    contentWrapper.append(this.#carousel.getDOM());
     this.#contentGrid.append(contentWrapper);
-
-    // const contentWrapper2 = document.createElement('div');
-    // contentWrapper2.classList.add('type-accordion-panel-content-wrapper');
-    // this.#content = new TypeContent({
-    //   type: params.type,
-    //   translations: params.translations,
-    //   l10n: params.l10n
-    // });
-    // contentWrapper2.append(this.#content.getDOM());
-    // this.#contentGrid.append(contentWrapper2);
 
     this.#dom.append(this.#contentGrid);
 
@@ -89,39 +77,7 @@ export class TypeAccordionPanel {
       this.toggle();
     });
 
-    // const panelsDOM = document.createElement('ul');
-    // panelsDOM.classList.add('message-accordion-panels-list');
-    // contentWrapper.append(panelsDOM);
-
-    // params.messages.forEach((message) => {
-    //   const listItem = document.createElement('li');
-    //   listItem.classList.add('message-accordion-panels-list-item');
-
-    //   const panel = new MessageAccordionPanel(
-    //     {
-    //       message: message,
-    //       translations: params.translations,
-    //       l10n: {
-    //         showDetails: params.l10n.showDetails,
-    //         hideDetails: params.l10n.hideDetails
-    //       }
-    //     },
-    //     {
-    //       expandedStateChanged: (state) => {
-    //         // if (this.#panels.every((panel) => !panel.isExpanded())) {
-    //         //   this.#expandButton.toggle(false, true);
-    //         // }
-    //         // else {
-    //         //   this.#expandButton.toggle(true, true);
-    //         // }
-    //       }
-    //     }
-    //   );
-    //   listItem.append(panel.getDOM());
-    //   // this.#panels.push(panel);
-
-    //   panelsDOM.append(listItem);
-    // });
+    this.updateMessageCount();
   }
 
   /**
@@ -170,13 +126,23 @@ export class TypeAccordionPanel {
    * @param {string[]} subContentIds Sub-content IDs of contents to show.
    */
   filter(subContentIds) {
-    if (!subContentIds || subContentIds.includes(this.#content.getSubContentId())) {
+    this.#carousel.filter(subContentIds);
+    this.updateMessageCount();
+
+    if (!subContentIds || this.#carousel.getNumberOfAvailableItems() > 0) {
       this.show();
     }
     else {
       this.collapse();
       this.hide();
     }
+  }
+
+  /**
+   * Update message count.
+   */
+  updateMessageCount() {
+    this.#messageCount.innerText = this.#carousel.getNumberOfAvailableItems();
   }
 
   /**

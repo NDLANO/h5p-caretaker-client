@@ -1,0 +1,46 @@
+.carousel-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--default-spacing);
+  padding: var(--default-spacing);
+
+  .carousel-item-header {
+    display: inline-flex;
+    flex-direction: row;
+    gap: var(--default-spacing);
+    justify-content: space-between;
+
+    .summary {
+      flex-grow: 1;
+      font-size: var(--font-size-small);
+      font-weight: bold;
+      width: 100%;
+    }
+
+    .level {
+      border-radius: var(--border-radius-default);
+      padding: 0.25rem 0.5rem;
+      font-weight: bold;
+      height: 1rem;
+
+      &.error {
+        background-color: var(--color-error-light);
+        color: var(--color-error);
+      }
+
+      &.caution {
+        background-color: var(--color-caution-light);
+        color: var(--color-caution);
+      }
+
+      &.info {
+        background-color: var(--color-info-light);
+        color: var(--color-info);
+      }
+    }
+  }
+
+  &:not(.active) {
+    display: none;
+  }
+}

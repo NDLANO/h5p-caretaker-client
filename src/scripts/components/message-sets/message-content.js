@@ -15,7 +15,7 @@ export class MessageContent {
     this.#dom = document.createElement('div');
     this.#dom.classList.add('message-content');
 
-    this.#subContentId = params.message.subContentId;
+    this.#subContentId = params.message.subContentId ?? params.message.details?.subContentId;
 
     // Prevent changing the original object
     this.#params = JSON.parse(JSON.stringify(params));

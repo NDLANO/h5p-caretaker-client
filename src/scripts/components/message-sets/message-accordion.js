@@ -1,10 +1,8 @@
-import { ExpandButton } from './expand-button.js';
 import { TypeAccordionPanel } from './type-accordion-panel.js';
 
 export class MessageAccordion {
 
   #dom;
-  #expandButton;
   #allFiltered;
   #panels = [];
 
@@ -37,24 +35,6 @@ export class MessageAccordion {
 
     header.append(text);
 
-    // this.#expandButton = new ExpandButton(
-    //   {
-    //     l10n: {
-    //       expandAllMessages: params.l10n.expandAllMessages,
-    //       collapseAllMessages: params.l10n.collapseAllMessages
-    //     }
-    //   },
-    //   {
-    //     expandedStateChanged: (state) => {
-    //       this.#panels.forEach((panel) => {
-    //         panel.toggle(state);
-    //       });
-    //     }
-    //   }
-    // );
-    // this.#expandButton.setWidth();
-    // header.append(this.#expandButton.getDOM());
-
     const panelsDOM = document.createElement('ul');
     panelsDOM.classList.add('type-accordion-panels-list');
     this.#dom.append(panelsDOM);
@@ -75,6 +55,7 @@ export class MessageAccordion {
           hideDetails: params.l10n.hideDetails
         }
       });
+      this.#panels.push(typeAccordionPanel);
       listItem.append(typeAccordionPanel.getDOM());
       panelsDOM.append(listItem);
     });
@@ -104,11 +85,9 @@ export class MessageAccordion {
     });
 
     if (this.#panels.some((panel) => panel.isVisible())) {
-      this.#expandButton.show();
       this.#allFiltered.classList.add('display-none');
     }
     else {
-      this.#expandButton.hide();
       this.#allFiltered.classList.remove('display-none');
     }
   }
