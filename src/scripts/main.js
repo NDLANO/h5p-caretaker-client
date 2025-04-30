@@ -495,15 +495,16 @@ class H5PCaretaker {
       };
     });
 
-    const issueItems = [{
-      id: 'issues',
-      value: messages.filter((message) => message.issues).length,
-      max: messages.length,
-      label: capitalize(this.#l10n.issues),
-      link: '#issues',
-      color: 'status',
-      percentage: false
-    }];
+    // This way filtering would be possible, but not needed for now
+    // const issueItems = [{
+    //   id: 'issues',
+    //   value: messages.filter((message) => message.issues).length,
+    //   max: messages.length,
+    //   label: capitalize(this.#l10n.issues),
+    //   link: '#issues',
+    //   color: 'status',
+    //   percentage: false
+    // }];
 
     return {
       level: {
