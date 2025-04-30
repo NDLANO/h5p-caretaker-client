@@ -520,13 +520,14 @@ class H5PCaretaker {
         items: categoryItems,
         type: 'group'
       },
-      issues: {
-        label: this.#l10n.issues,
-        header: this.#l10n.totalMessages,
-        value: messages.length,
-        items: issueItems,
-        type: 'filter'
-      }
+      // This way filtering would be possible, but not needed for now
+      // issues: {
+      //   label: this.#l10n.issues,
+      //   header: this.#l10n.totalMessages,
+      //   value: messages.length,
+      //   items: issueItems,
+      //   type: 'filter'
+      // }
     };
   }
 
