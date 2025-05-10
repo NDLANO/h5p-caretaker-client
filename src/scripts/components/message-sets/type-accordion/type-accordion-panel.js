@@ -73,7 +73,12 @@ export class TypeAccordionPanel {
 
     this.#dom.append(this.#contentGrid);
 
-    this.#dom.addEventListener('click', () => {
+    this.#dom.addEventListener('click', (event) => {
+      const targetIsCarouselItem = event.target.closest('.carousel-item') !== null;
+      if (targetIsCarouselItem) {
+        return;
+      }
+
       this.toggle();
     });
 
