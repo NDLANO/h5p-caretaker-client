@@ -65,6 +65,18 @@ export class Results {
   }
 
   /**
+   * Toggle the disabled state of the download button.
+   * @param {boolean} shouldBeEnabled Whether the button should be enabled or disabled.
+   */
+  toggleDownloadButton(shouldBeEnabled) {
+    if (typeof shouldBeEnabled !== 'boolean') {
+      shouldBeEnabled = this.downloadButton.disabled === true;
+    }
+
+    this.buttonDownload.disabled = !shouldBeEnabled;
+  }
+
+  /**
    * Build the results rows.
    * @param {object} results Results.
    * @returns {object} Results rows.
@@ -116,13 +128,15 @@ export class Results {
       selectResultsType.append(option);
     }
 
-    const buttonDownload = document.createElement('button');
-    buttonDownload.classList.add('button-download');
-    buttonDownload.textContent = this.#params.l10n.download;
-    buttonDownload.addEventListener('click', () => {
+    this.buttonDownload = document.createElement('button');
+    this.buttonDownload.classList.add('button-download');
+    this.buttonDownload.textContent = this.#params.l10n.download;
+    this.buttonDownload.addEventListener('click', () => {
       this.#callbacks.onDownload();
     });
-    navigationRow.append(buttonDownload);
+    navigationRow.append(this.buttonDownload);
+
+    this.toggleDownloadButton(false);
 
     return navigationRow;
   }

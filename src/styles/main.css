@@ -66,6 +66,7 @@ body {
   --icon-material-icons-speed: "\e9e4";
   --icon-material-icons-label: "\e892";
   --icon-material-icons-license: "\eb04";
+  --icon-material-icons-123: "\eb8d";
   --icon-material-icons-cycle: "\f854";
   --icon-material-icons-monitoring: "\f190";
   --icon-material-icons-image: "\e3f4";
@@ -80,6 +81,11 @@ body {
   --icon-material-icons-groups: "\f233";
   --icon-material-icons-thumb-down: "\e8db";
   --icon-material-icons-edit: "\e3c9";
+  --icon-material-icons-title: "\e264";
+  --icon-material-icons-link: "\e157";
+  --icon-material-icons-iframe: "\f71b";
+  --icon-material-icons-pending: "\ef64";
+  --icon-material-icons-high-quality: "\e024";
 
   color: var(--color-text);
   container-name: body;

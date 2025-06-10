@@ -2,6 +2,7 @@ import { TypeAccordionPanel } from './type-accordion-panel.js';
 
 export class TypeAccordion {
 
+  #callbacks;
   #dom;
   #allFiltered;
   #panels = [];
@@ -9,8 +10,11 @@ export class TypeAccordion {
   /**
    * @class
    * @param {object} params Parameters for the message accordion.
+   * @param {object} callbacks Callbacks for the message accordion.
    */
-  constructor(params = {}) {
+  constructor(params = {}, callbacks = {}) {
+    this.#callbacks = callbacks ?? {};
+    this.#callbacks.onFieldEdit = this.#callbacks.onFieldEdit ?? (() => {});
 
     this.#dom = document.createElement('div');
     this.#dom.classList.add('type-accordion');
@@ -44,17 +48,24 @@ export class TypeAccordion {
       const listItem = document.createElement('li');
       listItem.classList.add('type-accordion-panels-list-item');
 
-      const typeAccordionPanel = new TypeAccordionPanel({
-        type: type,
-        messages: params.messages.filter((message) => message.type === type),
-        translations: params.translations,
-        l10n: {
-          nextMessage: params.l10n.nextMessage,
-          previousMessage: params.l10n.previousMessage,
-          showDetails: params.l10n.showDetails,
-          hideDetails: params.l10n.hideDetails
+      const typeAccordionPanel = new TypeAccordionPanel(
+        {
+          type: type,
+          messages: params.messages.filter((message) => message.type === type),
+          translations: params.translations,
+          l10n: {
+            nextMessage: params.l10n.nextMessage,
+            previousMessage: params.l10n.previousMessage,
+            showDetails: params.l10n.showDetails,
+            hideDetails: params.l10n.hideDetails
+          }
+        },
+        {
+          onFieldEdit: (uuids, value) => {
+            this.#callbacks.onFieldEdit(uuids, value);
+          }
         }
-      });
+      );
       this.#panels.push(typeAccordionPanel);
       listItem.append(typeAccordionPanel.getDOM());
       panelsDOM.append(listItem);
@@ -90,5 +101,38 @@ export class TypeAccordion {
     else {
       this.#allFiltered.classList.remove('display-none');
     }
+  }
+
+  /**
+   * Ensure all fields use their current values as initial values.
+   */
+  makeCurrentValuesInitial() {
+    this.#panels.forEach((panel) => {
+      panel.makeCurrentValuesInitial();
+    });
+  }
+
+  /**
+   * Clear the pending state of all panels.
+   */
+  clearPendingState() {
+    this.#panels.forEach((panel) => {
+      panel.clearPendingState();
+    });
+  }
+
+  /**
+   * Update message edit fields.
+   * @param {string[]} uuids UUIDs of the fields to update.
+   * @param {string} value Value to set.
+   */
+  updateFields(uuids, value) {
+    this.#panels.forEach((panel) => {
+      panel.updateFields(uuids, value);
+    });
+  }
+
+  getEdits() {
+    return this.#panels.map((panel) => panel.getEdits()).flat();
   }
 }

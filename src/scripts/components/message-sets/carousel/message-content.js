@@ -1,17 +1,23 @@
+import InputFieldFactory from './input-field-factory.js';
+
 export class MessageContent {
   #dom;
   #subContentId;
   #params;
+  #callbacks;
   #detailsButton;
   #details;
+  #editFields = [];
 
   /**
    * @class MessageContent
    * @param {object} params Parameters for the message content.
    * @param {object} params.message Message object.
    * @param {object} params.translations Translations object.
+   * @param {object} params.l10n Localization object.
+   * @param {object} callbacks Callbacks for the message content.
    */
-  constructor(params = {}) {
+  constructor(params = {}, callbacks = {}) {
     this.#dom = document.createElement('div');
     this.#dom.classList.add('message-content');
 
@@ -19,6 +25,9 @@ export class MessageContent {
 
     // Prevent changing the original object
     this.#params = JSON.parse(JSON.stringify(params));
+
+    this.#callbacks = callbacks ?? {};
+    this.#callbacks.onEdit = this.#callbacks.onEdit ?? (() => {});
 
     if (this.#params.message.description) {
       const descriptionItem = document.createElement('div');
@@ -73,6 +82,37 @@ export class MessageContent {
       recommendationItem.append(recommendationItemText);
 
       this.#dom.append(recommendationItem);
+    }
+
+    if (this.#params.message.editDirectly?.field?.type) {
+      try {
+        const editDirectlyItem = document.createElement('div');
+        editDirectlyItem.classList.add('message-content-item');
+
+        const editDirectlyItemLabel = document.createElement('p');
+        editDirectlyItemLabel.classList.add('message-content-item-label');
+        editDirectlyItemLabel.innerText =
+          this.#params.message.editDirectly.field.label ?? this.#params.translations.editDirectly;
+        editDirectlyItem.append(editDirectlyItemLabel);
+
+        const field = InputFieldFactory.produce(
+          this.#params.message.editDirectly.field,
+          {
+            onEdit: (uuids, value) => {
+              this.#callbacks.onEdit(uuids, value);
+            }
+          }
+        );
+
+        this.#editFields.push(field);
+
+        editDirectlyItem.append(field.getDOM());
+
+        this.#dom.append(editDirectlyItem);
+      }
+      catch (error) {
+        console.warn('Error creating edit field:', error);
+      }
     }
 
     if (this.#params.message.type === 'libreText') {
@@ -175,6 +215,33 @@ export class MessageContent {
    */
   getSubContentId() {
     return this.#subContentId;
+  }
+
+  /**
+   * Set an edit field value.
+   * @param {string[]} uuids UUIDs of the field to set.
+   * @param {string} value Value to set.
+   */
+  setField(uuids, value) {
+    const targetField = this.#editFields.find((field) => field.getUUIDs().some((uuid) => uuids.includes(uuid)));
+    if (!targetField) {
+      return;
+    }
+
+    targetField.setValue(uuids, value);
+  }
+
+  getEdits() {
+    return this.#editFields.map((field) => field.getEdits()).flat();
+  }
+
+  /**
+   * Ensure all fields use their current values as initial values.
+   */
+  makeCurrentValuesInitial() {
+    this.#editFields.forEach((field) => {
+      field.makeCurrentValuesInitial();
+    });
   }
 
   /**
