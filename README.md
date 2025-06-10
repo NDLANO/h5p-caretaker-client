@@ -80,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
       groupBy: 'Group by', // Results: group by
       download: 'Download', // Results: download
       allFilteredOut: 'All messages have been filtered out by content.', // MessageAccordion
-      reportTitleTemplate: 'H5P Caretaker report for @title', // Report: report title template
       contentFilter: 'Content filter', // ContentFilter: filter by content
       showAll: 'Show all', // ContentFilter: show all
       showSelected: 'Various selected contents', // ContentFilter: show selected
