@@ -132,5 +132,5 @@ document.addEventListener('DOMContentLoaded', () => {
 ```
 
 ## Future Development
-Will at some point learn to edit fields and to send requests to the integration to save them to an H5P file.
+The UX will probably be changed/improved at some point.
 
