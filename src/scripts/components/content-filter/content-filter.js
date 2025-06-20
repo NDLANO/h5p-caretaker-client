@@ -170,6 +170,7 @@ export class ContentFilter {
       }
       else if (!this.#activeItem.isExpanded()) {
         this.#handleClick(event);
+        event.preventDefault();
       }
       else {
         this.#focusItem(this.#getNextItem());
@@ -181,13 +182,16 @@ export class ContentFilter {
       }
       else {
         this.#handleClick(event);
+        event.preventDefault();
       }
     }
     else if (event.key === 'ArrowDown') {
       this.#focusItem(this.#getNextItem());
+      event.preventDefault();
     }
     else if (event.key === 'ArrowUp') {
       this.#focusItem(this.#getPreviousItem());
+      event.preventDefault();
     }
     else if (event.key === 'Home') {
       this.#focusItem(this.#getVisibleItems()[0]);
