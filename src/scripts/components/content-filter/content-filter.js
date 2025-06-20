@@ -153,6 +153,13 @@ export class ContentFilter {
       return;
     }
 
+    // Make all descendants of the clicked item selected or unselected.
+    const item = this.#items.find((item) => item.getCheckboxDOM() === event.target);
+    const allDescendants = item.getAllDescendantItems();
+    allDescendants.forEach((descendant) => {
+      descendant.toggleSelectedState(item.isSelected());
+    });
+
     this.#updateSelection();
   }
 
