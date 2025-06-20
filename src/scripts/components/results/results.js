@@ -130,7 +130,7 @@ export class Results {
 
     this.buttonDownload = document.createElement('button');
     this.buttonDownload.classList.add('button-download');
-    this.buttonDownload.textContent = this.#params.l10n.download;
+    this.buttonDownload.textContent = this.#params.l10n.downloadEditedH5P;
     this.buttonDownload.addEventListener('click', () => {
       this.#callbacks.onDownload();
     });

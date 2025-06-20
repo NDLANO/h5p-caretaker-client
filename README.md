@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
       filterBy: 'Filter by', // Results: group by
       groupBy: 'Group by', // Results: group by
       download: 'Download', // Results: download
+      download: 'Download edited H5P', // Results: download edited H5P
       allFilteredOut: 'All messages have been filtered out by content.', // MessageAccordion
       contentFilter: 'Content filter', // ContentFilter: filter by content
       showAll: 'Show all', // ContentFilter: show all
