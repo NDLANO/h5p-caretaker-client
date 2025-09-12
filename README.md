@@ -4,7 +4,7 @@ Reference implementation of a JavaScript client using the H5P Caretaker library.
 ## Usage
 You can see a fully working example on integrating this client in the the [H5P Caretaker server reference implementation](https://github.com/ndlano/h5p-caretaker-server).
 
-### Instantiazation
+### Instantiation
 Load the `h5p-caretaker-client-*.js` file from the dist folder and `h5p-caretaker-client-*.css` file from the dist folder, e.g. with amending your HTML page's `head` with
 
 ```
