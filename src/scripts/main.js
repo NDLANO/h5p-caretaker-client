@@ -1,4 +1,4 @@
-import { capitalize, containsHtmlTags } from '@services/util.js';
+import { capitalize, containsHtmlTags, createUUID } from '@services/util.js';
 import { Dropzone } from '@components/dropzone/dropzone.js';
 import { Results } from '@components/results/results.js';
 import { MessageSets } from '@components/message-sets/message-sets.js';
@@ -27,8 +27,8 @@ const DEFAULT_L10N = {
   filterBy: 'Filter by', // Results: group by
   groupBy: 'Group by', // Results: group by
   download: 'Download', // Results: download
+  downloadEditedH5P: 'Download edited H5P', // Results: download edited H5P
   allFilteredOut: 'All messages have been filtered out by content.', // MessageAccordion
-  reportTitleTemplate: 'H5P Caretaker report for @title', // Report: report title template
   contentFilter: 'Content filter', // ContentFilter: filter by content
   showAll: 'Show all', // ContentFilter: show all
   showSelected: 'Various selected contents', // ContentFilter: show selected
@@ -129,7 +129,7 @@ class H5PCaretaker {
       },
       {
         upload: async (params) => {
-          this.#upload(params);
+          this.#uploadForAnalysis(params);
         },
         reset: () => {
           this.#reset();
@@ -175,11 +175,43 @@ class H5PCaretaker {
   }
 
   /**
+   * Upload a file for changes.
+   * @param {object} params Parameters.
+   * @param {File} params.file File to upload.
+   * @param {object} [params.session] Session object.
+   * @param {string} params.session.key Session key.
+   * @param {string} params.session.value Session value.
+   * @param {object[]} [params.changes] Changes to apply.
+   */
+  #uploadForChanges(params = {}) {
+    params.changes = params.changes ?? [];
+
+    const formData = new FormData();
+    formData.append('file', params.file);
+    if (params.session?.key && params.session?.value) {
+      formData.append(params.session.key, params.session.value);
+    }
+    formData.append('sessionKeyName', this.#sessionKeyName);
+    formData.set('locale', document.querySelector('.select-language')?.value ?? 'en');
+    formData.set('changes', JSON.stringify(params.changes));
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', this.#endpoint, true);
+    xhr.responseType = 'arraybuffer';
+
+    xhr.addEventListener('load', () => {
+      this.#handleFileUploadedForChanges(xhr);
+    });
+
+    xhr.send(formData);
+  }
+
+  /**
    * Handle file upload via dropzone.
    * @param {object} params Parameters.
    * @param {File} params.file File to upload.
    */
-  #upload(params = {}) {
+  #uploadForAnalysis(params = {}) {
     this.#callbacks.onUploadStarted();
 
     const formData = new FormData();
@@ -206,7 +238,7 @@ class H5PCaretaker {
     });
 
     xhr.addEventListener('load', () => {
-      this.#handleFileUploaded(xhr);
+      this.#handleFileUploadedForAnalysis(xhr);
       this.#callbacks.onUploadEnded(true);
     });
 
@@ -251,6 +283,8 @@ class H5PCaretaker {
     document.querySelector('.filter-tree').innerHTML = '';
     document.querySelector('.output').innerHTML = '';
 
+    this.#results?.toggleDownloadButton(false);
+
     this.#callbacks.onReset();
   }
 
@@ -280,17 +314,50 @@ class H5PCaretaker {
     }
   }
 
+  #handleFileUploadedForChanges(xhr) {
+    const isXHROK = xhr.status >= XHR_STATUS_CODES.OK && xhr.status < XHR_STATUS_CODES.MULTIPLE_CHOICES;
+    if (!isXHROK) {
+      this.#setErrorMessage(xhr.status);
+      return;
+    }
+
+    this.#messageSets.clearPendingState();
+    this.#messageSets.makeCurrentValuesInitial();
+    this.#results.toggleDownloadButton(false);
+
+    const blob = new Blob([xhr.response], { type: 'application/zip' });
+
+    // Create a URL for the Blob
+    const url = URL.createObjectURL(blob);
+
+    // Create a link element
+    const downloadLink = document.createElement('a');
+    downloadLink.href = url;
+    downloadLink.download = 'file.h5p'; // Specify the name for the downloaded file
+    downloadLink.style.display = 'none';
+
+    // Append the link to the body (not necessary for the download to work)
+    document.body.appendChild(downloadLink);
+
+    // Programmatically click the link to trigger the download
+    downloadLink.click();
+
+    // Clean up and remove the link
+    document.body.removeChild(downloadLink);
+    URL.revokeObjectURL(url); // Free up memory
+  }
+
   /**
    * Handle file uploaded.
    * @param {XMLHttpRequest} xhr XMLHttpRequest object.
    */
-  #handleFileUploaded(xhr) {
+  #handleFileUploadedForAnalysis(xhr) {
     this.#dropzone.hideProgress();
 
     const isXHROK = xhr.status >= XHR_STATUS_CODES.OK && xhr.status < XHR_STATUS_CODES.MULTIPLE_CHOICES;
 
     let data, errorMessage;
-    [data, errorMessage] = this.parseResponse(xhr);
+    [data, errorMessage] = this.parseAnalysisResponse(xhr);
 
     if (!isXHROK || errorMessage) {
       this.#setErrorMessage(errorMessage);
@@ -369,7 +436,7 @@ class H5PCaretaker {
           results: this.#l10n.results,
           filterBy: this.#l10n.filterBy,
           groupBy: this.#l10n.groupBy,
-          download: this.#l10n.download,
+          downloadEditedH5P: this.#l10n.downloadEditedH5P,
           changeSortingGrouping: this.#l10n.changeSortingGrouping
         }
       },
@@ -378,42 +445,54 @@ class H5PCaretaker {
           this.#messageSets.show(id);
         },
         onDownload: () => {
-          const title = this.#l10n.reportTitleTemplate
-            .replace('@title', `${data.raw.h5pJson.title} (${data.raw.h5pJson.mainLibrary})`);
+          const uploadParams = {
+            file: this.#dropzone.getFile()
+          };
 
-          const report = new Report({
-            title: title,
-            messages: data.messages,
-            l10n: this.#l10n,
-            translations: data.client.translations
-          });
-          report.download();
+          if (this.#sessionKeyName && this.#sessionKeyValue) {
+            uploadParams.session = {
+              key: this.#sessionKeyName,
+              value: this.#sessionKeyValue,
+            };
+          }
+
+          uploadParams.changes = this.#messageSets.getEdits().flat();
+          this.#uploadForChanges(uploadParams);
         }
       }
     );
     document.querySelector('.output').append(this.#results.getDOM());
 
     const categoryNames = [...new Set(data.messages.map((message) => message.category))];
-    this.#messageSets = new MessageSets({
-      sets: {
-        level: ['error', 'caution', 'info'],
-        category: categoryNames,
-        issues: [{ id: 'issues', header: this.#l10n.issues }], // Custom filter option
+
+    this.#messageSets = new MessageSets(
+      {
+        sets: {
+          level: ['error', 'caution', 'info'],
+          category: categoryNames,
+          issues: [{ id: 'issues', header: this.#l10n.issues }], // Custom filter option
+        },
+        messages: data.messages,
+        translations: data.client.translations,
+        l10n: {
+          allFilteredOut: this.#l10n.allFilteredOut,
+          nextMessage: this.#l10n.nextMessage,
+          previousMessage: this.#l10n.previousMessage,
+          showDetails: this.#l10n.showDetails,
+          hideDetails: this.#l10n.hideDetails
+        }
       },
-      messages: data.messages,
-      translations: data.client.translations,
-      l10n: {
-        allFilteredOut: this.#l10n.allFilteredOut,
-        nextMessage: this.#l10n.nextMessage,
-        previousMessage: this.#l10n.previousMessage,
-        showDetails: this.#l10n.showDetails,
-        hideDetails: this.#l10n.hideDetails
+      {
+        onFieldEdit: () => {
+          const hasEdits = this.#messageSets.getEdits().length > 0;
+          this.#results.toggleDownloadButton(hasEdits);
+        }
       }
-    });
+    );
     document.querySelector('.output').append(this.#messageSets.getDOM());
   }
 
-  parseResponse(xhr) {
+  parseAnalysisResponse(xhr) {
     let data;
     let errorMessage = null;
 

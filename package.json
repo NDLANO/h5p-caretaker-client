@@ -1,7 +1,7 @@
 {
   "name": "@explorendla/h5p-caretaker-client",
   "description": "JavaScript reference client for using H5P Caretaker",
-  "version": "1.0.26",
+  "version": "1.1.0",
   "scripts": {
     "lint": "stylelint './src/**/*.css' && eslint './src/**/*.js'",
     "build": "webpack --mode=production",
@@ -32,10 +32,10 @@
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
     "eslint-config-snordian-h5p": "github:otacke/eslint-config-snordian-h5p",
-    "mini-css-extract-plugin": "^2.9.2",
-    "stylelint": "^16.19.1",
-    "stylelint-config-recommended": "^16.0.0",
-    "webpack": "^5.99.7",
+    "mini-css-extract-plugin": "^2.9.4",
+    "stylelint": "^16.24.0",
+    "stylelint-config-recommended": "^17.0.0",
+    "webpack": "^5.101.3",
     "webpack-cli": "^6.0.1"
   }
 }

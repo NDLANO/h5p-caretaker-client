@@ -1,14 +1,19 @@
 import { TypeAccordion } from './type-accordion/type-accordion.js';
 
 export class MessageSet {
+  #callbacks;
   #dom;
   #accordions = [];
 
   /**
    * @class MessageSet
    * @param {object} params Parameters for the message set.
+   * @param {object} callbacks Callbacks for the message set.
    */
-  constructor(params = {}) {
+  constructor(params = {}, callbacks = {}) {
+    this.#callbacks = callbacks ?? {};
+    this.#callbacks.onFieldEdit = this.#callbacks.onFieldEdit ?? (() => {});
+
     this.#dom = document.createElement('div');
     this.#dom.classList.add('message-set');
 
@@ -18,13 +23,20 @@ export class MessageSet {
         return;
       }
 
-      const accordion = new TypeAccordion({
-        type: section.id,
-        header: section.header,
-        messages: messages,
-        translations: params.translations,
-        l10n: params.l10n
-      });
+      const accordion = new TypeAccordion(
+        {
+          type: section.id,
+          header: section.header,
+          messages: messages,
+          translations: params.translations,
+          l10n: params.l10n
+        },
+        {
+          onFieldEdit: (uuids, value) => {
+            this.#callbacks.onFieldEdit(uuids, value);
+          }
+        }
+      );
       this.#accordions.push(accordion);
 
       this.#dom.append(accordion.getDOM());
@@ -61,5 +73,38 @@ export class MessageSet {
    */
   hide() {
     this.#dom.classList.add('display-none');
+  }
+
+  /**
+   * Ensure all fields use their current values as initial values.
+   */
+  makeCurrentValuesInitial() {
+    this.#accordions.forEach((accordion) => {
+      accordion.makeCurrentValuesInitial();
+    });
+  }
+
+  /**
+   * Clear the pending state of all accordions.
+   */
+  clearPendingState() {
+    this.#accordions.forEach((accordion) => {
+      accordion.clearPendingState();
+    });
+  }
+
+  /**
+   * Update message edit fields.
+   * @param {string[]} uuids UUIDs of the messages to update.
+   * @param {string} value Value to set the fields to.
+   */
+  updateFields(uuids, value) {
+    this.#accordions.forEach((accordion) => {
+      accordion.updateFields(uuids, value);
+    });
+  }
+
+  getEdits() {
+    return this.#accordions.map((accordion) => accordion.getEdits()).flat();
   }
 }

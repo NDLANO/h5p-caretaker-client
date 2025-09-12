@@ -2,6 +2,7 @@ import { createUUID } from '@services/util.js';
 import { CarouselItem } from './carousel-item.js';
 
 export class Carousel {
+  #callbacks;
   #dom;
   #activeItemIndex = 0;
   #messageCount;
@@ -14,9 +15,12 @@ export class Carousel {
    * @param {object} params.translations Translations for the messages.
    * @param {object} params.l10n Localization object.
    * @param {string} params.ariaLabel Aria label for the carousel.
+   * @param {object} callbacks Callbacks for the carousel.
    */
-  constructor(params = {}) {
+  constructor(params = {}, callbacks = {}) {
     const uuid = createUUID();
+    this.#callbacks = callbacks ?? {};
+    this.#callbacks.onFieldEdit = this.#callbacks.onFieldEdit ?? (() => {});
 
     this.#dom = document.createElement('section');
     this.#dom.setAttribute('id', `carousel-${uuid}`);
@@ -63,13 +67,20 @@ export class Carousel {
     this.#dom.append(items);
 
     params.messages.forEach((message, index) => {
-      const carouselItem = new CarouselItem({
-        message: message,
-        index: index,
-        carouselUuid: uuid,
-        translations: params.translations,
-        l10n: params.l10n,
-      });
+      const carouselItem = new CarouselItem(
+        {
+          message: message,
+          index: index,
+          carouselUuid: uuid,
+          translations: params.translations,
+          l10n: params.l10n,
+        },
+        {
+          onFieldEdit: (uuids, value) => {
+            this.#callbacks.onFieldEdit(uuids, value);
+          },
+        }
+      );
 
       this.#carouselItems.push(carouselItem);
 
@@ -170,5 +181,29 @@ export class Carousel {
     const activeItemPosition = availableItems.findIndex((item) => item === this.#carouselItems[this.#activeItemIndex]);
 
     this.#messageCount.innerText = `${activeItemPosition + 1} / ${this.getNumberOfAvailableItems()}`;
+  }
+
+  /**
+   * Ensure all fields use their current values as initial values.
+   */
+  makeCurrentValuesInitial() {
+    this.#carouselItems.forEach((item) => {
+      item.makeCurrentValuesInitial();
+    });
+  }
+
+  /**
+   * Update message edit fields.
+   * @param {string[]} uuids UUIDs of the fields to update.
+   * @param {string} value Value to set for the fields.
+   */
+  updateFields(uuids, value) {
+    this.#carouselItems.forEach((item) => {
+      item.updateField(uuids, value);
+    });
+  }
+
+  getEdits() {
+    return this.#carouselItems.map((item) => item.getEdits()).flat();
   }
 }

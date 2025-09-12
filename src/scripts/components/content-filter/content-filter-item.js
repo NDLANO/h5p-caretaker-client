@@ -92,6 +92,14 @@ export class ContentFilterItem {
   }
 
   /**
+   * Get the checkbox DOM element of the content filter item.
+   * @returns {HTMLElement} DOM element of the checkbox.
+   */
+  getCheckboxDOM() {
+    return this.#checkbox;
+  }
+
+  /**
    * Get the name of the content filter item.
    * @returns {string} The name of the content filter item.
    */
@@ -129,6 +137,22 @@ export class ContentFilterItem {
    */
   getItems() {
     return this.#items;
+  }
+
+  /**
+   * Get all descendant items of the content filter item.
+   * @returns {ContentFilterItem[]} All descendant items of the content filter item.
+   */
+  getAllDescendantItems() {
+    return this.#getDescendantItems(this);
+  }
+
+  #getDescendantItems(item) {
+    const descendants = [...item.getItems()];
+    for (const child of item.getItems()) {
+      descendants.push(...this.#getDescendantItems(child));
+    }
+    return descendants;
   }
 
   /**

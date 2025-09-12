@@ -4,7 +4,7 @@ Reference implementation of a JavaScript client using the H5P Caretaker library.
 ## Usage
 You can see a fully working example on integrating this client in the the [H5P Caretaker server reference implementation](https://github.com/ndlano/h5p-caretaker-server).
 
-### Instantiazation
+### Instantiation
 Load the `h5p-caretaker-client-*.js` file from the dist folder and `h5p-caretaker-client-*.css` file from the dist folder, e.g. with amending your HTML page's `head` with
 
 ```
@@ -79,8 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
       filterBy: 'Filter by', // Results: group by
       groupBy: 'Group by', // Results: group by
       download: 'Download', // Results: download
+      download: 'Download edited H5P', // Results: download edited H5P
       allFilteredOut: 'All messages have been filtered out by content.', // MessageAccordion
-      reportTitleTemplate: 'H5P Caretaker report for @title', // Report: report title template
       contentFilter: 'Content filter', // ContentFilter: filter by content
       showAll: 'Show all', // ContentFilter: show all
       showSelected: 'Various selected contents', // ContentFilter: show selected
@@ -133,5 +133,5 @@ document.addEventListener('DOMContentLoaded', () => {
 ```
 
 ## Future Development
-Will at some point learn to edit fields and to send requests to the integration to save them to an H5P file.
+The UX will probably be changed/improved at some point.
 

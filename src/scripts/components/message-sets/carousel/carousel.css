@@ -58,4 +58,8 @@
       width: var(--count-width);
     }
   }
+
+  .carousel-items {
+    cursor: initial;
+  }
 }

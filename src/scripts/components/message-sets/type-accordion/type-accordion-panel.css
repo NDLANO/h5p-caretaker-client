@@ -8,7 +8,11 @@
   --type-accordion-panel-header-icon-missingAltText: var(--icon-material-icons-image);
   --type-accordion-panel-header-icon-missingAuthor: var(--icon-material-icons-signature);
   --type-accordion-panel-header-icon-missingLicense: var(--icon-material-icons-license);
+  --type-accordion-panel-header-icon-missingLicenseVersion: var(--icon-material-icons-123);
   --type-accordion-panel-header-icon-missingChanges: var(--icon-material-icons-edit);
+  --type-accordion-panel-header-icon-missingSource: var(--icon-material-icons-link);
+  --type-accordion-panel-header-icon-missingTitle: var(--icon-material-icons-title);
+  --type-accordion-panel-header-icon-missingA11yTitle: var(--icon-material-icons-iframe);
   --type-accordion-panel-header-icon-discouragedLicenseAdaptation: var(--icon-material-icons-thumb-down);
   --type-accordion-panel-header-icon-imageSize: var(--icon-material-icons-storage);
   --type-accordion-panel-header-icon-questionTypeContract: var(--icon-material-icons-gavel);
@@ -18,6 +22,7 @@
   --type-accordion-panel-header-icon-noAuthorComments: var(--icon-material-icons-comment);
   --type-accordion-panel-header-icon-notCulturalWork: var(--icon-material-icons-groups);
   --type-accordion-panel-header-icon-contentTypeCount: var(--icon-material-icons-counter-1);
+  --type-accordion-panel-header-icon-imageResolution: var(--icon-material-icons-high-quality);
 
   background-color: var(--color-main-ultra-light);
   border: 1px solid var(--color-background-separator);
@@ -26,7 +31,7 @@
   cursor: pointer;
   font-size: var(--font-size-small);
   padding: 1rem;
-  transition: background-color 0.3s; border-color: 0.3s;
+  transition: background-color 0.3s, border-color 0.3s;
 
   &:hover {
     background-color: var(--color-main-very-light);
@@ -61,7 +66,6 @@
         content: " ";
         font-family: var(--font-material-icons);
         font-size: var(--font-size-default);
-        top: -0.125rem;
       }
     }
 
@@ -77,6 +81,23 @@
       text-align: left;
       text-transform: capitalize;
       width: 100%;
+    }
+
+    .type-accordion-panel-pending-indicator {
+      margin-right: 0.75rem;
+      position: relative;
+      width: var(--header-icon-width);
+
+      &::before {
+        content: var(--icon-material-icons-pending);
+        font-family: var(--font-material-icons);
+        font-size: var(--font-size-default);
+      }
+
+      &.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
     }
 
     .type-accordion-panel-count {

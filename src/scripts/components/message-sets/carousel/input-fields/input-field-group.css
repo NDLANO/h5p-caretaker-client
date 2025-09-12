@@ -1,0 +1,12 @@
+.message-content-item-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 0.5rem;
+
+    .message-content-item-input-group-wrapper {
+        .message-content-item-input-group-label {
+            text-transform: capitalize;
+        }
+    }
+}

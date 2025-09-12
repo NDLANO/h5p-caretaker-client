@@ -158,8 +158,18 @@ export class Dropzone {
       this.#fileValue.innerText = `${(file.size / KB).toFixed(DEFAULT_FILESIZE_PADDING)} KB`;
     }
 
+    this.file = file;
+
     this.#uploadWrapper.classList.add('display-none');
     this.#fileInfo.classList.remove('display-none');
+  }
+
+  /**
+   * Get file.
+   * @returns {File} File.
+   */
+  getFile() {
+    return this.file;
   }
 
   /**
@@ -186,6 +196,8 @@ export class Dropzone {
       this.#currentUploadController.abort();
       this.#currentUploadController = null;
     }
+
+    delete this.file;
 
     this.#fileInfo.classList.add('display-none');
     this.#uploadWrapper.classList.remove('display-none');

@@ -8,6 +8,7 @@ export class TypeAccordionPanel {
   #button;
   #carousel;
   #messageCount;
+  #pendingIndicator;
   #isVisibleState = true;
   #callbacks;
 
@@ -21,6 +22,7 @@ export class TypeAccordionPanel {
   constructor(params = {}, callbacks = {}) {
     this.#callbacks = callbacks;
     this.#callbacks.expandedStateChanged = this.#callbacks.expandedStateChanged ?? (() => {});
+    this.#callbacks.onFieldEdit = this.#callbacks.onFieldEdit ?? (() => {});
 
     this.#dom = document.createElement('div');
     this.#dom.classList.add('type-accordion-panel');
@@ -42,6 +44,10 @@ export class TypeAccordionPanel {
     this.#button.innerText = params.translations[params.type];
     header.append(this.#button);
 
+    this.#pendingIndicator = document.createElement('span');
+    this.#pendingIndicator.classList.add('type-accordion-panel-pending-indicator');
+    header.append(this.#pendingIndicator);
+
     this.#messageCount = document.createElement('span');
     this.#messageCount.classList.add('type-accordion-panel-count');
     header.append(this.#messageCount);
@@ -62,12 +68,22 @@ export class TypeAccordionPanel {
     const contentWrapper = document.createElement('div');
     contentWrapper.classList.add('type-accordion-panel-content-wrapper');
 
-    this.#carousel = new Carousel({
-      ariaLabel: params.translations[params.type],
-      messages: params.messages,
-      translations: params.translations,
-      l10n: params.l10n,
-    });
+    this.#carousel = new Carousel(
+      {
+        ariaLabel: params.translations[params.type],
+        messages: params.messages,
+        translations: params.translations,
+        l10n: params.l10n,
+      },
+      {
+        onFieldEdit: (uuids, value) => {
+          const hasEdits = this.#carousel.getEdits().length > 0;
+
+          this.#togglePendingIndicator(hasEdits);
+          this.#callbacks.onFieldEdit(uuids, value);
+        }
+      }
+    );
     contentWrapper.append(this.#carousel.getDOM());
     this.#contentGrid.append(contentWrapper);
 
@@ -82,6 +98,7 @@ export class TypeAccordionPanel {
       this.toggle();
     });
 
+    this.#togglePendingIndicator(false);
     this.updateMessageCount();
   }
 
@@ -184,5 +201,40 @@ export class TypeAccordionPanel {
     this.#button.setAttribute('aria-expanded', 'false');
 
     this.#callbacks.expandedStateChanged(false);
+  }
+
+  /**
+   * Ensure all fields use their current values as initial values.
+   */
+  makeCurrentValuesInitial() {
+    this.#carousel.makeCurrentValuesInitial();
+  }
+
+  /**
+   * Clear the pending state of all panels.
+   */
+  clearPendingState() {
+    this.#togglePendingIndicator(false);
+  }
+
+  /**
+   * Update message edit fields.
+   * @param {string[]} uuids UUIDs of the fields to update.
+   * @param {string} value Value to set for the fields.
+   */
+  updateFields(uuids, value) {
+    this.#carousel.updateFields(uuids, value);
+  }
+
+  getEdits() {
+    return this.#carousel.getEdits();
+  }
+
+  /**
+   * Toggle the pending indicator.
+   * @param {boolean} shouldBeVisible Whether the pending indicator should be visible.
+   */
+  #togglePendingIndicator(shouldBeVisible) {
+    this.#pendingIndicator.classList.toggle('hidden', !shouldBeVisible);
   }
 }

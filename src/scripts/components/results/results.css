@@ -77,7 +77,6 @@
         border: 1px solid var(--color-background-separator);
         border-radius: var(--border-radius-default);
         color: var(--color-main);
-        cursor: pointer;
         font-size: var(--font-size-small);
         font-weight: bold;
         padding: 0.25rem 1rem 0.25rem 2rem;
@@ -86,8 +85,13 @@
         text-decoration: none;
         transition: background-color 0.2s;
 
-        &:hover {
+        &[disabled] {
+          color: var(--color-text-light);
+        }
+
+        &:not([disabled]):hover {
           border-color: var(--color-background-separator-dark);
+          cursor: pointer;
         }
 
         &::before {

@@ -4,6 +4,7 @@ export class MessageSets {
 
   #dom;
   #messageSets;
+  #callbacks;
 
   /**
    * @class MessageSets
@@ -12,8 +13,13 @@ export class MessageSets {
    * @param {object} params.messages Messages object.
    * @param {object} params.translations Translations object.
    * @param {object} params.l10n Localization object.
+   * @param {object} callbacks Callbacks for the message sets.
+   * @param {function} callbacks.onFieldEdit Callback for when a message field is edited.
    */
-  constructor(params = {}) {
+  constructor(params = {}, callbacks = {}) {
+    this.#callbacks = callbacks ?? {};
+    this.#callbacks.onFieldEdit = this.#callbacks.onFieldEdit ?? (() => {});
+
     this.#dom = document.createElement('div');
     this.#dom.classList.add('message-sets');
 
@@ -41,13 +47,20 @@ export class MessageSets {
     }
 
     for (const id in params.sets) {
-      this.#messageSets[id] = new MessageSet({
-        id: id,
-        sections: params.sets[id],
-        messages: params.messages,
-        translations: params.translations,
-        l10n: params.l10n
-      });
+      this.#messageSets[id] = new MessageSet(
+        {
+          id: id,
+          sections: params.sets[id],
+          messages: params.messages,
+          translations: params.translations,
+          l10n: params.l10n
+        },
+        {
+          onFieldEdit: (uuids, value) => {
+            this.#updateFields(uuids, value);
+          }
+        }
+      );
       this.#dom.append(this.#messageSets[id].getDOM());
     }
 
@@ -89,5 +102,38 @@ export class MessageSets {
     for (const key in this.#messageSets) {
       this.#messageSets[key].filter(subcontentIds);
     }
+  }
+
+  /**
+   * Ensure all fields use their current values as initial values.
+   */
+  makeCurrentValuesInitial() {
+    for (const key in this.#messageSets) {
+      this.#messageSets[key].makeCurrentValuesInitial();
+    }
+  }
+
+  /**
+   * Clear the pending state of all message sets.
+   */
+  clearPendingState() {
+    for (const key in this.#messageSets) {
+      this.#messageSets[key].clearPendingState();
+    }
+  }
+
+  getEdits() {
+    const allEdits = Object.keys(this.#messageSets).map((key) => this.#messageSets[key].getEdits()).flat();
+
+    // MessageSets can contain multiple messages with the same field, remove duplicates
+    return [...new Map(allEdits.map((edit) => [edit.uuid, edit])).values()];
+  }
+
+  #updateFields(uuids, value) {
+    Object.keys(this.#messageSets).forEach((key) => {
+      this.#messageSets[key].updateFields(uuids, value);
+    });
+
+    this.#callbacks.onFieldEdit();
   }
 }
