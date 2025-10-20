@@ -39,8 +39,12 @@ export class ProgressCircle {
     this.#dom.style.setProperty('--size', this.#params.size);
     this.#dom.style.setProperty('--stroke-width', this.#params.strokeWidth);
 
-    const wrapper = document.createElement('div');
+    const wrapper = document.createElement('button');
     wrapper.classList.add('progress-circle-wrapper');
+    wrapper.setAttribute('tabindex', '-1'); // We have a link in the label already
+    wrapper.addEventListener('click', () => {
+      window.location.href = this.#params.link;
+    });
     this.#dom.append(wrapper);
 
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'svg');

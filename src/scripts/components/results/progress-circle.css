@@ -6,9 +6,13 @@
   width: var(--size);
 
   .progress-circle-wrapper {
+    background: none;
+    border: none;
+    cursor: pointer;
     display: grid;
     gap: 0.5rem;
     overflow: hidden;
+    padding: 0;
     place-items: center;
 
     svg.progress-circle {
