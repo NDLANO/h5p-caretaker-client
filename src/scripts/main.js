@@ -19,8 +19,10 @@ const DEFAULT_L10N = {
   selectYourLanguage: 'Select your language', // Language select field
   uploadProgress: 'Upload progress', // Dropzone: upload progress
   uploadYourH5Pfile: 'Upload your H5P file', // Dropzone: upload call to action
-  yourFileIsBeingChecked: 'Your file is being checked', // Dropzone: file is being checked
-  yourFileWasCheckedSuccessfully: 'Your file check was completed', // Dropzone: file was checked successfully
+  yourFileIsBeingChecked: 'Your file is being checked ...', // Dropzone: file is being checked
+  yourFileWasCheckedSuccessfully: 'Your file check was completed.', // Dropzone: file was checked successfully
+  // eslint-disable-next-line max-len
+  instructions: 'Now do all the changes that you deem necessary and download the edited version of your file.', // Dropzone: instructions after check
   totalMessages: 'Total messages', // Results: total messages
   issues: 'issues', // Results: issues
   results: 'results', // Results: results
@@ -370,7 +372,7 @@ class H5PCaretaker {
 
     this.#l10n = { ...this.#l10n, ...data.client.translations };
 
-    this.#dropzone.setStatus(this.#l10n.yourFileWasCheckedSuccessfully);
+    this.#dropzone.setStatus([this.#l10n.yourFileWasCheckedSuccessfully, this.#l10n.instructions]);
 
     // Map content tree to the format expected by the content filter
     const mapContentTree = (input) => {

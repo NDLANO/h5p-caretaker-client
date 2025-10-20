@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
       uploadYourH5Pfile: 'Upload your H5P file', // Dropzone: upload call to action
       yourFileIsBeingChecked: 'Your file is being checked', // Dropzone: file is being checked
       yourFileWasCheckedSuccessfully: 'Your file check was completed', // Dropzone: file was checked successfully
+      instructions: 'Now do all the changes that you deem necessary and download the edited version of your file.', // Dropzone: instructions after check
       totalMessages: 'Total messages', // Results: total messages
       issues: 'issues', // Results: issues
       results: 'results', // Results: results

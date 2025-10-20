@@ -211,14 +211,28 @@ export class Dropzone {
 
   /**
    * Set status message.
-   * @param {string} status Status message.
+   * @param {string|[string]} status Status message.
    * @param {string} className Class name for the status message.
    */
   setStatus(status = '', className = '') {
     this.#status.classList.toggle('display-none', !status);
     this.#status.classList.toggle('error', className === 'error');
     this.#status.classList.toggle('pulse', className === 'pulse');
-    this.#status.innerText = status;
+
+    if (typeof status === 'string') {
+      this.#status.innerText = status;
+    }
+    else if (Array.isArray(status)) {
+      this.#status.innerHTML = '';
+      status.forEach((line) => {
+        if (typeof line !== 'string' || line.trim() === '') {
+          return;
+        }
+        const lineElement = document.createElement('p');
+        lineElement.innerText = line;
+        this.#status.append(lineElement);
+      });
+    }
   }
 
   /**
