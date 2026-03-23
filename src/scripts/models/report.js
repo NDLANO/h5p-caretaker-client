@@ -106,7 +106,7 @@ export class Report {
       text = `${text}${description}\n`;
     }
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/js/max-len
     const category = `#### ${capitalize(this.#translations.category)}\n${this.#translations[message.category]} > ${this.#translations[message.type]}\n`;
     text = `${text}${category}\n`;
 

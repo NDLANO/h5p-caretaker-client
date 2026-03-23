@@ -21,7 +21,7 @@ const DEFAULT_L10N = {
   uploadYourH5Pfile: 'Upload your H5P file', // Dropzone: upload call to action
   yourFileIsBeingChecked: 'Your file is being checked ...', // Dropzone: file is being checked
   yourFileWasCheckedSuccessfully: 'Your file check was completed.', // Dropzone: file was checked successfully
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/js/max-len
   instructions: 'Now do all the changes that you deem necessary and download the edited version of your file.', // Dropzone: instructions after check
   totalMessages: 'Total messages', // Results: total messages
   issues: 'issues', // Results: issues
@@ -51,7 +51,7 @@ const DEFAULT_L10N = {
 /** @constant {object} XHR_STATUS_CODES XHR status codes */
 const XHR_STATUS_CODES = {
   OK: 200,
-  MULTIPLE_CHOICES: 300
+  MULTIPLE_CHOICES: 300,
 };
 
 class H5PCaretaker {
@@ -126,8 +126,8 @@ class H5PCaretaker {
           orDragTheFileHere: this.#l10n.orDragTheFileHere,
           removeFile: this.#l10n.removeFile,
           uploadProgress: this.#l10n.uploadProgress,
-          uploadYourH5Pfile: this.#l10n.uploadYourH5Pfile
-        }
+          uploadYourH5Pfile: this.#l10n.uploadYourH5Pfile,
+        },
       },
       {
         upload: async (params) => {
@@ -135,8 +135,8 @@ class H5PCaretaker {
         },
         reset: () => {
           this.#reset();
-        }
-      }
+        },
+      },
     );
 
     window.setTimeout(() => {
@@ -235,7 +235,7 @@ class H5PCaretaker {
         return;
       }
 
-      // eslint-disable-next-line no-magic-numbers
+
       this.#updateProgress((event.loaded / event.total) * 100);
     });
 
@@ -279,7 +279,7 @@ class H5PCaretaker {
     }
 
     window.history.replaceState(
-      {}, document.title, `${window.location.pathname}?${queryParams.toString()}${window.location.hash}`
+      {}, document.title, `${window.location.pathname}?${queryParams.toString()}${window.location.hash}`,
     );
 
     document.querySelector('.filter-tree').innerHTML = '';
@@ -309,7 +309,7 @@ class H5PCaretaker {
   #updateProgress(percentage) {
     this.#dropzone.setProgress(percentage);
 
-    // eslint-disable-next-line no-magic-numbers
+
     if (percentage === 100) {
       this.#dropzone.hideProgress();
       this.#dropzone.setStatus(this.#l10n.yourFileIsBeingChecked, 'pulse');
@@ -378,7 +378,7 @@ class H5PCaretaker {
     const mapContentTree = (input) => {
       const mapped = {
         label: input.label,
-        subcontentId: input.subContentId
+        subcontentId: input.subContentId,
       };
 
       if (Array.isArray(input.children)) {
@@ -399,8 +399,8 @@ class H5PCaretaker {
           filterByContent: this.#l10n.filterByContent,
           reset: this.#l10n.reset,
           expandList: this.#l10n.expandList,
-          collapseList: this.#l10n.collapseList
-        }
+          collapseList: this.#l10n.collapseList,
+        },
       },
       {
         onFilterChange: (subContentIds) => {
@@ -410,8 +410,8 @@ class H5PCaretaker {
 
           this.#results.update(filteredResults);
           this.#messageSets.filter(subContentIds);
-        }
-      }
+        },
+      },
     );
     document.querySelector('.filter-tree').append(contentFilter.getDOM());
 
@@ -439,8 +439,8 @@ class H5PCaretaker {
           filterBy: this.#l10n.filterBy,
           groupBy: this.#l10n.groupBy,
           downloadEditedH5P: this.#l10n.downloadEditedH5P,
-          changeSortingGrouping: this.#l10n.changeSortingGrouping
-        }
+          changeSortingGrouping: this.#l10n.changeSortingGrouping,
+        },
       },
       {
         onResultsTypeChanged: (id) => {
@@ -448,7 +448,7 @@ class H5PCaretaker {
         },
         onDownload: () => {
           const uploadParams = {
-            file: this.#dropzone.getFile()
+            file: this.#dropzone.getFile(),
           };
 
           if (this.#sessionKeyName && this.#sessionKeyValue) {
@@ -460,8 +460,8 @@ class H5PCaretaker {
 
           uploadParams.changes = this.#messageSets.getEdits().flat();
           this.#uploadForChanges(uploadParams);
-        }
-      }
+        },
+      },
     );
     document.querySelector('.output').append(this.#results.getDOM());
 
@@ -481,15 +481,15 @@ class H5PCaretaker {
           nextMessage: this.#l10n.nextMessage,
           previousMessage: this.#l10n.previousMessage,
           showDetails: this.#l10n.showDetails,
-          hideDetails: this.#l10n.hideDetails
-        }
+          hideDetails: this.#l10n.hideDetails,
+        },
       },
       {
         onFieldEdit: () => {
           const hasEdits = this.#messageSets.getEdits().length > 0;
           this.#results.toggleDownloadButton(hasEdits);
-        }
-      }
+        },
+      },
     );
     document.querySelector('.output').append(this.#messageSets.getDOM());
   }
@@ -541,7 +541,7 @@ class H5PCaretaker {
         label: capitalize(this.#l10n.error),
         link: '#error',
         color: 'var(--color-error)',
-        percentage: false
+        percentage: false,
       },
       {
         id: 'caution',
@@ -550,7 +550,7 @@ class H5PCaretaker {
         label: capitalize(this.#l10n.caution),
         link: '#caution',
         color: 'var(--color-caution)',
-        percentage: false
+        percentage: false,
       },
       {
         id: 'info',
@@ -559,8 +559,8 @@ class H5PCaretaker {
         label: capitalize(this.#l10n.info),
         link: '#info',
         color: 'var(--color-info)',
-        percentage: false
-      }
+        percentage: false,
+      },
     ];
 
     const categoryNames = [...new Set(messages.map((message) => message.category))];
@@ -572,7 +572,7 @@ class H5PCaretaker {
         label: capitalize(this.#l10n[category]),
         link: `#${category}`,
         color: 'var(--color-primary)',
-        percentage: false
+        percentage: false,
       };
     });
 
@@ -593,14 +593,14 @@ class H5PCaretaker {
         header:this.#l10n.totalMessages,
         value: messages.length,
         items: typeItems,
-        type: 'group'
+        type: 'group',
       },
       category: {
         label: this.#l10n.category,
         header: this.#l10n.totalMessages,
         value: messages.length,
         items: categoryItems,
-        type: 'group'
+        type: 'group',
       },
       // This way filtering would be possible, but not needed for now
       // issues: {

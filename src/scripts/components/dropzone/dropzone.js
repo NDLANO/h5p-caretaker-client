@@ -129,8 +129,8 @@ export class Dropzone {
 
     this.#progressbar = new Progressbar({
       l10n: {
-        uploadProgress: this.#params.l10n.uploadProgress
-      }
+        uploadProgress: this.#params.l10n.uploadProgress,
+      },
     });
     this.hideProgress();
     this.#dropzone.append(this.#progressbar.getDOM());

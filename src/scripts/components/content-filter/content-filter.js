@@ -76,7 +76,7 @@ export class ContentFilter {
       l10n: {
         expandList: params.l10n.expandList,
         collapseList: params.l10n.collapseList,
-      }
+      },
     });
     item.toggleVisibility(true);
     tree.append(item.getDOM());

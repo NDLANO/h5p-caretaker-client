@@ -79,7 +79,7 @@ export class Carousel {
           onFieldEdit: (uuids, value) => {
             this.#callbacks.onFieldEdit(uuids, value);
           },
-        }
+        },
       );
 
       this.#carouselItems.push(carouselItem);

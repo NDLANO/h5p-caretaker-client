@@ -81,8 +81,8 @@ export class TypeAccordionPanel {
 
           this.#togglePendingIndicator(hasEdits);
           this.#callbacks.onFieldEdit(uuids, value);
-        }
-      }
+        },
+      },
     );
     contentWrapper.append(this.#carousel.getDOM());
     this.#contentGrid.append(contentWrapper);

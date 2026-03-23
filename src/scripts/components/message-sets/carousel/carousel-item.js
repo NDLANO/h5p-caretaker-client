@@ -41,13 +41,13 @@ export class CarouselItem {
       {
         message: params.message,
         translations: params.translations,
-        l10n: params.l10n
+        l10n: params.l10n,
       },
       {
         onEdit: (uuids, value) => {
           this.#callbacks.onFieldEdit(uuids, value);
-        }
-      }
+        },
+      },
     );
     this.#dom.append(this.#messageContent.getDOM());
   }

@@ -11,7 +11,7 @@ const MAX_PERCENTAGE = 100;
 const STATUS_RANGES = {
   5: 'good',
   10: 'neutral',
-  100: 'bad'
+  100: 'bad',
 };
 
 export class ProgressCircle {

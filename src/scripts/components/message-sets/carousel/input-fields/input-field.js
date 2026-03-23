@@ -88,7 +88,7 @@ export default class InputField {
       uuid: this.#uuid,
       semanticsPath: this.#semanticsPath,
       ...(this.#filePath && { filePath: this.#filePath }),
-      value: this.getValue()
+      value: this.getValue(),
     }];
   }
 

@@ -100,8 +100,8 @@ export class MessageContent {
           {
             onEdit: (uuids, value) => {
               this.#callbacks.onEdit(uuids, value);
-            }
-          }
+            },
+          },
         );
 
         this.#editFields.push(field);

@@ -29,13 +29,13 @@ export class MessageSet {
           header: section.header,
           messages: messages,
           translations: params.translations,
-          l10n: params.l10n
+          l10n: params.l10n,
         },
         {
           onFieldEdit: (uuids, value) => {
             this.#callbacks.onFieldEdit(uuids, value);
-          }
-        }
+          },
+        },
       );
       this.#accordions.push(accordion);
 

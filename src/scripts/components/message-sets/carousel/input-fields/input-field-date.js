@@ -73,7 +73,7 @@ export default class InputFieldDate extends InputField {
       dateParts[0], // day
       timeParts[0], // hours
       timeParts[1], // minutes
-      timeParts[2] || 0 // seconds (default to 0 if not provided)
+      timeParts[2] || 0, // seconds (default to 0 if not provided)
     );
     const formattedDate = date.toISOString().slice(0, ISO_TIMESTAMP_SLICE_INDEX);
 

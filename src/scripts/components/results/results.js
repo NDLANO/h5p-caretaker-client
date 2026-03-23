@@ -59,7 +59,7 @@ export class Results {
     for (const key in results) {
       this.#resultsRows[key].update({
         messageCount: results[key].value,
-        items: results[key].items
+        items: results[key].items,
       });
     }
   }

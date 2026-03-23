@@ -53,13 +53,13 @@ export class MessageSets {
           sections: params.sets[id],
           messages: params.messages,
           translations: params.translations,
-          l10n: params.l10n
+          l10n: params.l10n,
         },
         {
           onFieldEdit: (uuids, value) => {
             this.#updateFields(uuids, value);
-          }
-        }
+          },
+        },
       );
       this.#dom.append(this.#messageSets[id].getDOM());
     }

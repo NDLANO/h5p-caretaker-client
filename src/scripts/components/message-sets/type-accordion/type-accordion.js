@@ -20,7 +20,7 @@ export class TypeAccordion {
     this.#dom.classList.add('type-accordion');
     this.#dom.style.setProperty(
       '--type-accordion-header-icon',
-      `var(--type-accordion-header-icon-${params.type})`
+      `var(--type-accordion-header-icon-${params.type})`,
     );
 
     const anchor = document.createElement('a');
@@ -57,14 +57,14 @@ export class TypeAccordion {
             nextMessage: params.l10n.nextMessage,
             previousMessage: params.l10n.previousMessage,
             showDetails: params.l10n.showDetails,
-            hideDetails: params.l10n.hideDetails
-          }
+            hideDetails: params.l10n.hideDetails,
+          },
         },
         {
           onFieldEdit: (uuids, value) => {
             this.#callbacks.onFieldEdit(uuids, value);
-          }
-        }
+          },
+        },
       );
       this.#panels.push(typeAccordionPanel);
       listItem.append(typeAccordionPanel.getDOM());

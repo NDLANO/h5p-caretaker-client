@@ -49,7 +49,7 @@ export class ResultsRow {
         percentage: item.percentage,
         label: item.label,
         link: item.link,
-        color: item.color
+        color: item.color,
       });
       progressCirclesDOM.append(progressCircle.getDOM());
 
