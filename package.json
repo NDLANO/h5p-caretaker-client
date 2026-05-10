@@ -33,7 +33,7 @@
     "css-minimizer-webpack-plugin": "^8.0.0",
     "eslint-config-snordian-h5p": "github:otacke/eslint-config-snordian-h5p",
     "mini-css-extract-plugin": "^2.10.2",
-    "stylelint": "^17.9.1",
+    "stylelint": "^17.11.0",
     "stylelint-config-recommended": "^18.0.0",
     "webpack": "^5.106.2",
     "webpack-cli": "^7.0.2"
