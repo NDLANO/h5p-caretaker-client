@@ -30,6 +30,24 @@ jobs:
       - name: Build package
         run: npm run build
 
+      - name: Diagnose npm authentication
+        if: inputs.publish
+        run: |
+          echo "registry: $(npm config get registry)"
+          echo "npm $(npm --version), node $(node --version)"
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "::error::NPM_TOKEN is empty — secret missing, wrong name, or not inherited"
+            exit 1
+          fi
+          echo "token present (${#NODE_AUTH_TOKEN} chars)"
+          case "$NODE_AUTH_TOKEN" in
+            npm_*) echo "token has standard npm_ prefix" ;;
+            *) echo "::warning::token does not start with 'npm_' — legacy classic token?" ;;
+          esac
+          npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Publish to npm
         if: inputs.publish
         run: npm publish --access public
