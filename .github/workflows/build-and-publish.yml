@@ -50,6 +50,11 @@ jobs:
 
       - name: Publish to npm
         if: inputs.publish
-        run: npm publish --access public
+        run: |
+          npm publish --access public || {
+            echo "::error::npm publish failed — npm debug log:"
+            cat "$(ls -t /home/runner/.npm/_logs/*-debug-*.log 2>/dev/null | head -1)" || true
+            exit 1
+          }
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
