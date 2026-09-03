@@ -1,6 +1,6 @@
-@import url("@components/dropzone/dropzone.css");
-@import url("@components/message-sets/message-sets.css");
-@import url("@components/results/results.css");
+@import "@components/dropzone/dropzone.css";
+@import "@components/message-sets/message-sets.css";
+@import "@components/results/results.css";
 
 .page {
   .centered-row {

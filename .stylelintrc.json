@@ -1,5 +1,13 @@
 {
   "extends": [
     "stylelint-config-recommended"
-  ]
+  ],
+  "rules": {
+    "at-rule-prelude-no-invalid": [
+      true,
+      {
+        "ignoreAtRules": ["import"]
+      }
+    ]
+  }
 }

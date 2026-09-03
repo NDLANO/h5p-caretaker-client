@@ -1,4 +1,4 @@
-@import url("progressbar.css");
+@import "progressbar.css";
 
 .dropzone {
   --remove-button-size: 2rem;

@@ -1,5 +1,5 @@
 
-@import url("carousel-item.css");
+@import "carousel-item.css";
 
 .h5p-caretaker-carousel {
   --button-size: 2rem;

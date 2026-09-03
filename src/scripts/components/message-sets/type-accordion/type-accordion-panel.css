@@ -1,4 +1,4 @@
-@import url("../carousel/carousel.css");
+@import "../carousel/carousel.css";
 
 .type-accordion-panel {
   --header-gap: 0.5rem;
